@@ -68,8 +68,8 @@
                         });
                         polydraw.setMap(map);
                         // polydraw.addListener('click', pointtwo);
-                        outJSON[polyArray[i].id] = [];
-                        polyindex.push(polyArray[i].id);
+                        // outJSON[polyArray[i].id] = [];
+                        // polyindex.push(polyArray[i].id);
                         // newpoint.addListener('click', pointone);
                     }
                     //                    alert(data);
