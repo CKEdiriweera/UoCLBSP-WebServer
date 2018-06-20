@@ -12,7 +12,7 @@
 <aside>
     <nav id="nav">
         <ul>
-            <li><a  data-target="User_home/home"><i class="fas fa-home" ></i><div class="list-item">Home</div></a></li>
+            <li><a  data-target="User_home/search"><i class="fas fa-home" ></i><div class="list-item">Home</div></a></li>
         </ul>
         <p >Manage Map</p>
         <ul>
