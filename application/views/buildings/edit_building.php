@@ -101,23 +101,23 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <input type="hidden" name="graphId" id="graph_id" value="<?php echo $graph_id ?>">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <input type="hidden" name="id" id="building_id" value="<?php echo $id ?>">
-                    </td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="text" name="id" id="id" value="--><?php //echo $id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!---->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="hidden" name="graphId" id="graph_id" value="--><?php //echo $graph_id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!---->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="hidden" name="id" id="building_id" value="--><?php //echo $id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
 
                 <tr>
                     <td>
