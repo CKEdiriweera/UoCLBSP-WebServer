@@ -21,7 +21,7 @@
             //var s = <?php //echo json_encode($_SESSION); ?>//;
             //console.log(s);
 
-            document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home";
+            document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/";
 
         }
 
@@ -30,18 +30,10 @@
 
 <meta name="google-signin-client_id" content="<?php echo $this->config->item('oauth_key');?>">
 <!--    <script type = 'text/javascript' src = "--><?php //echo base_url(); ?><!--/assets/js/admin_panel.js"></script>-->
-    <?php if($call == 'admin') {
+    <?php if($call == True) {
         echo '<script>
                 $(function(){
                     $("#cont").load("Admin_home/home");
-                });
-
-    </script>';
-    }
-    if($call == 'user') {
-        echo '<script>
-                $(function(){
-                    $("#cont").load("home");
                 });
 
     </script>';
@@ -59,7 +51,7 @@
 <header>
            <div class="container" style="width: 100%;">
 
-                   <a data-target="Admin_home/search"><img src="<?php echo base_url();?>/assets/drawable/web_icon.png" height="45px"></a>
+                   <a data-target="Admin_home/home"><img src="<?php echo base_url();?>/assets/drawable/web_icon.png" height="45px"></a>
                    <img src="<?php echo $this->session->userdata('img');?>" height="45px" style="float: right; padding-right: 110px;">
                    <a id="signoutbutton" href="#" onclick="signOut();" style="float: right; padding-right: 50px; padding-top: 5px">Sign Out</a>
            </div>

@@ -4,7 +4,7 @@ class Admin_home extends CI_Controller
 {
     public function index()
     {
-        $data["call"] = 'admin';
+        $data["call"] = True;
         $this->load->view('include/header_Loggedin',$data);
         $this->load->view('include/side_navbar');
         //$this->load->view('admin_home');
@@ -14,7 +14,7 @@ class Admin_home extends CI_Controller
     public function home()
     {
         $this->load->view('search_place');
-        //$this->load->view('admin_map');
+//        $this->load->view('admin_map');
 
     }
 
