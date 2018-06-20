@@ -3,7 +3,7 @@ class Manage_building_model extends CI_Model
 {
     public function display_buildings()
     {
-        $query = $this->db->select('latitudes, longitudes, name, description')->from('building')->get();
+        $query = $this->db->select('id, latitudes, longitudes, name, description, graph_id')->from('building')->get();
         return $query->result();
     }
 
@@ -41,7 +41,7 @@ class Manage_building_model extends CI_Model
             $this->load->view('buildings/selected_building', $data2);
         }
     }
-    public function edit($name)
+    public function edit($id)
     {
 ////        echo 'ok';
 ////        var_dump($datasearch2);
@@ -67,7 +67,7 @@ class Manage_building_model extends CI_Model
 //            $this->load->view('buildings/edit_building', $data2);
 //        }
 
-        $query = $this->db->select('*')->from('building')->where('name', $name)->get();
+        $query = $this->db->select('*')->from('building')->where('id', $id)->get();
         $rows = $query->row_array();
         $data2 = array(
                 'id' => $rows['id'],
@@ -87,18 +87,19 @@ class Manage_building_model extends CI_Model
     public function change($datasearch3)
     {
 //        var_dump($datasearch3);
-        if (isset($_POST['name'])) {
+        if (isset($datasearch3['name'])) {
 //            echo 'poo';
-            $id = $_POST['id'];
+            $id = $datasearch3['id'];
             $data3 = array(
-                'name' => $_POST['name'],
-                'description' => $_POST['description'],
-                'latitudes' => $_POST['latitudes'],
-                'longitudes' => $_POST['longitudes'],
-                'graph_id' => $_POST['graphId']
+                'name' => $datasearch3['name'],
+                'description' => $datasearch3['description'],
+                'latitudes' => $datasearch3['latitudes'],
+                'longitudes' => $datasearch3['longitudes'],
+                'graph_id' => $datasearch3['graph_id']
             );
-            $this->db->where('id', $id)->update('building', $data3);
+
         }
+        $this->db->where('id', $id)->update('building', $data3);
     }
     public function delete($datasearch4)
     {

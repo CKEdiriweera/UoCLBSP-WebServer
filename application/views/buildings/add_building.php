@@ -17,9 +17,9 @@ $building_json = json_encode($building_array);
 
 <div id="form-div">
     <div id="title-div">
-        <p>Add Building</p></div>
+        <p id ="title_p">Add Building</p></div>
     </br>
-    <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
+    <form id="form" method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
 
         <table>
             <tr>
@@ -27,7 +27,7 @@ $building_json = json_encode($building_array);
                     Name :
                 </td>
                 <td>
-                    <input type="text" name="name">
+                    <input id="b_name" type="text" name="name">
                 </td>
             </tr>
 
@@ -36,7 +36,7 @@ $building_json = json_encode($building_array);
                     Description :
                 </td>
                 <td>
-                    <textarea rows="1.5" cols="30" name="description"></textarea>
+                    <textarea id="b_desc" rows="1.5" cols="30" name="description"></textarea>
                 </td>
             </tr>
 
@@ -60,13 +60,18 @@ $building_json = json_encode($building_array);
 
             <tr>
                 <td>
-                    <input type="hidden" name="graphId" id="graph_id" value="">
+                    <input type="hidden" name="graphId" id="graphId" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" name="id" id="b_id" value="">
                 </td>
             </tr>
 
         </table>
 
-        <input class="button" type="submit" name="add_building" value="Add Building">
+        <input id ="s_button" class="button" type="submit" name="add_building" value="Add Building">
         <input class="button" type="reset" name="reset" value="Reset">
 
     </form>
@@ -108,11 +113,12 @@ $building_json = json_encode($building_array);
         for(var a = 0; a < buildings.length; a++)
         {
             //console.log(buildings[a]);
-
+            var id = buildings[a]['id'];
             var lat = buildings[a]['latitudes'];
             var lng = buildings[a]['longitudes'];
             var name = buildings[a]['name'];
             var description = buildings[a]['description'];
+            var g_id = buildings[a]['graph_id'];
 
             var building_marker = new google.maps.Marker({
                 position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
@@ -139,11 +145,46 @@ $building_json = json_encode($building_array);
             building_marker.addListener('click', function() {
                 //infowindow.open(map, marker);
                 //window.location.href = "<?php //echo site_url('Manage_building/update_building');?>//?name="+name;
-                var new_name = name.replace(" ","_");
-                console.log(new_name);
-                window.location.href ="<?php echo site_url('Manage_building/update_building/');?>"+new_name;
+                // var new_name = name.replace(" ","_");
+                // console.log(id);
+                //window.location.href ="<?php //echo site_url('Manage_building/update_building/');?>//"+id;
+
+                document.getElementById("form").action = "<?php echo base_url() ?>index.php/manage_building/change_building";
+
+                document.getElementById("title_p").innerHTML = "Edit Building";
+                document.getElementById("b_id").value = id;
+                document.getElementById("b_name").value = name;
+                document.getElementById("b_desc").innerHTML = description;
+                document.getElementById("infoLat").value = lat;
+                document.getElementById("infoLng").value = lng;
+                document.getElementById("graphId").value = g_id;
+
+                document.getElementById("s_button").value = "Edit Building";
+
+                //console.log(document.getElementById("b_id").value);
+
+
+
+
+                // google.maps.event.addListener(building_marker, 'drag', function () {
+                //     // updateMarkerStatus('Dragging...');
+                //     updateMarkerPosition(building_marker.getPosition());
+                // });
+                // google.maps.event.addListener(building_marker, 'dragend', function () {
+                //     // updateMarkerStatus('Position Found!');
+                //     geocodePosition(building_marker.getPosition());
+                // });
+
+
+
+
+
+
+
+
             });
         }
+
 
         map.addListener('dblclick', sendData);
         // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';

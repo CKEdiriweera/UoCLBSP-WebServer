@@ -55,8 +55,8 @@ class Manage_building extends CI_Controller
     public function update_building()
     {
         $this->load->helper('url_helper');
-        $name = $this->uri->segment(3);
-        $name2 = str_replace("_"," ",$name);
+        $id = $this->uri->segment(3);
+//        $name2 = str_replace("_"," ",$name);
 
 
         $this->load->model('manage_building_model');
@@ -66,7 +66,7 @@ class Manage_building extends CI_Controller
 //        );
 //        var_dump($datasearch2);
 //        $this->load->view('buildings/edit', $datasearch2);
-        $data2 = $this->manage_building_model->edit($name2);
+        $data2 = $this->manage_building_model->edit($id);
         $this->load->view('buildings/edit_building', $data2);
     }
     public function change_building()
@@ -83,6 +83,10 @@ class Manage_building extends CI_Controller
 //        var_dump($datasearch3);
         $this->manage_building_model->change($datasearch3);
 //        $this->load->view('buildings/edit');
+        //$this->load->library(base_url("controllers/Admin_home"));
+        //$this->Admin_home->index();
+
+        redirect('Admin_home');
     }
     public function delete_building()
     {

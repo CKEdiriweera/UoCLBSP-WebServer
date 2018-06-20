@@ -42,11 +42,13 @@
                     }
                     else{
                         console.log(obj.admin);
+                        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home/user";
                     }
                     document.getElementById('signinbutton').style.display = 'none';
                     //link.style.visibility = 'hidden';
                     document.getElementById("gimage").style.display = 'inline';
                     document.getElementById("signoutbutton").style.display = 'inline';
+
                     //location.reload(false);
 
 
@@ -72,7 +74,7 @@
                 var s = <?php echo json_encode($_SESSION); ?>;
                 console.log(s);
 
-                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost/UoCLBSP-WebServer/";
+                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home";
 
             });
 
