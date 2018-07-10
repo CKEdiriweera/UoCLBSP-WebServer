@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf"/>
-    <title>MANAGING BUILDINGS AND PEOPLE</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="jquery.js"></script>
@@ -50,6 +51,17 @@
 
 <div style="width: 25%; float: left; background-color: black; height: 100%">
     <div>
+
+    </div>
+    <script>
+        $(document).ready(function(){
+            $( "#name" ).autocomplete({
+                source: "<?php echo site_url('Nearby_search/get_autocomplete/?');?>"
+            });
+        });
+    </script>
+
+    <div>
         <form method="post" action="<?php echo base_url() ?>index.php/Manage_building/change_building">
 
             <table>
@@ -58,7 +70,8 @@
                         Name :
                     </td>
                     <td>
-                        <input type="text" name="name" id="name" value="<?php echo $name ?>">
+                        <input type="text" name="name" id="name" class="form-control" value="<?php echo $name ?>" style="width:200px;">
+<!--                        <input type="text"  value="--><?php //echo $name ?><!--">-->
                     </td>
                 </tr>
 
@@ -89,23 +102,23 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <input type="hidden" name="graphId" id="graph_id" value="<?php echo $graph_id ?>">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <input type="hidden" name="id" id="building_id" value="<?php echo $id ?>">
-                    </td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="text" name="id" id="id" value="--><?php //echo $id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!---->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="hidden" name="graphId" id="graph_id" value="--><?php //echo $graph_id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!---->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="hidden" name="id" id="building_id" value="--><?php //echo $id ?><!--">-->
+<!--                    </td>-->
+<!--                </tr>-->
 
                 <tr>
                     <td>

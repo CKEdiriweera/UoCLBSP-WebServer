@@ -16,6 +16,7 @@
             var jsonObj = {};
             var polyArray = [];
             var outArray = [];
+            var verArray = [];
 
 
             function initMap() {
@@ -38,10 +39,10 @@
 
                     maparray = JSON.parse(data);
 
-                    alert(data);
+                    // alert(data);
                     polyArray = maparray.polygons;
                     graphArray = maparray.graphs;
-                    loadmap();
+                    // loadmap();
                     line = [];
                     temp = [];
                     flag = 0;
@@ -67,8 +68,8 @@
                         });
                         polydraw.setMap(map);
                         // polydraw.addListener('click', pointtwo);
-                        outJSON[polyArray[i].id] = [];
-                        polyindex.push(polyArray[i].id);
+                        // outJSON[polyArray[i].id] = [];
+                        // polyindex.push(polyArray[i].id);
                         // newpoint.addListener('click', pointone);
                     }
                     //                    alert(data);
@@ -95,7 +96,7 @@
                     jsonObject = {};
                     jsonObject['latitudes'] = event.latLng.lat();
                     jsonObject['longitudes'] = event.latLng.lng();
-                    polyArray.push(jsonObject);
+                    verArray.push(jsonObject);
                     vertexPoints.push({'lat': event.latLng.lat(), 'lng': event.latLng.lng()});
 
                     if (mIsSet == 0) {
@@ -117,7 +118,7 @@
             
             function drawPloygon(event) {
                 if (state == 0) {
-                    jsonObj['polygon'] = polyArray;
+                    jsonObj['polygon'] = verArray;
                     polygon = new google.maps.Polygon({
                         paths: vertexPoints,
                         strokeColor: '#aeb20c',
@@ -131,8 +132,6 @@
                     polygon.addListener('click', pickExits);
                     state = 1;
                 }
-
-
             }
 
             function pickExits(event) {
@@ -152,6 +151,7 @@
             function sendData(event) {
                 if (state == 2) {
                     jsonObj['outvertexes'] = outArray;
+                    jsonObj['type'] = "geofence";
                     alert(JSON.stringify(jsonObj));
 
                     var urlPoly = "<?=$this->config->item('server_url');?>";
@@ -170,7 +170,6 @@
                     }
                     requestMap.open(method, urlPoly, shouldBeAsync);
                     requestMap.send(mapData);
-
                 }
             }
 

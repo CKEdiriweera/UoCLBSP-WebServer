@@ -23,7 +23,7 @@
         <form method="post" action="<?php echo base_url()?>index.php/Manage_building/delete_building">
             <input type="submit" name="delete" value="Delete">
             <input type="text" name="name" value="<?php echo $name ?>">
-            <input type="hidden" name="id" value="<?php echo $id ?>">
+<!--            <input type="hidden" name="id" value="--><?php //echo $id ?><!--">-->
         </form>
     </div>
 </body>
