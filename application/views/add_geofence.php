@@ -152,7 +152,7 @@
                 if (state == 2) {
                     jsonObj['outvertexes'] = outArray;
                     jsonObj['type'] = "geofence";
-                    alert(JSON.stringify(jsonObj));
+                    // alert(JSON.stringify(jsonObj));
 
                     var urlPoly = "<?=$this->config->item('server_url');?>";
                     var method = "POST";

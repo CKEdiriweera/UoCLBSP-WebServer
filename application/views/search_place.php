@@ -16,11 +16,16 @@
     <style>
         input[type=text], select {
             font-family: "roboto";
+            border-radius: 0px;
             padding: 12px 12px;
             margin: 18px 0px 12px 10px;
             display: inline-block;
             border: 1px solid #ccc;
             box-sizing: border-box;
+        }
+        #search-button{
+            margin: 18px 0px 12px 10px;
+            border-radius: 0px;
         }
     </style>
 </head>
@@ -30,7 +35,7 @@
 <input type="text" list="places"  id="origin-input" class="form-control" placeholder="Search here" style="width:200px;"/>
 <datalist id="places"></datalist>
 
-<button type="button" onclick="getLocation()" id="search-button" class="btn btn-default" style="margin: 18px 0px 12px 10px;">Search</button>
+<button type="button" onclick="getLocation()" id="search-button" class="btn btn-default">Search</button>
 
 <script src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>" type="text/javascript"></script>
 <script src="<?php echo base_url().'assets/js/bootstrap.js'?>" type="text/javascript"></script>

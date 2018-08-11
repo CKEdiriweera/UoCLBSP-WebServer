@@ -14,7 +14,7 @@
         function onSignIn(googleUser) {
 
             const url = "<?php echo site_url("Login/login/") ?>";
-            let profile = googleUser.getBasicProfile();
+            var profile = googleUser.getBasicProfile();
             var id_token = googleUser.getAuthResponse().id_token;
 
 
@@ -72,7 +72,7 @@
                 var s = <?php echo json_encode($_SESSION); ?>;
                 console.log(s);
 
-                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost/UoCLBSP-WebServer/";
+                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost/UoCLBSP-WebServer/User_home";
 
             });
 

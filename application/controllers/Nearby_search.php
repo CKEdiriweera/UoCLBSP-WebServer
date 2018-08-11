@@ -18,6 +18,7 @@ class Nearby_search extends CI_Controller
     }
 
     function get_autocomplete(){
+//        $this->load->model('nearby_search_model');
         if (isset($_GET['term'])) {
             $result = $this->nearby_search_model->search_room_type($_GET['term']);
             if (count($result) > 0) {

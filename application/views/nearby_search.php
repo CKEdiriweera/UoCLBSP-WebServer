@@ -73,7 +73,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var originInput = document.getElementById('origin-input');
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(location_type);
-        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchType);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(search_button);
 
         // map.addListener('dblclick', sendData);
@@ -225,7 +224,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     room_type: room_type,
                 },
                 function(data, status){
-                    // alert("Data: " + data + "\nStatus: " + status);
+                    alert("Data: " + data + "\nStatus: " + status);
                     $("#main").html(data);
                 }
             );

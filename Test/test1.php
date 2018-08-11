@@ -1,382 +1,268 @@
-<!DOCTYPE html>
 <html>
 <head>
-
-    <style>
-        div.container {
-            width: 100%;
-            /*border: 1px solid gray;*/
-        }
-
-        /*header, footer {*/
-            /*padding: 1em;*/
-            /*color: white;*/
-            /*background-color: #343434;*/
-            /*clear: left;*/
-            /*text-align: center;*/
-        /*}*/
-
-        cont {
-            /*margin-left: 170px;*/
-            /*border-left: 1px solid gray;*/
-            width: 100%;
-            padding: 1em;
-            overflow: hidden;
-        }
-
-        header {
-            position: fixed;
-            /*float: top;*/
-            height: 7%;
-            left: 0;
-            top: 0;
-            width: 100%;
-            background-color: dimgrey;
-            color: black;
-            text-align: center;
-            padding: 30px 0;
-        }
-        footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: dimgrey;
-            color: white;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
 </head>
+
 <body>
-
-<div class="container">
-
-    <header>
-        <p>This is the header</p>
-    </header>
-
-    <cont style="position: absolute">
-            <style>
-                html,
-                body {
-                    font-family: 'Droid Serif';
-                    color: #343434;
-                    font-size: 1.1em;
-                    line-height: 1.6;
-                    overflow-x: hidden;
-                }
-
-                /*header {*/
-                    /*!*border-bottom: 1px solid #cdcdcd;*!*/
-                    /*!*padding: 40px 0;*!*/
-                /*}*/
-
-                .container {
-                    max-width: 750px;
-                    margin: 0 auto;
-                    padding: 0 20px;
-                }
-
-                h1 {
-                    font-size: 1em;
-                    text-align: center;
-                    margin: 0;
-                    line-height: 0;
-                }
-
-                @media screen and (min-width: 900px) {
-                    h1 {
-                        font-size: 1.4em;
-                        text-align: left;
-                    }
-                }
-
-                h1 span {
-                    display: none;
-                }
-
-                @media screen and (min-width: 900px) {
-                    h1 span {
-                        display: inline;
-                        font-size: .6em;
-                        color: #898989;
-                    }
-                }
-
-                map {
-                    max-width: 750px;
-                    /*margin: 0 auto;*/
-                    padding: 0 20px;
-                }
-
-                h2 {
-                    font-size: 1.5em;
-                    margin: 1em 0 0;
-                }
-
-                dt {
-                    font-weight: bold;
-                }
-
-                time {
-                    font-size: .9em;
-                    color: #898989;
-                    display: block;
-                }
-
-                /* Nav icon positioning */
-
-                .position {
-                    position: absolute;
-                    top: 15px;
-                    left: 15px;
-                    transition: all .3s ease;
-                    z-index: 2;
-                }
-
-                @media screen and (min-width: 900px) {
-                    .position {
-                        position: fixed;
-                    }
-                }
-
-                /* Elijah Manor Nav button */
-
-                #nav-toggle {
-                    cursor: pointer;
-                    padding: 10px 35px 16px 0px;
-                }
-
-                #nav-toggle span,
-                #nav-toggle span:before,
-                #nav-toggle span:after {
-                    cursor: pointer;
-                    border-radius: 1px;
-                    height: 5px;
-                    width: 35px;
-                    background: #343434;
-                    position: absolute;
-                    display: block;
-                    content: '';
-                }
-
-                #nav-toggle span:before {
-                    top: -10px;
-                }
-
-                #nav-toggle span:after {
-                    bottom: -10px;
-                }
-
-                #nav-toggle span,
-                #nav-toggle span:before,
-                #nav-toggle span:after {
-                    transition: all 200ms ease-in-out;
-                }
-
-                #nav-toggle.active span {
-                    background-color: transparent;
-                }
-
-                #nav-toggle.active span:before,
-                #nav-toggle.active span:after {
-                    top: 0;
-                }
-
-                #nav-toggle.active span:before {
-                    transform: rotate(45deg);
-                }
-
-                #nav-toggle.active span:after {
-                    transform: rotate(-45deg);
-                }
-
-                /* Off Canvas Navigation */
-
-                main {
-                    /*width: %;*/
-                    /*position: absolute;*/
-                    left: 0;
-                    top: 0;
-                    transition: .3s ease all;
-                }
-
-                aside {
-                    width: 250px;
-                    height: 100%;
-                    position: fixed;
-                    top: 5%;
-                    left: -250px;
-                    background: #343434;
-                    font-size: .8em;
-                    font-family: sans-serif;
-                    font-weight: 300;
-                    transition: all .3s ease;
-                }
-
-                aside p {
-                    color: #cdcdcd;
-                    padding: 10px;
-                }
-
-                aside nav ul {
-                    /*top: 7%;*/
-                    margin: 0;
-                    padding: 0;
-                }
-
-                aside nav ul li:first-of-type {
-                    border-top: 1px solid #565656;
-                }
-
-                aside nav ul li {
-                    border-bottom: 1px solid #565656;
-                }
-
-                aside nav ul li a {
-                    padding: 10px 20px;
-                    display: block;
-                    color: #fff;
-                    text-decoration: none;
-                }
-
-                aside nav ul li a:hover {
-                    background: #454545;
-                }
-
-                /* JavaScript toggle */
-
-                .show-nav aside,
-                .show-nav .position,
-                .show-nav main {
-                    transform: translateX(250px);
-                }
-
-                .show-nav .position {
-                    position: fixed;
-                }
-
-                .show-nav map {
-                    padding: 0 80px;
-                }
-
-                a {
-                    text-decoration: none;
-                    color: #6699cc;
-                }
-
-                a:hover {
-                    text-decoration: underline;
-                }
-
-
-            </style>
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-            <script type="text/javascript">
-                (function ($) {
-                    $(function () { // DOM Ready
-
-                        // Toggle navigation
-                        $('#nav-toggle').click(function () {
-                            this.classList.toggle("active");
-                            // If sidebar is visible:
-                            if ($('body').hasClass('show-nav')) {
-                                // Hide sidebar
-                                $('body').removeClass('show-nav');
-                            } else { // If sidebar is hidden:
-                                $('body').addClass('show-nav');
-                                // Display sidebar
-                            }
-                        });
-                    });
-                })(jQuery);
-            </script>
-
-        <aside>
-
-            <nav>
-                <div class="nav-side-menu">
-
-                    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
-                    <div class="menu-list">
-
-                        <ul id="menu-content" class="menu-content collapse out">
-                            <p>Manage Map</p>
-
-                            <ul class="sub-menu collapse" id="products">
-
-                                <li><a href="#">Buildings</a></li>
-                                <li><a href="#">People</a></li>
-                                <li><a href="#">Geofencing</a></li>
-                                <li><a href="#">Paths</a></li>
-
-                            </ul>
-
-                            <p>Manage Roles</p>
-                            <ul class="sub-menu collapse" id="pro">
-
-                                <li><a href="#">Admin</a></li>
-                                <li><a href="#">Users</a></li>
-
-                            </ul>
-
-                        </ul>
-                        <div>
-
-                        </div>
-
-                    </div>
-            </nav>
-
-        </aside>
-        <a id="nav-toggle" href="#!" class="position"><span></span></a>
-        <main>
-
-        <map>
-            <h2>map Title</h2>
-            <time>November 1st, 2015</time>
-            <p><a href="http://www.taniarascia.com/off-canvas-navigation" target="_blank">Click here to view the
-                    tutorial</a>.</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
-                tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas
-                semper. Aenean ultricies mi vitae est.
-                Mauris placerat eleifend leo.</p>
-            <h3>Lorem Ipsum</h3>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-            <ul>
-                <li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in,
-                    diam. Sed arcu. Cras consequat.
-                </li>
-                <li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-                    Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.
-                </li>
-                <li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-                    cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.
-                </li>
-                <li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate,
-                    nunc.
-                </li>
-            </ul>
-            <dl>
-                <dt>Definition list</dt>
-                <dd>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </dd>
-                <dt>Lorem ipsum dolor sit amet</dt>
-                <dd>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </dd>
-            </dl>
-        </map>
-        </main>
-
-
-    </cont>
-
-    <footer><p>Copyrights @University of Colombo 2017</p></footer>
-
+<?php
+ini_set('display_errors', 1);
+
+//convert the stdClass Object into a php array
+foreach($result as $key => $data){
+    $building_array[$key] = (array)$data;
+}
+$building_json = json_encode($building_array);
+//        var_dump($building_json);
+?>
+
+<div id="form-div">
+    <div id="title-div">
+        <p>Add Building</p></div>
+    </br>
+    <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
+
+        <table>
+            <tr>
+                <td>
+                    Name :
+                </td>
+                <td>
+                    <input type="text" name="name">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Description :
+                </td>
+                <td>
+                    <textarea rows="1.5" cols="30" name="description"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Latitudes :
+                </td>
+                <td>
+                    <input type="text" name="latitudes" id="infoLat" value="" readonly="true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Longitudes :
+                </td>
+                <td>
+                    <input type="text" name="longitudes" id="infoLng" value="" readonly="true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="hidden" name="graphId" id="graph_id" value="">
+                </td>
+            </tr>
+
+        </table>
+
+        <input class="button" type="submit" name="add_building" value="Add Building">
+        <input class="button" type="reset" name="reset" value="Reset">
+
+    </form>
 </div>
+
+<div id="map"></div>
+<script>
+    var flag = 0;
+    var line;
+    var source;
+    var map;
+    var mapdata;
+    var maparray;
+    var polyArray;
+    var graphArray;
+    var path, graph, point, newpoint;
+    var temp;
+    var flag;
+    var destination;
+    var polygons = {};
+    var polyid = 0;
+    var startingPoint;
+    var outJSON = {};
+    var polyindex = [];
+    var buildingLat;
+    var buildingLng;
+    var graph_id;
+    var building;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 6.901120, lng: 79.860532},
+            gestureHandling: 'greedy',
+            zoom: 16
+        });
+
+        var buildings = <?php echo $building_json; ?>;
+        buildings = JSON.parse(JSON.stringify(buildings));
+        // alert(buildings);
+        for(var a = 0; a < buildings.length; a++)
+        {
+            //console.log(buildings[a]);
+
+            var lat = buildings[a]['latitudes'];
+            var lng = buildings[a]['longitudes'];
+            var name = buildings[a]['name'];
+            var description = buildings[a]['description'];
+
+            var building_marker = new google.maps.Marker({
+                position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
+                map: map
+            });
+
+            var content = '<b>' + name + '</b>' + '</br>' + description;
+
+            var info_window = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(building_marker, 'mouseover', (function (building_marker, content, info_window) {
+                return function () {
+                    info_window.setContent(content);
+                    info_window.open(map, building_marker);
+                };
+            })(building_marker, content, info_window));
+
+            google.maps.event.addListener(building_marker, 'mouseout', (function (building_marker, info_window) {
+                return function () {
+                    info_window.close();
+                };
+            })(building_marker, info_window));
+
+            building_marker.addListener('click', function() {
+                //infowindow.open(map, marker);
+                //window.location.href = "<?php //echo site_url('Manage_building/update_building');?>//?name="+name;
+                var new_name = name.replace(" ","_");
+                console.log(new_name);
+                window.location.href ="<?php echo site_url('Manage_building/update_building/');?>"+new_name;
+            });
+        }
+
+        map.addListener('dblclick', sendData);
+        // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
+        var urlPoly = "<?=$this->config->item('server_url');?>";
+        var method = "POST";
+        var mapData = JSON.stringify({"type": "mapRequest"});
+        var shouldBeAsync = true;
+        var requestMap = new XMLHttpRequest();
+        requestMap.onload = function () {
+            var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+            var data = requestMap.response;
+            // alert(data);
+            maparray = JSON.parse(data);
+            // //alert(dataPoly);
+            polyArray = maparray.polygons;
+            graphArray = maparray.graphs;
+            loadmap();
+            line = [];
+            temp = [];
+            flag = 0;
+            source = [];
+            // cestination = [];
+            // var verticelatlng = [];
+            // var verticepos = [];
+            for (var i = 0; i < polyArray.length; i++) {
+                path = [];
+                // graph = [];
+                var polyObject = polyArray[i].vertexes;
+                // alert(JSON.stringify(polyObject));
+                var polydraw = new google.maps.Polygon({
+                    paths: polyObject,
+                    strokeColor: '#aeb20c',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#eaf01b',
+                    fillOpacity: 0.35,
+                    id: polyArray[i].id
+                });
+                polydraw.setMap(map);
+                polydraw.addListener('click', setAsBuilding);
+                outJSON[polyArray[i].id] = [];
+                polyindex.push(polyArray[i].id);
+                // newpoint.addListener('click', pointone);
+            }
+//                    alert(data);
+        }
+        requestMap.open(method, urlPoly, shouldBeAsync);
+        requestMap.send(mapData);
+    }
+    function loadmap() {
+        flag = 1;
+        for (var z = 0; z < graphArray.length; z++) {
+            var sourcelat, sourcelng, destlat, destlng, sourId;
+            var graphVertexes = {};
+            for (var verti = 0; verti < graphArray[z].vertexes.length; verti++) {
+                sourcelat = graphArray[z].vertexes[verti]["lat"];
+                sourcelng = graphArray[z].vertexes[verti]["lng"];
+                sourId = graphArray[z].vertexes[verti]["id"];
+                var sourcepoint = {'lat': sourcelat, 'lng': sourcelng};
+                graphVertexes[sourId] = sourcepoint;
+            }
+            for (var k = 0; k < graphArray[z].edges.length; k++) {
+                var sourceid = graphArray[z].edges[k]["source"];
+                var destid = graphArray[z].edges[k]["destination"];
+                var graphline = new google.maps.Polyline({
+                    path: [graphVertexes[sourceid], graphVertexes[destid]],
+                    strokeColor: '#E2E054',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 5
+                });
+                graphline.setMap(map);
+                graphline = [];
+            }//
+        }
+    }
+    function setAsBuilding(eve) {
+        if(building!=null){
+            building.setMap(null);
+        }
+        building = new google.maps.Marker({
+            position: eve.latLng,
+            map: map,
+        });
+        document.getElementById('infoLat').setAttribute('value', JSON.stringify(eve.latLng.lat()));
+        document.getElementById('infoLng').setAttribute('value', JSON.stringify(eve.latLng.lng()));
+        document.getElementById('graph_id').setAttribute('value', this.id);
+        // alert(graph_id);
+    }
+    function sendData(ev) {
+        var resultJson = [];
+        for (var i = 0; i < polyindex.length; i++) {
+            if (outJSON[polyindex[i]].length > 0) {
+                var getElement = {};
+                getElement['id'] = polyindex[i];
+                getElement['paths'] = outJSON[polyindex[i]];
+                resultJson.push(getElement);
+            }
+        }
+        var finalJson = {};
+        finalJson['type'] = "addPaths";
+        finalJson['Changes'] = resultJson;
+        // alert(JSON.stringify(finalJson));
+        var urlPoly = "<?=$this->config->item('server_url');?>";
+        var method = "POST";
+        var mapData = JSON.stringify(finalJson);
+        var shouldBeAsync = true;
+        var requestMap = new XMLHttpRequest();
+        var data;
+        requestMap.onload = function () {
+            var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+            var data = requestMap.response;
+            // alert(data);
+        }
+        requestMap.open(method, urlPoly, shouldBeAsync);
+        requestMap.send(mapData);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"
+        async defer></script>
 
 </body>
 </html>

@@ -1,80 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="jquery.js"></script>
-    <script src="css/boostrap.js"></script>
-    <link herf="css/boostrap.css" rel="stylesheet"/>
-    <style>
-        html,
-        body {
-            font-family: 'Droid Serif';
-            color: #343434;
-            font-size: 1.1em;
-            line-height: 1.6;
-            /*overflow-x: hidden;*/
-            margin: 0;
-            height: 100%;
-        }
-
-        textarea,
-        input[type=text], select {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type=submit],
-        input[type=reset] {
-            width: 45%;
-            background-color: #898989;
-            color: #cdcdcd;
-            padding: 14px 10px;
-            margin: 8px 6px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
+<?php
+ini_set('display_errors', 1);
 
+//convert the stdClass Object into a php array
+foreach($result as $key => $data){
+    $building_array[$key] = (array)$data;
+}
 
-<div style="width: 25%; float: left; background-color: black; height: 100%">
-    <div>
-
+$building_json = json_encode($building_array);
+//var_dump($building_json);
+?>
+<div id="form-div">
+    <div id="title-div">
+        <p>Edit Building</p>
     </div>
-    <script>
-        $(document).ready(function(){
-            $( "#name" ).autocomplete({
-                source: "<?php echo site_url('Nearby_search/get_autocomplete/?');?>"
-            });
-        });
+    </br>
+    <script type="text/javascript">
+        function submitForm(action) {
+            var form = document.getElementById('form');
+            form.action = action;
+            form.submit();
+        }
     </script>
-
-    <div>
-        <form method="post" action="<?php echo base_url() ?>index.php/Manage_building/change_building">
-
+        <form method="post" id="form">
             <table>
                 <tr>
                     <td>
                         Name :
                     </td>
                     <td>
-                        <input type="text" name="name" id="name" class="form-control" value="<?php echo $name ?>" style="width:200px;">
-<!--                        <input type="text"  value="--><?php //echo $name ?><!--">-->
+                        <input type="text" name="name" id="name" value="<?php echo $name ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Description :
@@ -83,7 +46,6 @@
                         <input type="text" name="description" id="name" value="<?php echo $description ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Latitude :
@@ -92,7 +54,6 @@
                         <input type="text" name="latitudes" id="infoLat" value="<?php echo $latitudes ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Longitude :
@@ -101,122 +62,210 @@
                         <input type="text" name="longitudes" id="infoLng" value="<?php echo $longitudes ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
-                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
-                        <input type="hidden" name="graphId" id="graph_id" value="<?php echo $graph_id ?>">
+                        <input type="hidden" name="graphId" id="graphId" value="<?php echo $graph_id ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
-                        <input type="hidden" name="id" id="building_id" value="<?php echo $id ?>">
+                        <input type="submit" onclick="submitForm('<?php echo base_url()?>manage_building/change_building')" name="update" value="Update building">
                     </td>
-                </tr>
-
-                <tr>
                     <td>
-                        <input type="submit" name="update" value="Update">
+                        <input type="submit" onclick="submitForm('<?php echo base_url()?>manage_building/delete_building')" name="delete" value="Delete building">
                     </td>
                 </tr>
-
             </table>
-
         </form>
-
-    </div>
-
-    <!--        </div>-->
-
-    <!--    </div>-->
 </div>
-<div style="width: 75%; height:100%; float:right">
-<!--    <div>-->
-        <html>
-        <head>
-            <!--                        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />-->
-            <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-            <script type="text/javascript">
-                var geocoder = new google.maps.Geocoder();
+        <div id="map"></div>
+        <script type="text/javascript">
+            var line;
+            var source;
+            var map;
+            var maparray;
+            var polyArray;
+            var graphArray;
+            var path;
+            var temp;
+            var flag;
+            var outJSON = {};
+            var polyindex = [];
+            var graph_id;
+            var building;
 
-                function geocodePosition(pos) {
-                    geocoder.geocode({
-                        latLng: pos
-                    });
-                }
+            var geocoder = new google.maps.Geocoder();
 
-                // function updateMarkerStatus(str) {
-                //     document.getElementById('markerStatus').innerHTML = str;
-                // }
-
-                function updateMarkerPosition(latLng) {
-                    document.getElementById('infoLat').setAttribute('value', latLng.lat());
-                    document.getElementById('infoLng').setAttribute('value', latLng.lng());
-                }
-
-                function initialize() {
-                    var latLng = new google.maps.LatLng(<?php echo $latitudes ?>, <?php echo $longitudes ?>);
-                    var map = new google.maps.Map(document.getElementById('mapCanvas'), {
-                        zoom: 16,
-                        center: latLng,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    });
-
-                    //var buildingPos = {'lat': '<?php //echo $latitudes ?>//', 'lng': '<?php //echo $longitudes ?>//'};
-                    var marker = new google.maps.Marker({
-                        position: latLng,
-                        map: map,
-                        draggable: true
-                    });
-                    // Update current position info.
-                    updateMarkerPosition(latLng);
-                    geocodePosition(latLng);
-                    google.maps.event.addListener(marker, 'drag', function () {
-                        // updateMarkerStatus('Dragging...');
-                        updateMarkerPosition(marker.getPosition());
-                    });
-                    google.maps.event.addListener(marker, 'dragend', function () {
-                        // updateMarkerStatus('Position Found!');
-                        geocodePosition(marker.getPosition());
-                    });
-                }
-
-                // Onload handler to fire off the app.
-                google.maps.event.addDomListener(window, 'load', initialize);
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=places&callback=initMap"
-                    async defer></script>
-
-        </head>
-        <body>
-        <style>
-            #mapCanvas {
-                width: 100%;
-                height: 100%;
-                float: left;
-                z-index: 1;
+            function geocodePosition(pos) {
+                geocoder.geocode({
+                    latLng: pos
+                });
             }
-        </style>
 
-        <div id="mapCanvas"></div>
+            function updateMarkerPosition(latLng) {
+                document.getElementById('infoLat').setAttribute('value', parseFloat(latLng.lat()));
+                document.getElementById('infoLng').setAttribute('value', parseFloat(latLng.lng()));
+                document.getElementById('graphId').setAttribute('value', this.id.value);
+            }
 
-        </body>
-        </html>
+            function initialize() {
+                var latLng = new google.maps.LatLng(<?php echo $latitudes ?>, <?php echo $longitudes ?>);
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: latLng,
+                    // mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
 
-<!--    </div>-->
-</div>
+                var buildings = <?php echo $building_json; ?>;
+                buildings = JSON.parse(JSON.stringify(buildings));
+                // alert(buildings);
+                for(var a = 0; a < buildings.length; a++)
+                {
+                    //console.log(buildings[a]);
+                    var id = buildings[a]['id'];
+                    var lat = buildings[a]['latitudes'];
+                    var lng = buildings[a]['longitudes'];
+                    var name = buildings[a]['name'];
+                    var description = buildings[a]['description'];
+                    var g_id = buildings[a]['graph_id'];
 
+                    var building_marker = new google.maps.Marker({
+                        position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
+                        map: map
+                    });
 
+                    var content = '<b>' + name + '</b>' + '</br>' + description;
+
+                    var info_window = new google.maps.InfoWindow();
+
+                    google.maps.event.addListener(building_marker, 'mouseover', (function (building_marker, content, info_window) {
+                        return function () {
+                            info_window.setContent(content);
+                            info_window.open(map, building_marker);
+                        };
+                    })(building_marker, content, info_window));
+
+                    google.maps.event.addListener(building_marker, 'mouseout', (function (building_marker, info_window) {
+                        return function () {
+                            info_window.close();
+                        };
+                    })(building_marker, info_window));
+                }
+
+                map.addListener('dblclick', sendData);
+                // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
+                var urlPoly = "<?=$this->config->item('server_url');?>";
+                var method = "POST";
+                var mapData = JSON.stringify({"type": "mapRequest"});
+                var shouldBeAsync = true;
+                var requestMap = new XMLHttpRequest();
+                requestMap.onload = function () {
+                    var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+                    var data = requestMap.response;
+                    // alert(data);
+                    maparray = JSON.parse(data);
+                    // //alert(dataPoly);
+                    polyArray = maparray.polygons;
+                    graphArray = maparray.graphs;
+                    loadmap();
+                    line = [];
+                    temp = [];
+                    flag = 0;
+                    source = [];
+                    // cestination = [];
+                    // var verticelatlng = [];
+                    // var verticepos = [];
+                    for (var i = 0; i < polyArray.length; i++) {
+                        path = [];
+                        // graph = [];
+                        var polyObject = polyArray[i].vertexes;
+                        // alert(JSON.stringify(polyObject));
+                        var polydraw = new google.maps.Polygon({
+                            paths: polyObject,
+                            strokeColor: '#aeb20c',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 3,
+                            fillColor: '#eaf01b',
+                            fillOpacity: 0.35,
+                            id: polyArray[i].id
+                        });
+                        polydraw.setMap(map);
+                        outJSON[polyArray[i].id] = [];
+                        polyindex.push(polyArray[i].id);
+                        // newpoint.addListener('click', pointone);
+                    }
+//                    alert(data);
+                }
+                requestMap.open(method, urlPoly, shouldBeAsync);
+                requestMap.send(mapData);
+
+                var icon = {
+                    url: '<?php echo base_url(); ?>/assets/drawable/marker_blue.png';
+                    scaledSize: new google.maps.Size(25, 40), // scaled size
+                    // origin: new google.maps.Point(0,0), // origin
+                    // anchor: new google.maps.Point(0, 0) // anchor
+                };
+
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    icon: icon,
+                    draggable: true
+                });
+                // Update current position info.
+                updateMarkerPosition(latLng);
+                geocodePosition(latLng);
+                google.maps.event.addListener(marker, 'drag', function () {
+                    // updateMarkerStatus('Dragging...');
+                    updateMarkerPosition(marker.getPosition());
+                });
+                google.maps.event.addListener(marker, 'dragend', function () {
+                    // updateMarkerStatus('Position Found!');
+                    geocodePosition(marker.getPosition());
+                });
+            }
+
+            function loadmap() {
+                flag = 1;
+                for (var z = 0; z < graphArray.length; z++) {
+                    var sourcelat, sourcelng, destlat, destlng, sourId;
+                    var graphVertexes = {};
+                    for (var verti = 0; verti < graphArray[z].vertexes.length; verti++) {
+                        sourcelat = graphArray[z].vertexes[verti]["lat"];
+                        sourcelng = graphArray[z].vertexes[verti]["lng"];
+                        sourId = graphArray[z].vertexes[verti]["id"];
+                        var sourcepoint = {'lat': sourcelat, 'lng': sourcelng};
+                        graphVertexes[sourId] = sourcepoint;
+                    }
+                    for (var k = 0; k < graphArray[z].edges.length; k++) {
+                        var sourceid = graphArray[z].edges[k]["source"];
+                        var destid = graphArray[z].edges[k]["destination"];
+                        var graphline = new google.maps.Polyline({
+                            path: [graphVertexes[sourceid], graphVertexes[destid]],
+                            strokeColor: '#E2E054',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 5
+                        });
+                        graphline.setMap(map);
+                        graphline = [];
+                    }//
+                }
+            }
+
+            // Onload handler to fire off the app.
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=places&callback=initialize"
+                async defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </html>

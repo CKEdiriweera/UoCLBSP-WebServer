@@ -7,19 +7,20 @@
 <?php
 ini_set('display_errors', 1);
 
-//convert the stdClass Object into a php array
-foreach($result as $key => $data){
-    $building_array[$key] = (array)$data;
-}
-$building_json = json_encode($building_array);
-//        var_dump($building_json);
+    //convert the stdClass Object into a php array
+    foreach($result as $key => $data){
+        $building_array[$key] = (array)$data;
+    }
+
+    $building_json = json_encode($building_array);
+    //        var_dump($building_json);
 ?>
 
 <div id="form-div">
     <div id="title-div">
         <p>Add Building</p></div>
     </br>
-    <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
+    <form id="form" method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
 
         <table>
             <tr>
@@ -27,7 +28,7 @@ $building_json = json_encode($building_array);
                     Name :
                 </td>
                 <td>
-                    <input type="text" name="name">
+                    <input id="b_name" type="text" name="name">
                 </td>
             </tr>
 
@@ -36,7 +37,7 @@ $building_json = json_encode($building_array);
                     Description :
                 </td>
                 <td>
-                    <textarea rows="1.5" cols="30" name="description"></textarea>
+                    <textarea id="b_desc" rows="1.5" cols="30" name="description"></textarea>
                 </td>
             </tr>
 
@@ -60,13 +61,18 @@ $building_json = json_encode($building_array);
 
             <tr>
                 <td>
-                    <input type="hidden" name="graphId" id="graph_id" value="">
+                    <input type="hidden" name="graphId" id="graphId" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" name="id" id="b_id" value="">
                 </td>
             </tr>
 
         </table>
 
-        <input class="button" type="submit" name="add_building" value="Add Building">
+        <input id ="s_button" class="button" type="submit" name="add_building" value="Add Building">
         <input class="button" type="reset" name="reset" value="Reset">
 
     </form>
@@ -74,25 +80,17 @@ $building_json = json_encode($building_array);
 
 <div id="map"></div>
 <script>
-    var flag = 0;
     var line;
     var source;
     var map;
-    var mapdata;
     var maparray;
     var polyArray;
     var graphArray;
-    var path, graph, point, newpoint;
+    var path;
     var temp;
     var flag;
-    var destination;
-    var polygons = {};
-    var polyid = 0;
-    var startingPoint;
     var outJSON = {};
     var polyindex = [];
-    var buildingLat;
-    var buildingLng;
     var graph_id;
     var building;
     function initMap() {
@@ -108,11 +106,12 @@ $building_json = json_encode($building_array);
         for(var a = 0; a < buildings.length; a++)
         {
             //console.log(buildings[a]);
-
+            var id = buildings[a]['id'];
             var lat = buildings[a]['latitudes'];
             var lng = buildings[a]['longitudes'];
             var name = buildings[a]['name'];
             var description = buildings[a]['description'];
+            var g_id = buildings[a]['graph_id'];
 
             var building_marker = new google.maps.Marker({
                 position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
@@ -135,14 +134,6 @@ $building_json = json_encode($building_array);
                     info_window.close();
                 };
             })(building_marker, info_window));
-
-            building_marker.addListener('click', function() {
-                //infowindow.open(map, marker);
-                //window.location.href = "<?php //echo site_url('Manage_building/update_building');?>//?name="+name;
-                var new_name = name.replace(" ","_");
-                console.log(new_name);
-                window.location.href ="<?php echo site_url('Manage_building/update_building/');?>"+new_name;
-            });
         }
 
         map.addListener('dblclick', sendData);
@@ -229,37 +220,9 @@ $building_json = json_encode($building_array);
         });
         document.getElementById('infoLat').setAttribute('value', JSON.stringify(eve.latLng.lat()));
         document.getElementById('infoLng').setAttribute('value', JSON.stringify(eve.latLng.lng()));
-        document.getElementById('graph_id').setAttribute('value', this.id);
-        // alert(graph_id);
+        document.getElementById('graphId').setAttribute('value', this.id);
     }
-    function sendData(ev) {
-        var resultJson = [];
-        for (var i = 0; i < polyindex.length; i++) {
-            if (outJSON[polyindex[i]].length > 0) {
-                var getElement = {};
-                getElement['id'] = polyindex[i];
-                getElement['paths'] = outJSON[polyindex[i]];
-                resultJson.push(getElement);
-            }
-        }
-        var finalJson = {};
-        finalJson['type'] = "addPaths";
-        finalJson['Changes'] = resultJson;
-        // alert(JSON.stringify(finalJson));
-        var urlPoly = "<?=$this->config->item('server_url');?>";
-        var method = "POST";
-        var mapData = JSON.stringify(finalJson);
-        var shouldBeAsync = true;
-        var requestMap = new XMLHttpRequest();
-        var data;
-        requestMap.onload = function () {
-            var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
-            var data = requestMap.response;
-            // alert(data);
-        }
-        requestMap.open(method, urlPoly, shouldBeAsync);
-        requestMap.send(mapData);
-    }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"
         async defer></script>

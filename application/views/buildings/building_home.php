@@ -1,6 +1,32 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
+    <style>
+        input[type=text], select {
+            font-family: "roboto";
+            padding: 12px 12px;
+            margin: 18px 0px 12px 10px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button{
+            background-color: #AF7AC5;
+            color: #FFFFFF;
+            padding: 14px 10px;
+            /*margin-left: 5px;*/
+            /*float: right;*/
+            border: none;
+            cursor: pointer;
+        }
+        .ui-autocomplete{
+            background-color: white;
+            list-style-type: none;
+            padding-left: 10px;
+            width: 239px;
+            border: 0.1px solid gray;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,29 +40,46 @@ foreach($result as $key => $data){
 $building_json = json_encode($building_array);
 //        var_dump($building_json);
 ?>
+<script src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>" type="text/javascript"></script>
+<script src="<?php echo base_url().'assets/js/bootstrap.js'?>" type="text/javascript"></script>
+<script src="<?php echo base_url().'assets/js/jquery-ui.js'?>" type="text/javascript"></script>
 
+<script>
+    $(document).ready(function(){
+        $( "#name" ).autocomplete({
+            source: "<?php echo site_url('Manage_building/get_autocomplete/?');?>",
+        });
+    });
+</script>
+<div id="main">
 <div id="form-div">
     <div id="title-div">
-        <p>Add Building</p></div>
+        <p></p>
+    </div>
     </br>
     <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
-
-        <table>
-            <tr>
-                <td>
-                    <input type="text" class="form-control" id="location_type" placeholder="Place type.." style="width:200px;">
-                </td>
-            </tr>
-
-        </table>
-
-        <input class="button" type="submit" name="add_building" value="Add Building">
-        <input class="button" type="reset" name="reset" value="Reset">
-
+        <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search building" style="width:320px;">
+        <button type="button" onclick="search_building()" id="search_button" class="btn btn-default">Search</button>
     </form>
+    <button type="button" class="btn btn-default" id="add_button" style="position: absolute; bottom: 50px;">Add new building</button>
+    <script>
+        $("#add_button").click(function () {
+            //$("body").html("url: <?php //echo base_url()?>//index.php/manage_building/building");
+            $.ajax({
+                dataType:'text',
+                type: "POST",
+                url: "<?php echo base_url() ?>index.php/manage_building/building",
+                success: function (response){
+                    // $("#cont").html(' ');
+                    $("#cont").html(response);
+                    // location.replace(response);
+                }
+            });
+        });
+    </script>
 </div>
 
-<div id="map"></div>
+    <div id="map"></div></div>
 <script>
     var flag = 0;
     var line;
@@ -81,6 +124,8 @@ $building_json = json_encode($building_array);
                 map: map
             });
 
+            building_marker.addListener('dblclick', edit_building);
+
             var content = '<b>' + name + '</b>' + '</br>' + description;
 
             var info_window = new google.maps.InfoWindow();
@@ -119,9 +164,7 @@ $building_json = json_encode($building_array);
             temp = [];
             flag = 0;
             source = [];
-            // cestination = [];
-            // var verticelatlng = [];
-            // var verticepos = [];
+
             for (var i = 0; i < polyArray.length; i++) {
                 path = [];
                 // graph = [];
@@ -137,7 +180,7 @@ $building_json = json_encode($building_array);
                     id: polyArray[i].id
                 });
                 polydraw.setMap(map);
-                polydraw.addListener('click', setAsBuilding);
+                // polydraw.addListener('click', setAsBuilding);
                 outJSON[polyArray[i].id] = [];
                 polyindex.push(polyArray[i].id);
                 // newpoint.addListener('click', pointone);
@@ -170,22 +213,10 @@ $building_json = json_encode($building_array);
                 });
                 graphline.setMap(map);
                 graphline = [];
-            }//
+            }
         }
     }
-    function setAsBuilding(eve) {
-        if(building!=null){
-            building.setMap(null);
-        }
-        building = new google.maps.Marker({
-            position: eve.latLng,
-            map: map,
-        });
-        document.getElementById('infoLat').setAttribute('value', JSON.stringify(eve.latLng.lat()));
-        document.getElementById('infoLng').setAttribute('value', JSON.stringify(eve.latLng.lng()));
-        document.getElementById('graph_id').setAttribute('value', this.id);
-        // alert(graph_id);
-    }
+
     function sendData(ev) {
         var resultJson = [];
         for (var i = 0; i < polyindex.length; i++) {
@@ -213,6 +244,37 @@ $building_json = json_encode($building_array);
         }
         requestMap.open(method, urlPoly, shouldBeAsync);
         requestMap.send(mapData);
+    }
+    function search_building() {
+        var name = document.getElementById('name').value;
+        // alert(search_building);
+
+        $.post("<?php echo base_url(); ?>Manage_building/search_building",
+            {
+                name: name
+            },
+            function(data, status){
+                // alert("Data: " + data + "\nStatus: " + status);
+                $("#main").html(data);
+            }
+        );
+    }
+
+    function edit_building(event) {
+        var latitudes = event.latLng.lat();
+        var longitudes = event.latLng.lng();
+        // alert(latitudes);
+
+        $.post("<?php echo base_url(); ?>Manage_building/search_buildingby_latlng",
+            {
+                latitudes: latitudes,
+                longitudes: longitudes
+            },
+            function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+                // $("#main").html(data);
+            }
+        );
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"
