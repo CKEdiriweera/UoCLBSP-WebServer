@@ -257,6 +257,10 @@ $building_json = json_encode($building_array);
                 }
             }
 
+            $(input).onclick(function () {
+                    $("#main").load("Admin_home/buildings");
+            });
+
             // Onload handler to fire off the app.
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
