@@ -74,10 +74,10 @@ $building_json = json_encode($building_array);
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" onclick="submitForm('<?php echo base_url()?>manage_building/change_building')" name="update" value="Update building">
+                        <input type="submit" id="update" onclick="submitForm('<?php echo base_url()?>manage_building/change_building')" name="update" value="Update building">
                     </td>
                     <td>
-                        <input type="submit" onclick="submitForm('<?php echo base_url()?>manage_building/delete_building')" name="delete" value="Delete building">
+                        <input type="submit" id="delete" onclick="submitForm('<?php echo base_url()?>manage_building/delete_building')" name="delete" value="Delete building">
                     </td>
                 </tr>
             </table>
@@ -205,7 +205,7 @@ $building_json = json_encode($building_array);
                 requestMap.send(mapData);
 
                 var icon = {
-                    url: '<?php echo base_url(); ?>/assets/drawable/marker_blue.png';
+                    url: '<?php echo base_url(); ?>/assets/drawable/marker_blue.png',
                     scaledSize: new google.maps.Size(25, 40), // scaled size
                     // origin: new google.maps.Point(0,0), // origin
                     // anchor: new google.maps.Point(0, 0) // anchor

@@ -7,11 +7,12 @@ class Manage_building_model extends CI_Model
         return $query->result();
     }
 
-    public function get_name($data)
+    public function get_name($data0)
     {
-        $latitudes = $data['latitudes'];
-        $longitudes = $data['longitudes'];
-        $query = $this->db->select('name')->where("(latitudes = $latitudes AND longitudes = $longitudes)")->get();
+        $latitudes = $data0['latitudes'];
+        $longitudes = $data0['longitudes'];
+        $multiple_where = array('latitudes' => $latitudes, 'longitudes' => $longitudes);
+        $query = $this->db->select('name')->from('building')->where($multiple_where)->get();
         return $query->result();
     }
 
@@ -35,6 +36,7 @@ class Manage_building_model extends CI_Model
     public function selected($data)
     {
         $name = $data['name'];
+//        var_dump($name);
         $query = $this->db->select('*')->from('building')->where('name', $name)->get();
         $rows = $query->row_array();
 //        var_dump($rows);
@@ -48,27 +50,7 @@ class Manage_building_model extends CI_Model
             'graph_id' => $rows['graph_id']
         );
         return $data;
-//        var_dump($data2);
-    }
-
-    public function selectby_latlng($data)
-    {
-        $latitudes = $data['latitudes'];
-        $longitudes = $data['longitudes'];
-        $query = $this->db->select('*')->from('building')->where('latitudes', $latitudes AND 'longitudes', $longitudes)->get();
-        $rows = $query->row_array();
-//        var_dump($rows);
-//        $rows['name'];
-        $data = array(
-            'id' => $rows['id'],
-            'name' => $rows['name'],
-            'description' => $rows['description'],
-            'latitudes' => $rows['latitudes'],
-            'longitudes' => $rows['longitudes'],
-            'graph_id' => $rows['graph_id']
-        );
-        return $data;
-//        var_dump($data2);
+//        var_dump($data);
     }
 
     public function edit($id)
@@ -88,6 +70,7 @@ class Manage_building_model extends CI_Model
         return $data2;
 
     }
+
     public function change($data)
     {
         var_dump($data);
@@ -105,10 +88,10 @@ class Manage_building_model extends CI_Model
         }
 
     }
+
     public function delete($datasearch4)
     {
         if (isset($_POST['name'])) {
-//            echo 'poo';
             $id = $_POST['id'];
             $this->db->where('id', $id)->delete('building');
         }

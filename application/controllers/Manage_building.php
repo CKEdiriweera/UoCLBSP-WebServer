@@ -66,19 +66,24 @@ class Manage_building extends CI_Controller
     public function search_buildingby_latlng()
     {
         if (isset($_POST['latitudes'], $_POST['longitudes'])) {
-            echo 'hfh';
             $this->load->model('manage_building_model');
             $data0 = array(
                 'latitudes' => $this->input->post('latitudes'),
                 'longitudes' => $this->input->post('longitudes'),
             );
+//            var_dump($data0);
             $data = $this->manage_building_model->get_name($data0);
-            var_dump($data);
-//            $building = $this->manage_building_model->selectby_latlng($data);
-//            $building['result'] = $this->manage_building_model->display_buildings_except($data);
+//            var_dump($data);
+            $data = json_decode(json_encode($data), True);
+            $data = array(
+                'name' => $data[0]['name']
+            );
+//            var_dump($data);
+            $building = $this->manage_building_model->selected($data);
+            $building['result'] = $this->manage_building_model->display_buildings_except($data);
 //            var_dump($building);
-//            $view_data = $this->load->view('buildings/edit_building', $building, TRUE);
-//            $this->output->set_output($view_data);
+            $view_data = $this->load->view('buildings/edit_building', $building, TRUE);
+            $this->output->set_output($view_data);
         }
     }
 

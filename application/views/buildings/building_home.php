@@ -271,8 +271,8 @@ $building_json = json_encode($building_array);
                 longitudes: longitudes
             },
             function(data, status){
-                alert("Data: " + data + "\nStatus: " + status);
-                // $("#main").html(data);
+                // alert("Data: " + data + "\nStatus: " + status);
+                $("#main").html(data);
             }
         );
     }
