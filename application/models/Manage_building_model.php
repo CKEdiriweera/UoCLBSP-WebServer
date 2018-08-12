@@ -58,13 +58,13 @@ class Manage_building_model extends CI_Model
         $query = $this->db->select('*')->from('building')->where('id', $id)->get();
         $rows = $query->row_array();
         $data2 = array(
-                'id' => $rows['id'],
-                'name' => $rows['name'],
-                'description' => $rows['description'],
-                'latitudes' => $rows['latitudes'],
-                'longitudes' => $rows['longitudes'],
-                'graph_id' => $rows['graph_id']
-            );
+            'id' => $rows['id'],
+            'name' => $rows['name'],
+            'description' => $rows['description'],
+            'latitudes' => $rows['latitudes'],
+            'longitudes' => $rows['longitudes'],
+            'graph_id' => $rows['graph_id']
+        );
 
         //$this->load->view('buildings/edit_building', $data2);
         return $data2;

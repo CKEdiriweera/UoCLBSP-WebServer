@@ -18,7 +18,7 @@ ini_set('display_errors', 1);
 
 <div id="form-div">
     <div id="title-div">
-        <p>Add Building</p></div>
+        <p id ="title_p">Add Building</p></div>
     </br>
     <form id="form" method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
 
@@ -134,7 +134,53 @@ ini_set('display_errors', 1);
                     info_window.close();
                 };
             })(building_marker, info_window));
+<<<<<<< HEAD
+=======
+
+            building_marker.addListener('click', function() {
+                //infowindow.open(map, marker);
+                //window.location.href = "<?php //echo site_url('Manage_building/update_building');?>//?name="+name;
+                // var new_name = name.replace(" ","_");
+                // console.log(id);
+                //window.location.href ="<?php //echo site_url('Manage_building/update_building/');?>//"+id;
+
+                document.getElementById("form").action = "<?php echo base_url() ?>index.php/manage_building/change_building";
+
+                document.getElementById("title_p").innerHTML = "Edit Building";
+                document.getElementById("b_id").value = id;
+                document.getElementById("b_name").value = name;
+                document.getElementById("b_desc").innerHTML = description;
+                document.getElementById("infoLat").value = lat;
+                document.getElementById("infoLng").value = lng;
+                document.getElementById("graphId").value = g_id;
+
+                document.getElementById("s_button").value = "Edit Building";
+
+                //console.log(document.getElementById("b_id").value);
+
+
+
+
+                // google.maps.event.addListener(building_marker, 'drag', function () {
+                //     // updateMarkerStatus('Dragging...');
+                //     updateMarkerPosition(building_marker.getPosition());
+                // });
+                // google.maps.event.addListener(building_marker, 'dragend', function () {
+                //     // updateMarkerStatus('Position Found!');
+                //     geocodePosition(building_marker.getPosition());
+                // });
+
+
+
+
+
+
+
+
+            });
+>>>>>>> 232eaf79462bab5f627fe5b93da2a1a5ec64e183
         }
+
 
         map.addListener('dblclick', sendData);
         // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
