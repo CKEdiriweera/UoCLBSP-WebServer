@@ -8,6 +8,11 @@
 
 class Manage_room_types_model extends CI_Model
 {
+    function search_room_types($type)
+    {
+        return $this->db->select('id, type, description')->like('type', $type, 'both')->order_by('type', 'ASC')->limit(5)->get('room_type')->result();
+    }
+
     public function add($data){
         return $this->db->insert('room_type', $data);
     }

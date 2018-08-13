@@ -134,8 +134,6 @@ ini_set('display_errors', 1);
                     info_window.close();
                 };
             })(building_marker, info_window));
-<<<<<<< HEAD
-=======
 
             building_marker.addListener('click', function() {
                 //infowindow.open(map, marker);
@@ -178,7 +176,6 @@ ini_set('display_errors', 1);
 
 
             });
->>>>>>> 232eaf79462bab5f627fe5b93da2a1a5ec64e183
         }
 
 

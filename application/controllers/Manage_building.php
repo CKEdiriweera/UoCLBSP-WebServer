@@ -16,11 +16,6 @@ class Manage_building extends CI_Controller
         $this->load->view('buildings/add_building', $buildings);
     }
 
-    public function selected()
-    {
-
-    }
-
     function get_autocomplete(){
         $this->load->model('manage_building_model');
         if (isset($_GET['term'])) {
@@ -48,6 +43,7 @@ class Manage_building extends CI_Controller
         $this->manage_building_model->add($data);
 //        redirect('admin_home');
     }
+
     public function search_building()
     {
         if (isset($_POST['name'])) {

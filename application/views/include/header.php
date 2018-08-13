@@ -74,11 +74,8 @@
                 var s = <?php echo json_encode($_SESSION); ?>;
                 console.log(s);
 
-<<<<<<< HEAD
                 document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost/UoCLBSP-WebServer/User_home";
-=======
                 document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home";
->>>>>>> 232eaf79462bab5f627fe5b93da2a1a5ec64e183
 
             });
 

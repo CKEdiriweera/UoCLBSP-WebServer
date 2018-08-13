@@ -19,6 +19,7 @@ input[type=submit]{
     border: none;    
     cursor: pointer;
 }
+
 input[type=reset]{
     width: 47%;
     background-color: #AF7AC5;

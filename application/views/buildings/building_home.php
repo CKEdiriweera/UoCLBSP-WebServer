@@ -245,6 +245,7 @@ $building_json = json_encode($building_array);
         requestMap.open(method, urlPoly, shouldBeAsync);
         requestMap.send(mapData);
     }
+
     function search_building() {
         var name = document.getElementById('name').value;
         // alert(search_building);
