@@ -10,7 +10,7 @@ input[type=text], input[type=password], select {
 }
 
 input[type=submit]{
-    /*width: 47%;*/
+    width: 47%;
     background-color: #AF7AC5;
     color: #FFFFFF;
     padding: 14px 10px;

@@ -37,7 +37,7 @@
 
 <script>
     $(document).ready(function(){
-        $( "#name" ).autocomplete({
+        $( "#type" ).autocomplete({
             source: "<?php echo site_url('Manage_room_types/get_autocomplete/?');?>",
         });
     });
@@ -74,12 +74,12 @@
         function search_room_types() {
             var type = document.getElementById('type').value;
             // alert(search_building);
-            $.post("<?php echo base_url(); ?>Manage_room_types/add_room_type",
+            $.post("<?php echo base_url(); ?>Manage_room_types/change_room_type",
                 {
                     type: type
                 },
                 function(data, status){
-                    // alert("Data: " + data + "\nStatus: " + status);
+                    alert("Data: " + data + "\nStatus: " + status);
                     $("#main").html(data);
                 }
             );

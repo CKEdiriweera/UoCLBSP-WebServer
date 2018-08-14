@@ -42,29 +42,18 @@ class Manage_room_types_model extends CI_Model
         }
     }
 
-    public function edit($datasearch2)
+    public function edit($data)
     {
-//        echo 'ok';
-//        var_dump($datasearch2);
         if (isset($_POST['type'])) {
-//            echo 'poo';
-            $id = $_POST['id'];
-            $query = $this->db->select('*')->from('room_type')->where('id', $id)->get();
-//            $query = $this->db->select('*')->from('room_types')->like('name', $type, 'before')->get();
-//            $query = $this->db->query("SELECT * FROM room_types where name = '$type';");
-//            var_dump($query);
-
+            $type = $_POST['type'];
+            $query = $this->db->select('*')->from('room_type')->where('type', $type)->get();
             $rows = $query->row_array();
-//            var_dump($rows);
-//            $rows['name'];
-            $data2 = array(
+            $data = array(
                 'id' => $rows['id'],
                 'type' => $rows['type'],
                 'description' => $rows['description'],
             );
-//            var_dump($data2);
-
-            $this->load->view('room_types/edit_room_type', $data2);
+            return $data;
         }
     }
 

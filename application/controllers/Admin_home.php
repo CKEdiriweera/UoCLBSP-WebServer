@@ -8,14 +8,12 @@ class Admin_home extends CI_Controller
         $this->load->view('include/header_Loggedin',$data);
         $this->load->view('include/side_navbar');
         //$this->load->view('admin_home');
-
     }
 
     public function home()
     {
         $this->load->view('search_place');
 //        $this->load->view('admin_map');
-
     }
 
     public function add_polygon(){
