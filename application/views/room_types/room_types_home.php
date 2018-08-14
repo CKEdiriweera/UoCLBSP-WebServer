@@ -74,7 +74,7 @@
         function search_room_types() {
             var type = document.getElementById('type').value;
             // alert(search_building);
-            $.post("<?php echo base_url(); ?>Manage_room_types/change_room_type",
+            $.post("<?php echo base_url(); ?>Manage_room_types/search_room_type",
                 {
                     type: type
                 },

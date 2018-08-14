@@ -1,55 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf"/>
-    <title>MANAGING BUILDINGS AND PEOPLE</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="jquery.js"></script>
-    <script src="css/boostrap.js"></script>
-    <link herf="css/boostrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
     <style>
-        html,
-        body {
-            font-family: 'Droid Serif';
-            color: #343434;
-            font-size: 1.1em;
-            line-height: 1.6;
-            /*overflow-x: hidden;*/
-            margin: 0;
-            height: 100%;
-        }
-
-        textarea,
         input[type=text], select {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
+            font-family: "roboto";
+            padding: 12px 12px;
+            margin: 18px 0px 12px 10px;
             display: inline-block;
             border: 1px solid #ccc;
-            border-radius: 4px;
             box-sizing: border-box;
         }
-
-        input[type=submit],
-        input[type=reset] {
-            width: 45%;
-            background-color: #898989;
-            color: #cdcdcd;
+        button{
+            background-color: #AF7AC5;
+            color: #FFFFFF;
             padding: 14px 10px;
-            margin: 8px 6px;
+            /*margin-left: 5px;*/
+            /*float: right;*/
             border: none;
-            border-radius: 4px;
             cursor: pointer;
+        }
+        .ui-autocomplete{
+            background-color: white;
+            list-style-type: none;
+            padding-left: 10px;
+            width: 239px;
+            border: 0.1px solid gray;
         }
     </style>
 </head>
 
 <body>
-<div style="width: 25%; float: left; background-color: black; height: 100%">
-    <div>
-        <form method="post" action="<?php echo base_url() ?>index.php/Manage_rooms/change_room">
 
+<script src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>" type="text/javascript"></script>
+<script src="<?php echo base_url().'assets/js/bootstrap.js'?>" type="text/javascript"></script>
+<script src="<?php echo base_url().'assets/js/jquery-ui.js'?>" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function(){
+        $( "#room_type" ).autocomplete({
+            source: "<?php echo site_url('Manage_rooms/get_autocomplete_room_type/?');?>",
+        });
+
+        $( "#building_name" ).autocomplete({
+            source: "<?php echo site_url('Manage_rooms/get_autocomplete_building/?');?>",
+        });
+    });
+</script>
+<div id="main">
+    <div id="form-div">
+        <div id="title-div">
+            <p>Edit Room</p>
+        </div>
+        </br>
+        <form method="post" action="<?php echo base_url() ?>index.php/Manage_rooms/change_room">
             <table>
                 <tr>
                     <td>
@@ -59,7 +63,6 @@
                         <input type="text" name="name" id="name" value="<?php echo $name ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Description :
@@ -68,7 +71,6 @@
                         <input type="text" name="description" id="name" value="<?php echo $description ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Floor Number :
@@ -77,118 +79,130 @@
                         <input type="text" name="floor" id="floor" value="<?php echo $floor ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Room Type :
                     </td>
                     <td>
-                        <input type="text" name="room_type" id="room_type" value="<?php echo $room_name ?>">
-                        <input type="text" name="room_type_id" id="room_type_id" value="<?php echo $room_type_id ?>">
+                        <input type="text" class="form-control" class="ui-widget" name="room_type" id="room_type" value="<?php echo $room_type ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         Building Name :
                     </td>
                     <td>
-                        <input type="text" name="building_name" id="building_name" value="<?php echo $building_name ?>">
-                        <input type="text" name="building_name_id" id="building_id" value="<?php echo $building_id ?>">
+                        <input type="text" class="form-control" class="ui-widget" name="building_name" id="building_name" value="<?php echo $building_name ?>">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         <input type="submit" name="update" value="Update">
-
                     </td>
                 </tr>
-
             </table>
-
         </form>
-
     </div>
+    <div id="map"></div>
+    <script>
+        var line;
+        var source;
+        var map;
+        var maparray;
+        var polyArray;
+        var graphArray;
+        var temp;
+        var flag;
 
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 6.901120, lng: 79.860532},
+                gestureHandling: 'greedy',
+                zoom: 16
+
+            });
+
+            // map.addListener('dblclick', sendData);
+
+            // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
+
+            // var urlPoly = "http://ec2-52-72-156-17.compute-1.amazonaws.com:1978";
+            var urlPoly = "<?=$this->config->item('server_url');?>";
+            var method = "POST";
+            var mapData = JSON.stringify({"type": "mapRequest"});
+            var shouldBeAsync = true;
+            var requestMap = new XMLHttpRequest();
+
+            requestMap.onload = function () {
+                var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+                var data = requestMap.response;
+                // alert(data);
+                maparray = JSON.parse(data);
+
+                // //alert(dataPoly);
+                polyArray = maparray.polygons;
+                graphArray = maparray.graphs;
+                // loadmap();
+                line = [];
+                temp = [];
+                flag = 0;
+                source = [];
+                cestination = [];
+                // var verticelatlng = [];
+                // var verticepos = [];
+
+                flag = 1;
+                for (var z = 0; z < graphArray.length; z++) {
+                    var sourcelat, sourcelng, destlat, destlng, sourId;
+                    var graphVertexes = {};
+                    for (var verti = 0; verti < graphArray[z].vertexes.length; verti++) {
+                        sourcelat = graphArray[z].vertexes[verti]["lat"];
+                        sourcelng = graphArray[z].vertexes[verti]["lng"];
+                        sourId = graphArray[z].vertexes[verti]["id"];
+                        var sourcepoint = {'lat': sourcelat, 'lng': sourcelng};
+
+                        sourcemark = new google.maps.Marker({
+                            position: sourcepoint,
+                            map: map,
+                            id: graphArray[z].id,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 1,
+                                strokeWeight: 2,
+                                fillOpacity: 0.6,
+                                fillColor: "white",
+                                strokeColor: "white"
+                            },
+                        });
+                        // sourcemark.addListener('click', pointone);
+                        graphVertexes[sourId] = sourcepoint;
+                    }
+
+                    for (var k = 0; k < graphArray[z].edges.length; k++) {
+                        var sourceid = graphArray[z].edges[k]["source"];
+                        var destid = graphArray[z].edges[k]["destination"];
+                        var graphline = new google.maps.Polyline({
+                            path: [graphVertexes[sourceid], graphVertexes[destid]],
+                            strokeColor: 'white',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 5
+                        });
+
+                        graphline.setMap(map);
+                        graphline = [];
+                    }//
+                }
+
+            }
+            requestMap.open(method, urlPoly, shouldBeAsync);
+            requestMap.send(mapData);
+
+        } //init ends
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"
+            async defer></script>
 </div>
-<div style="width: 75%; height:100%; float:right">
-    <!--    <div>-->
-    <html>
-    <head>
-        <!--                        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />-->
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-        <script type="text/javascript">
-            var geocoder = new google.maps.Geocoder();
-
-            function geocodePosition(pos) {
-                geocoder.geocode({
-                    latLng: pos
-                });
-            }
-
-            // function updateMarkerStatus(str) {
-            //     document.getElementById('markerStatus').innerHTML = str;
-            // }
-
-            function updateMarkerPosition(latLng) {
-                document.getElementById('infoLat').setAttribute('value', latLng.lat());
-                document.getElementById('infoLng').setAttribute('value', latLng.lng());
-            }
-
-            function initialize() {
-                var latLng = new google.maps.LatLng(<?php echo $latitudes ?>, <?php echo $longitudes ?>);
-                var map = new google.maps.Map(document.getElementById('mapCanvas'), {
-                    zoom: 16,
-                    center: latLng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-
-                //var buildingPos = {'lat': '<?php //echo $latitudes ?>//', 'lng': '<?php //echo $longitudes ?>//'};
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    draggable: true
-                });
-                // Update current position info.
-                updateMarkerPosition(latLng);
-                geocodePosition(latLng);
-                google.maps.event.addListener(marker, 'drag', function () {
-                    // updateMarkerStatus('Dragging...');
-                    updateMarkerPosition(marker.getPosition());
-                });
-                google.maps.event.addListener(marker, 'dragend', function () {
-                    // updateMarkerStatus('Position Found!');
-                    geocodePosition(marker.getPosition());
-                });
-            }
-
-            // Onload handler to fire off the app.
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuVuyPajdEVimNlE-ejFP3_ca3dRNHLT4&libraries=places&callback=initMap"
-                async defer></script>
-
-    </head>
-    <body>
-    <style>
-        #mapCanvas {
-            width: 100%;
-            height: 100%;
-            float: left;
-            z-index: 1;
-        }
-    </style>
-
-    <div id="mapCanvas"></div>
-
-    </body>
-    </html>
-
-    <!--    </div>-->
-</div>
-
-
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
