@@ -18,7 +18,8 @@ ini_set('display_errors', 1);
 
 <div id="form-div">
     <div id="title-div">
-        <p id ="title_p">Add Building</p></div>
+        <p id ="title_p">Add Building</p>
+    </div>
     </br>
     <form id="form" method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
 

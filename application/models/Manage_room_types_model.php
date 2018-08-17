@@ -17,30 +17,30 @@ class Manage_room_types_model extends CI_Model
         return $this->db->insert('room_type', $data);
     }
 
-    public function selected($datasearch1)
-    {
-//        var_dump($datasearch1);
-        if (isset($_POST['type'])) {
-//            echo 'poo';
-            $id = $_POST['id'];
-//            echo $type;
-            $query = $this->db->select('*')->from('room_type')->where('id', $id)->get();
-//            $query = $this->db->query("SELECT * FROM room_types where name = '$type';");
-//            var_dump($query);
-
-            $rows = $query->row_array();
-//            var_dump($rows);
-//            $rows['name'];
-            $data2 = array(
-                'id' => $rows['id'],
-                'type' => $rows['type'],
-                'description' => $rows['description'],
-            );
-//            var_dump($data2);
-
-            $this->load->view('room_types/selected_room_type', $data2);
-        }
-    }
+//    public function selected($datasearch1)
+//    {
+////        var_dump($datasearch1);
+//        if (isset($_POST['type'])) {
+////            echo 'poo';
+//            $id = $_POST['id'];
+////            echo $type;
+//            $query = $this->db->select('*')->from('room_type')->where('id', $id)->get();
+////            $query = $this->db->query("SELECT * FROM room_types where name = '$type';");
+////            var_dump($query);
+//
+//            $rows = $query->row_array();
+////            var_dump($rows);
+////            $rows['name'];
+//            $data2 = array(
+//                'id' => $rows['id'],
+//                'type' => $rows['type'],
+//                'description' => $rows['description'],
+//            );
+////            var_dump($data2);
+//
+//            $this->load->view('room_types/selected_room_type', $data2);
+//        }
+//    }
 
     public function edit($data)
     {
