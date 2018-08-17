@@ -26,12 +26,14 @@ class Login extends CI_Controller{
         $email = $_GET['email'];
         $id_token = $_GET['id_token'];
         $img_url = $_GET['img'];
+        $name = $_GET['name'];
 
         $type = $this->User->user_type($email);
 
         $session_data = array(
             'id_token'  => $id_token,
             'email'     => $email,
+            'name'      => $name,
             'img'       => $img_url,
             'logged_in' => TRUE
         );
@@ -49,6 +51,7 @@ class Login extends CI_Controller{
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('img');
+        $this->session->unset_userdata('name');
         $this->session->sess_destroy();
         session_destroy();
 

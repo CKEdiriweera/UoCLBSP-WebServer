@@ -16,6 +16,9 @@
             const url = "<?php echo site_url("Login/login/") ?>";
             var profile = googleUser.getBasicProfile();
             var id_token = googleUser.getAuthResponse().id_token;
+            var profile_picture = profile.getImageUrl();
+            var email = profile.getEmail();
+            var name = profile.getName();
 
 
             /*
@@ -28,7 +31,7 @@
             $.ajax({
                 url: url,
                 type: 'GET',
-                data: { 'email': profile.getEmail(), 'id_token': id_token, 'img': profile.getImageUrl()} ,
+                data: { 'email': email, 'id_token': id_token, 'img': profile_picture, 'name': name} ,
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
 
@@ -38,6 +41,7 @@
 
                     if (obj.admin=="true"){
                         console.log(response.admin);
+
                         window.location.href = "<?php echo site_url('Admin_home'); ?>";
                     }
                     else{
