@@ -251,6 +251,7 @@
                 if(polygons[z]){
                     if(google.maps.geometry.poly.containsLocation(source, polygons[z])){
                         srcdst.source['inside'] = ids[z];
+                        alert(ids[z]);
                     }
                     if(google.maps.geometry.poly.containsLocation(destination, polygons[z])){
                         srcdst.destination['inside'] = ids[z];

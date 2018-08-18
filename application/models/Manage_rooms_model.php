@@ -136,6 +136,9 @@ class Manage_rooms_model extends CI_Model
     {
         if (isset($_POST['name'])) {
             $name = $_POST['name'];
+            $room_query = $this->db->select('id')->from('building')->where('name', $name)->get();
+            $room_row = $room_query->row_array();
+            $id = $room_row['id'];
 
             $room_type = $_POST['room_type'];
             $room_type_query = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
@@ -154,7 +157,8 @@ class Manage_rooms_model extends CI_Model
                 'room_type_id' => $room_type_id,
                 'building_id' => $building_id
             );
-            $this->db->where('name', $name)->update('room', $data);
+
+            $this->db->where('id', $id)->update('room', $data);
         }
     }
 

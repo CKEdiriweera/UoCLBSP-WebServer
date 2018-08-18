@@ -46,4 +46,24 @@ class Nearby_search extends CI_Controller
         }
     }
 
+    function get_nearby_places_android()
+    {
+//        $data = '{"source_name": "a", "source_lat": "b", "source_lng": "c", "room_type": "d"}';
+//        var_dump($data);
+        $data = $_POST['data'];
+        $character = json_decode($data, true);
+        var_dump($character);
+        var_dump($character[source_name]);
+        $data = array(
+            'name' => $character[source_name],
+            'lat1' => $character[source_lat],
+            'lng1' => $character[source_lng],
+            'type' => $character[room_type],
+        );
+        $room_array['result'] = $this->nearby_search_model->search_nearby_places($data);
+        $room_array = json_encode($room_array);
+        return $room_array;
+//        var_dump($room_array);
+    }
+
 }

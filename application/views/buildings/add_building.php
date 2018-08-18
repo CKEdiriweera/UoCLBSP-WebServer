@@ -136,47 +136,47 @@ ini_set('display_errors', 1);
                 };
             })(building_marker, info_window));
 
-            building_marker.addListener('click', function() {
-                //infowindow.open(map, marker);
-                //window.location.href = "<?php //echo site_url('Manage_building/update_building');?>//?name="+name;
-                // var new_name = name.replace(" ","_");
-                // console.log(id);
-                //window.location.href ="<?php //echo site_url('Manage_building/update_building/');?>//"+id;
-
-                document.getElementById("form").action = "<?php echo base_url() ?>index.php/manage_building/change_building";
-
-                document.getElementById("title_p").innerHTML = "Edit Building";
-                document.getElementById("b_id").value = id;
-                document.getElementById("b_name").value = name;
-                document.getElementById("b_desc").innerHTML = description;
-                document.getElementById("infoLat").value = lat;
-                document.getElementById("infoLng").value = lng;
-                document.getElementById("graphId").value = g_id;
-
-                document.getElementById("s_button").value = "Edit Building";
-
-                //console.log(document.getElementById("b_id").value);
-
-
-
-
-                // google.maps.event.addListener(building_marker, 'drag', function () {
-                //     // updateMarkerStatus('Dragging...');
-                //     updateMarkerPosition(building_marker.getPosition());
-                // });
-                // google.maps.event.addListener(building_marker, 'dragend', function () {
-                //     // updateMarkerStatus('Position Found!');
-                //     geocodePosition(building_marker.getPosition());
-                // });
-
-
-
-
-
-
-
-
-            });
+            //building_marker.addListener('click', function() {
+            //    //infowindow.open(map, marker);
+            //    //window.location.href = "<?php ////echo site_url('Manage_building/update_building');?>////?name="+name;
+            //    // var new_name = name.replace(" ","_");
+            //    // console.log(id);
+            //    //window.location.href ="<?php ////echo site_url('Manage_building/update_building/');?>////"+id;
+            //
+            //    document.getElementById("form").action = "<?php //echo base_url() ?>//index.php/manage_building/change_building";
+            //
+            //    document.getElementById("title_p").innerHTML = "Edit Building";
+            //    document.getElementById("b_id").value = id;
+            //    document.getElementById("b_name").value = name;
+            //    document.getElementById("b_desc").innerHTML = description;
+            //    document.getElementById("infoLat").value = lat;
+            //    document.getElementById("infoLng").value = lng;
+            //    document.getElementById("graphId").value = g_id;
+            //
+            //    document.getElementById("s_button").value = "Edit Building";
+            //
+            //    //console.log(document.getElementById("b_id").value);
+            //
+            //
+            //
+            //
+            //    // google.maps.event.addListener(building_marker, 'drag', function () {
+            //    //     // updateMarkerStatus('Dragging...');
+            //    //     updateMarkerPosition(building_marker.getPosition());
+            //    // });
+            //    // google.maps.event.addListener(building_marker, 'dragend', function () {
+            //    //     // updateMarkerStatus('Position Found!');
+            //    //     geocodePosition(building_marker.getPosition());
+            //    // });
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //});
         }
 
 
@@ -228,6 +228,7 @@ ini_set('display_errors', 1);
         requestMap.open(method, urlPoly, shouldBeAsync);
         requestMap.send(mapData);
     }
+
     function loadmap() {
         flag = 1;
         for (var z = 0; z < graphArray.length; z++) {
@@ -254,6 +255,7 @@ ini_set('display_errors', 1);
             }//
         }
     }
+
     function setAsBuilding(eve) {
         if(building!=null){
             building.setMap(null);
