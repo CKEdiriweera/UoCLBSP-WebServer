@@ -8,6 +8,11 @@
 
 class Manage_people_model extends CI_Model
 {
+    function search_people($name)
+    {
+        return $this->db->select('name')->like('name', $name, 'both')->order_by('name', 'ASC')->limit(5)->get('people')->result();
+    }
+
     public function add($data)
     {
         if(isset($_POST['people_name'])){

@@ -21,7 +21,7 @@
             <li><a  data-target="<?php echo base_url(); ?>/Manage_building/home"><i class="fas fa-building"></i><div class="list-item">Buildings</div></a></li>
             <li><a  data-target="<?php echo base_url(); ?>/Manage_rooms/home"><i class="fas fa-columns"></i><div class="list-item">Rooms</div></a></li>
             <li><a  data-target="<?php echo base_url(); ?>/Manage_room_types/home"><i class="fas fa-tags"></i><div class="list-item">Room Types</div></a></li>
-            <li><a  data-target="<?php echo base_url(); ?>/Manage_people/people"><i class="fas fa-user"></i><div class="list-item">People</div></a></li>
+            <li><a  data-target="<?php echo base_url(); ?>/Manage_people/home"><i class="fas fa-user"></i><div class="list-item">People</div></a></li>
         </ul>
 
         <p ><b>Manage Roles</b></p>

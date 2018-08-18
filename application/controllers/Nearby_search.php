@@ -52,8 +52,8 @@ class Nearby_search extends CI_Controller
 //        var_dump($data);
         $data = $_POST['data'];
         $character = json_decode($data, true);
-        var_dump($character);
-        var_dump($character[source_name]);
+//        var_dump($character);
+//        var_dump($character[source_name]);
         $data = array(
             'name' => $character[source_name],
             'lat1' => $character[source_lat],
@@ -62,7 +62,7 @@ class Nearby_search extends CI_Controller
         );
         $room_array['result'] = $this->nearby_search_model->search_nearby_places($data);
         $room_array = json_encode($room_array);
-        return $room_array;
+        echo($room_array);
 //        var_dump($room_array);
     }
 

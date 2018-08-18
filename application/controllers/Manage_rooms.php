@@ -12,6 +12,7 @@ class Manage_rooms extends CI_Controller
     {
         $this->load->view('rooms/rooms_home');
     }
+
     public function rooms()
     {
         $this->load->view('rooms/add_room');
