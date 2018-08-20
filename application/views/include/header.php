@@ -93,7 +93,7 @@
     <?php if($call == True) {
         echo '<script>
                 $(function(){
-                    $("#cont").load("Admin_home/search");
+                    $("#cont").load("Admin_home/home");
                 });
 
     </script>';
