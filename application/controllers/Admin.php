@@ -70,5 +70,6 @@ class Admin extends CI_Controller
         $this->load->view('include/header');
         $this->load->view('buildings/add');
 
+
     }
 }

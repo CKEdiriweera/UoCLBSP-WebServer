@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
+    <script src="<?php echo base_url() ?>assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -21,7 +22,7 @@ ini_set('display_errors', 1);
         <p id ="title_p">Add Building</p>
     </div>
     </br>
-    <form id="form" method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
+    <form id="form">
 
         <table>
             <tr>
@@ -67,6 +68,11 @@ ini_set('display_errors', 1);
             </tr>
 
         </table>
+        <button id ="s_button" class="sbutton" type="button" onclick="addBuilding()" name="add_building">Add Building</button>
+        <button class="rbutton" type="button" onclick="resetForm()" name="reset">Reset</button>
+
+<!--        <input id ="s_button" class="button" type="xxx" onclick="addBuilding()" name="add_building" value="Add Building">-->
+<!--        <input class="button" type="yyy" onclick="resetForm()" name="reset" value="Reset">-->
 
     </form>
 
@@ -91,6 +97,67 @@ ini_set('display_errors', 1);
 
 </div>
 
+<script>
+
+    //$("#s_button").click(function () {
+    //    //$("body").html("url: <?php ////echo base_url()?>////index.php/manage_building/building");
+    //    $.ajax({
+    //        dataType:'text',
+    //        type: "GET",
+    //        url: "<?php //echo base_url() ?>//index.php/manage_building/building",
+    //        success: function (response){
+    //            // $("#cont").html(' ');
+    //            console.log("aaaa");
+    //            $("#cont").html(response);
+    //            // location.replace(response);
+    //        },
+    //        error: function () {
+    //            console.log("error");
+    //        }
+    //    });
+    //});
+</script>
+
+<script>
+    function addBuilding() {
+
+
+        let name = document.getElementById('b_name').value;
+        let desc = document.getElementById('b_desc').value;
+        let lat = document.getElementById('infoLat').value;
+        let lng = document.getElementById('infoLng').value;
+        let g_id = document.getElementById('graphId').value;
+
+        $.ajax({
+            url:"<?php echo base_url('Manage_building/add_building')?>",
+            data: {"name":name, "desc":desc, "lat":lat, "lng":lng, "g_id":g_id},
+            type:"POST",
+            dataType:"JSON",
+            success:function () {
+                $.ajax({
+                    dataType:'text',
+                    type: "POST",
+                    url: "<?php echo base_url() ?>index.php/manage_building/building",
+                    success: function (response){
+                        // $("#cont").html(' ');
+                        $("#cont").html(response);
+                        // location.replace(response);
+                    },
+                    error:function () {
+                        swal({
+                            type:'error'
+                        })
+                    }
+                });
+
+                $('#form').trigger("reset");
+            }
+        });
+
+    }
+</script>
+
+
 <div id="map"></div>
 <script>
     var line;
@@ -106,6 +173,7 @@ ini_set('display_errors', 1);
     var polyindex = [];
     var graph_id;
     var building;
+    var markers=[];
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 6.901120, lng: 79.860532},
@@ -275,11 +343,28 @@ ini_set('display_errors', 1);
         building = new google.maps.Marker({
             position: eve.latLng,
             map: map,
+            id: 0,
+            draggable:true
         });
+
+        markers[0] = building;
+
         document.getElementById('infoLat').setAttribute('value', JSON.stringify(eve.latLng.lat()));
         document.getElementById('infoLng').setAttribute('value', JSON.stringify(eve.latLng.lng()));
         document.getElementById('graphId').setAttribute('value', this.id);
     }
+
+    function resetForm() {
+        markers[0].setMap(null);
+        //delete markers[0];
+        // $('#form')[0].reset();
+        document.getElementById('b_name').value='';
+        document.getElementById('b_desc').value='';
+        document.getElementById('infoLat').setAttribute('value',"");
+        document.getElementById('infoLng').setAttribute('value', "");
+        document.getElementById('graphId').setAttribute('value',"");
+    }
+
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"

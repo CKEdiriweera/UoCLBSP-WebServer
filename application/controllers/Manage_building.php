@@ -40,15 +40,33 @@ class Manage_building extends CI_Controller
     public function add_building()
     {
         $this->load->model('manage_building_model');
+//        $data = array(
+//            'name' => $this->input->post('name'),
+//            'description' => $this->input->post('description'),
+//            'latitudes' => $this->input->post('latitudes'),
+//            'longitudes' => $this->input->post('longitudes'),
+//            'graph_id' => $this->input->post('graphId')
+//        );
         $data = array(
+
+            'name' => $_REQUEST['name'],
+            'description' => $_REQUEST['desc'],
+            'latitudes' => $_REQUEST['lat'],
+            'longitudes' => $_REQUEST['lng'],
+            'graph_id' => $_REQUEST['g_id'],
             'name' => $this->input->post('name'),
             'description' => $this->input->post('description'),
             'latitudes' => $this->input->post('latitudes'),
             'longitudes' => $this->input->post('longitudes'),
             'graph_id' => $this->input->post('graph_id')
+
         );
         $this->manage_building_model->add($data);
-//        redirect('admin_home');
+
+        $res = array("type"=>true);
+
+        echo json_encode($res);
+
     }
 
     public function search_building()
