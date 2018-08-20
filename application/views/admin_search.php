@@ -19,10 +19,10 @@
 </head>
 <body>
 
-<input list="places"  id="origin-input" placeholder="Origin.." />
+<input list="places"  id="origin-input" placeholder="From" value="" />
 <datalist id="places"></datalist>
 
-<input list="placesD" id="destination-input" placeholder="Destination.." />
+<input list="placesD" id="destination-input" placeholder="To" />
 <datalist id="placesD"></datalist>
 
 <button type="button" onclick="getDirections()" id="search-button" class="btn btn-default">Get Directions</button>

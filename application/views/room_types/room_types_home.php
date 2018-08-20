@@ -38,8 +38,26 @@
 <script>
     $(document).ready(function(){
         $( "#type" ).autocomplete({
+            minLength: 0,
             source: "<?php echo site_url('Manage_room_types/get_autocomplete/?');?>",
-        });
+            focus: function( event, ui ) {
+                $( "#type" ).val( ui.item.type );
+                // console.log(source);
+                // var_dump(source);
+                return false;
+            },
+            select: function( event, ui ) {
+                $( "#type" ).val( ui.item.type );
+                $( "#id" ).val( ui.item.id );
+                console.log(source);
+                return false;
+            }
+        })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+                .append( "<div>" + item.type + "</div>" )
+                .appendTo( ul );
+        };
     });
 </script>
 <div id="main">
@@ -50,6 +68,7 @@
         </br>
         <form method="post" action="<?php echo base_url() ?>index.php/manage_room_types/add_room_type">
             <input type="text" class="form-control" class="ui-widget" id="type" placeholder="Search room type" style="width:320px;">
+            <input type="text" id="id">
             <button type="button" onclick="search_room_types()" id="search_button" class="btn btn-default">Search</button>
         </form>
         <button type="button" class="btn btn-default" id="add_button" style="position: absolute; bottom: 50px;">Add new room type</button>
@@ -73,13 +92,15 @@
     <script>
         function search_room_types() {
             var type = document.getElementById('type').value;
+            var id = document.getElementById('id').value;
             // alert(search_building);
             $.post("<?php echo base_url(); ?>Manage_room_types/search_room_type",
                 {
-                    type: type
+                    type: type,
+                    id: id
                 },
                 function(data, status){
-                    alert("Data: " + data + "\nStatus: " + status);
+                    // alert("Data: " + data + "\nStatus: " + status);
                     $("#main").html(data);
                 }
             );

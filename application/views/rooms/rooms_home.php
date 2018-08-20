@@ -38,8 +38,26 @@
 <script>
     $(document).ready(function(){
         $( "#name" ).autocomplete({
+            minLength: 0,
             source: "<?php echo site_url('Manage_rooms/get_autocomplete/?');?>",
-        });
+            focus: function( event, ui ) {
+                $( "#name" ).val( ui.item.name );
+                // console.log(source);
+                // var_dump(source);
+                return false;
+            },
+            select: function( event, ui ) {
+                $( "#name" ).val( ui.item.name );
+                $( "#id" ).val( ui.item.id );
+                console.log(source);
+                return false;
+            }
+        })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+                .append( "<div>" + item.name + "</div>" )
+                .appendTo( ul );
+        };
     });
 </script>
 <div id="main">
@@ -50,6 +68,7 @@
         </br>
         <form method="post" action="<?php echo base_url() ?>index.php/manage_rooms/add_room">
             <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search room" style="width:320px;">
+            <input type="text" id="id">
             <button type="button" onclick="search_room()" id="search_button" class="btn btn-default">Search</button>
         </form>
         <button type="button" class="btn btn-default" id="add_button" style="position: absolute; bottom: 50px;">Add new room</button>

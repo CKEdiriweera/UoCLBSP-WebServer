@@ -18,12 +18,18 @@ class Manage_room_types extends CI_Controller
         if (isset($_GET['term'])) {
 //            var_dump($_GET['term']);
             $result = $this->manage_room_types_model->search_room_types($_GET['term']);
+            echo json_encode($result);
 //            var_dump($result);
-            if (count($result) > 0) {
-                foreach ($result as $row)
-                    $arr_result[] = $row->type;
-                echo json_encode($arr_result);
-            }
+//            if (count($result) > 0) {
+//                foreach ($result as $row)
+//                    $arr_result[] = $row->type;
+////                    $arr_result = array(
+////                      'type' => $row->type,
+////                      'id' => $row->id
+////                    );
+//                echo json_encode($arr_result);
+//                var_dump($arr_result);
+//            }
         }
     }
 
@@ -46,7 +52,8 @@ class Manage_room_types extends CI_Controller
     {
         $this->load->model('manage_room_types_model');
         $data = array(
-            'type' => $this->input->post('type')
+            'type' => $this->input->post('type'),
+            'id' => $this->input->post('id')
         );
         $room_type = $this->manage_room_types_model->edit($data);
         $view_data = $this->load->view('room_types/edit_room_type', $room_type, TRUE);

@@ -64,7 +64,7 @@ $building_json = json_encode($building_array);
             </tr>
             <tr>
                 <td>
-                    <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
+                    <input type="text" name="id" id="id" value="<?php echo $id ?>">
                 </td>
             </tr>
             <tr>

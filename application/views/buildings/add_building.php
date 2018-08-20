@@ -29,7 +29,7 @@ ini_set('display_errors', 1);
                     Name :
                 </td>
                 <td>
-                    <input id="b_name" type="text" name="name">
+                    <input id="name" type="text" name="name">
                 </td>
             </tr>
 
@@ -38,7 +38,7 @@ ini_set('display_errors', 1);
                     Description :
                 </td>
                 <td>
-                    <textarea id="b_desc" rows="1.5" cols="30" name="description"></textarea>
+                    <textarea id="description" rows="1.5" cols="30" name="description"></textarea>
                 </td>
             </tr>
 
@@ -62,21 +62,33 @@ ini_set('display_errors', 1);
 
             <tr>
                 <td>
-                    <input type="hidden" name="graphId" id="graphId" value="">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="hidden" name="id" id="b_id" value="">
+                    <input type="hidden" name="graph_id" id="graphId" value="">
                 </td>
             </tr>
 
         </table>
 
-        <input id ="s_button" class="button" type="submit" name="add_building" value="Add Building">
-        <input class="button" type="reset" name="reset" value="Reset">
-
     </form>
+
+    <input id ="add_button" class="button" type="submit" name="add_building" value="Add Building">
+    <input class="button" type="reset" name="reset" value="Reset">
+
+    <script>
+        $("#add_button").click(function () {
+            //$("body").html("url: <?php //echo base_url()?>//index.php/manage_building/building");
+            $.ajax({
+                dataType:'text',
+                type: "POST",
+                url: "<?php echo base_url() ?>index.php/manage_building/building",
+                success: function (response){
+                    // $("#cont").html(' ');
+                    $("#cont").html(response);
+                    // location.replace(response);
+                }
+            });
+        });
+    </script>
+
 </div>
 
 <div id="map"></div>
