@@ -39,7 +39,7 @@
         });
 
         //getting directions
-        function getDirections() {
+            alert('jfjf');
             window.source;
             window.destination;
             var originName = '<?php echo $source_name?>';
@@ -57,7 +57,6 @@
             // alert(source);
             // alert(destination);
             getWholePath();
-        }
 
         function getWholePath() {
             // var map = new google.maps.Map(document.getElementById('map'), {
