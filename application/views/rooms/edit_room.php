@@ -47,13 +47,22 @@
         });
     });
 </script>
+<script type="text/javascript">
+    function submitForm(action) {
+        // document.getElementById('room_type').value.setAttribute('room_type');
+        // document.getElementById('building_name').value.setAttribute('building_name');
+        var form = document.getElementById('form');
+        form.action = action;
+        form.submit();
+    }
+</script>
 <div id="main">
     <div id="form-div">
         <div id="title-div">
             <p>Edit Room</p>
         </div>
         </br>
-        <form method="post" action="<?php echo base_url() ?>index.php/Manage_rooms/change_room">
+        <form method="post" id="form">
             <table>
                 <tr>
                     <td>
@@ -61,6 +70,7 @@
                     </td>
                     <td>
                         <input type="text" name="name" id="name" value="<?php echo $name ?>">
+                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
                     </td>
                 </tr>
                 <tr>
@@ -97,11 +107,44 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" name="update" value="Update">
+                        <input type="submit" id="update" onclick="update_room()" name="update" value="Update building">
+                    </td>
+                    <td>
+                        <input type="submit" id="delete" onclick="delete_room()" name="delete" value="Delete building">
                     </td>
                 </tr>
             </table>
         </form>
+        <script>
+            function update_room() {
+                $.post("<?php echo base_url(); ?>Manage_rooms/change_room",
+                    {
+                        name: document.getElementById('name').value,
+                        id: document.getElementById('id').value,
+                        description: document.getElementById('description').value,
+                        floor: document.getElementById('floor').value,
+                        room_type: document.getElementById('room_type').value,
+                        building_name: document.getElementById('building_name').value,
+                    },
+                    function(data, status){
+                        // alert("Data: " + data + "\nStatus: " + status);
+                        $("#main").html(data);
+                    }
+                );
+            }
+
+            function delete_room() {
+                $.post("<?php echo base_url(); ?>Manage_rooms/delete_room",
+                    {
+                        id: document.getElementById('id').value,
+                    },
+                    function(data, status){
+                        // alert("Data: " + data + "\nStatus: " + status);
+                        $("#main").html(data);
+                    }
+                );
+            }
+        </script>
     </div>
     <div id="map"></div>
     <script>

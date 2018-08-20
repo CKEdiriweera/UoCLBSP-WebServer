@@ -12,6 +12,7 @@ class Manage_rooms extends CI_Controller
     {
         $this->load->view('rooms/rooms_home');
     }
+
     public function rooms()
     {
         $this->load->view('rooms/add_room');
@@ -22,12 +23,13 @@ class Manage_rooms extends CI_Controller
         if (isset($_GET['term'])) {
 //            var_dump($_GET['term']);
             $result = $this->manage_rooms_model->search_rooms($_GET['term']);
+            echo json_encode($result);
 //            var_dump($result);
-            if (count($result) > 0) {
-                foreach ($result as $row)
-                    $arr_result[] = $row->name;
-                echo json_encode($arr_result);
-            }
+//            if (count($result) > 0) {
+//                foreach ($result as $row)
+//                    $arr_result[] = $row->name;
+//                echo json_encode($arr_result);
+//            }
         }
     }
 
@@ -77,6 +79,7 @@ class Manage_rooms extends CI_Controller
         $this->load->model('manage_rooms_model');
         $data = array(
             'name' => $this->input->post('name'),
+            'id' => $this->input->post('id')
         );
         $room = $this->manage_rooms_model->edit($data);
         $view_data = $this->load->view('rooms/edit_room', $room, TRUE);
@@ -102,6 +105,7 @@ class Manage_rooms extends CI_Controller
     {
         $this->load->model('manage_rooms_model');
         $data = array(
+            'id' =>$this->input->post('id'),
             'name' => $this->input->post('name'),
             'description' => $this->input->post('description'),
             'floor' => $this->input->post('floor'),
@@ -114,11 +118,9 @@ class Manage_rooms extends CI_Controller
     public function delete_room()
     {
         $this->load->model('manage_rooms_model');
-
-        $datasearch4 = array(
+        $data = array(
             'id' => $this->input->post('id'),
         );
-
-        $this->manage_rooms_model->delete($datasearch4);
+        $this->manage_rooms_model->delete($data);
     }
 }

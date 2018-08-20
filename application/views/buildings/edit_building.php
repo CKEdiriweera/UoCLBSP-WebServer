@@ -64,7 +64,7 @@ $building_json = json_encode($building_array);
             </tr>
             <tr>
                 <td>
-                    <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
+                    <input type="text" name="id" id="id" value="<?php echo $id ?>">
                 </td>
             </tr>
             <tr>
@@ -110,7 +110,8 @@ $building_json = json_encode($building_array);
     function updateMarkerPosition(latLng) {
         document.getElementById('infoLat').setAttribute('value', parseFloat(latLng.lat()));
         document.getElementById('infoLng').setAttribute('value', parseFloat(latLng.lng()));
-        document.getElementById('graphId').setAttribute('value', this.id.value);
+        // document.getElementById('graphId').setAttribute('value', this.id.value);
+        // alert(this.id.value);
     }
 
     function initialize() {
@@ -197,6 +198,9 @@ $building_json = json_encode($building_array);
                 polydraw.setMap(map);
                 outJSON[polyArray[i].id] = [];
                 polyindex.push(polyArray[i].id);
+                polydraw.addListener('click', function () {
+                    document.getElementById('graphId').setAttribute('value', this.id.value);
+                });
                 // newpoint.addListener('click', pointone);
             }
 //                    alert(data);
@@ -207,8 +211,6 @@ $building_json = json_encode($building_array);
         var icon = {
             url: '<?php echo base_url(); ?>/assets/drawable/marker_blue.png',
             scaledSize: new google.maps.Size(25, 40), // scaled size
-            // origin: new google.maps.Point(0,0), // origin
-            // anchor: new google.maps.Point(0, 0) // anchor
         };
 
         var marker = new google.maps.Marker({
@@ -227,6 +229,7 @@ $building_json = json_encode($building_array);
         google.maps.event.addListener(marker, 'dragend', function () {
             // updateMarkerStatus('Position Found!');
             geocodePosition(marker.getPosition());
+            // document.getElementById('graphId').setAttribute('value', polydraw.id.value);
         });
     }
 
@@ -264,7 +267,7 @@ $building_json = json_encode($building_array);
     // Onload handler to fire off the app.
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=places&callback=initialize"
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=places,geometry&callback=initialize"
         async defer></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"

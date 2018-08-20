@@ -72,7 +72,7 @@ class Manage_rooms_model extends CI_Model
 
     function search_rooms($name)
     {
-        return $this->db->select('name')->like('name', $name, 'both')->order_by('name', 'ASC')->limit(5)->get('room')->result();
+        return $this->db->select('name,id')->like('name', $name, 'both')->order_by('name', 'ASC')->limit(5)->get('room')->result();
     }
 
 //    public function selected($datasearch1)
@@ -132,37 +132,39 @@ class Manage_rooms_model extends CI_Model
 //        }
 //    }
 
-    public function change($datasearch3)
+    public function change($data)
     {
-        if (isset($_POST['name'])) {
-            $name = $_POST['name'];
+            $id = $data['id'];
+//            $room_query = $this->db->select('id')->from('building')->where('name', $name)->get();
+//            $room_row = $room_query->row_array();
+//            $id = $room_row['id'];
 
-            $room_type = $_POST['room_type'];
+            $room_type = $data['room_type'];
             $room_type_query = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
             $room_type_row = $room_type_query->row_array();
             $room_type_id = $room_type_row['id'];
 
-            $building_name = $_POST['building_name'];
+            $building_name = $data['building_name'];
             $building_query = $this->db->select('id')->from('building')->where('name', $building_name)->get();
             $building_row = $building_query->row_array();
             $building_id = $building_row['id'];
 
             $data = array(
-                'name' => $_POST['name'],
-                'description' => $_POST['description'],
-                'floor' => $_POST['floor'],
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'floor' => $data['floor'],
                 'room_type_id' => $room_type_id,
                 'building_id' => $building_id
             );
-            $this->db->where('name', $name)->update('room', $data);
-        }
+
+            $this->db->where('id', $id)->update('room', $data);
     }
 
-    public function delete($datasearch4)
+    public function delete($data)
     {
-        if (isset($_POST['name'])) {
+        if (isset($_POST['id'])) {
 //            echo 'poo';
-            $id = $_POST['id'];
+            $id = $data['id'];
             $this->db->where('id', $id)->delete('room');
 
         }

@@ -19,10 +19,10 @@
 </head>
 <body>
 
-<input list="places"  id="origin-input" placeholder="Origin.." />
+<input list="places"  id="origin-input" placeholder="From" value="" />
 <datalist id="places"></datalist>
 
-<input list="placesD" id="destination-input" placeholder="Destination.." />
+<input list="placesD" id="destination-input" placeholder="To" />
 <datalist id="placesD"></datalist>
 
 <button type="button" onclick="getDirections()" id="search-button" class="btn btn-default">Get Directions</button>
@@ -251,6 +251,7 @@
                 if(polygons[z]){
                     if(google.maps.geometry.poly.containsLocation(source, polygons[z])){
                         srcdst.source['inside'] = ids[z];
+                        alert(ids[z]);
                     }
                     if(google.maps.geometry.poly.containsLocation(destination, polygons[z])){
                         srcdst.destination['inside'] = ids[z];

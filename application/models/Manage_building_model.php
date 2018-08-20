@@ -18,14 +18,14 @@ class Manage_building_model extends CI_Model
 
     public function display_buildings_except($data)
     {
-        $name =$data['name'];
+        $name =$_POST['name'];
         $query = $this->db->select('id, latitudes, longitudes, name, description, graph_id')->from('building')->where('name !=', $name)->get();
         return $query->result();
     }
 
     function search_buildings($name)
     {
-        return $this->db->select('name, id, description, latitudes, longitudes')->like('name', $name, 'both')->order_by('name', 'ASC')->limit(5)->get('building')->result();
+        return $this->db->select('name, id')->like('name', $name, 'both')->order_by('name', 'ASC')->limit(5)->get('building')->result();
     }
 
     public function add($data)
@@ -35,9 +35,10 @@ class Manage_building_model extends CI_Model
 
     public function selected($data)
     {
-        $name = $data['name'];
+        $name = $_POST['name'];
+        $id = $_POST['id'];
 //        var_dump($name);
-        $query = $this->db->select('*')->from('building')->where('name', $name)->get();
+        $query = $this->db->select('*')->from('building')->where('id', $id)->get();
         $rows = $query->row_array();
 //        var_dump($rows);
 //        $rows['name'];
@@ -75,7 +76,7 @@ class Manage_building_model extends CI_Model
     {
         var_dump($data);
         if (isset($data['name'])) {
-            $id = $data['id'];
+            $id = $_POST['id'];
             $data3 = array(
                 'name' => $data['name'],
                 'description' => $data['description'],

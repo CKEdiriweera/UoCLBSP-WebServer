@@ -18,6 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php
 ini_set('display_errors', 1);
 
+//print_r($source_name);
+
 //convert the stdClass Object into a php array
 foreach($result as $key => $data){
     $rooms[$key] = (array)$data;
@@ -156,6 +158,8 @@ $room_json = json_encode($rooms);
                 map: map
             });
 
+            room_marker.addListener('dblclick', getDirections);
+
             var content = '<b>' + name + '</b>' + '</br>' + description;
 
             var info_window = new google.maps.InfoWindow();
@@ -175,6 +179,20 @@ $room_json = json_encode($rooms);
         }
     }
 
+    //function getDirections(event) {
+    //    var name = $(this.name).val();
+    //    console.log(name.toString());
+    //    //$.post("<?php ////echo base_url(); ?>/////Nearby_search/get_directions",
+    //    //    {
+    //    //        source: document.getElementById('name').value,
+    //    //        destination: document.getElementById('id').value
+    //    //    },
+    //    //    function(data, status){
+    //    //        // alert("Data: " + data + "\nStatus: " + status);
+    //    //        $("#main").html(data);
+    //    //    }
+    //    //);
+    //}
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=geometry&callback=initMap"
         async defer></script>

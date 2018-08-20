@@ -46,7 +46,8 @@ class Manage_room_types_model extends CI_Model
     {
         if (isset($_POST['type'])) {
             $type = $_POST['type'];
-            $query = $this->db->select('*')->from('room_type')->where('type', $type)->get();
+            $id = $_POST['id'];
+            $query = $this->db->select('*')->from('room_type')->where('id', $id)->get();
             $rows = $query->row_array();
             $data = array(
                 'id' => $rows['id'],

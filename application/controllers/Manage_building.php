@@ -21,12 +21,24 @@ class Manage_building extends CI_Controller
         if (isset($_GET['term'])) {
 //            var_dump($_GET['term']);
             $result = $this->manage_building_model->search_buildings($_GET['term']);
+            echo json_encode($result);
 //            var_dump($result);
             if (count($result) > 0) {
                 foreach ($result as $row)
                     $arr_result[] = $row->name;
                 echo json_encode($arr_result);
             }
+//            if (count($result) > 0) {
+//                foreach ($result as $row)
+//                    $arr_result['name'] = $row->name;
+//                    $arr_result['id'] = $row->id;
+////                    $arr_result = array(
+////                        'name' => $row->name,
+////                        'id' => $row->id
+////                    );
+////                var_dump($arr_result);
+//                echo json_encode($arr_result);
+//            }
         }
     }
 
@@ -41,11 +53,18 @@ class Manage_building extends CI_Controller
 //            'graph_id' => $this->input->post('graphId')
 //        );
         $data = array(
+
             'name' => $_REQUEST['name'],
             'description' => $_REQUEST['desc'],
             'latitudes' => $_REQUEST['lat'],
             'longitudes' => $_REQUEST['lng'],
-            'graph_id' => $_REQUEST['g_id']
+            'graph_id' => $_REQUEST['g_id'],
+            'name' => $this->input->post('name'),
+            'description' => $this->input->post('description'),
+            'latitudes' => $this->input->post('latitudes'),
+            'longitudes' => $this->input->post('longitudes'),
+            'graph_id' => $this->input->post('graph_id')
+
         );
         $this->manage_building_model->add($data);
 
@@ -61,6 +80,7 @@ class Manage_building extends CI_Controller
             $this->load->model('manage_building_model');
             $data = array(
                 'name' => $this->input->post('name'),
+                'id' => $this->input->post('id')
             );
             $building = $this->manage_building_model->selected($data);
             $building['result'] = $this->manage_building_model->display_buildings_except($data);

@@ -18,7 +18,6 @@
             var outArray = [];
             var verArray = [];
 
-
             function initMap() {
 
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -36,7 +35,6 @@
                 requestMap.onload = function () {
                     var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
                     var data = requestMap.response;
-
                     maparray = JSON.parse(data);
 
                     // alert(data);
