@@ -70,7 +70,7 @@ ini_set('display_errors', 1);
         </table>
         <button id ="s_button" class="sbutton" type="button" onclick="addBuilding()" name="add_building">Add Building</button>
         <button class="rbutton" type="button" onclick="resetForm()" name="reset">Reset</button>
-        
+
 <!--        <input id ="s_button" class="button" type="xxx" onclick="addBuilding()" name="add_building" value="Add Building">-->
 <!--        <input class="button" type="yyy" onclick="resetForm()" name="reset" value="Reset">-->
 

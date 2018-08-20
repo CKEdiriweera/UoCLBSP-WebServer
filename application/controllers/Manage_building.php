@@ -23,11 +23,6 @@ class Manage_building extends CI_Controller
             $result = $this->manage_building_model->search_buildings($_GET['term']);
             echo json_encode($result);
 //            var_dump($result);
-            if (count($result) > 0) {
-                foreach ($result as $row)
-                    $arr_result[] = $row->name;
-                echo json_encode($arr_result);
-            }
 //            if (count($result) > 0) {
 //                foreach ($result as $row)
 //                    $arr_result['name'] = $row->name;
