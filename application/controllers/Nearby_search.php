@@ -33,6 +33,8 @@ class Nearby_search extends CI_Controller
     {
         if (isset($_POST['source_name'])) {
             $source_name = $_POST['source_name'];
+            $source_lat = $_POST['sourceLat'];
+            $source_lng = $_POST['sourceLng'];
             $this->load->model('Nearby_search_model');
             $data = array(
                 'name' => $this->input->post('source_name'),
@@ -41,7 +43,9 @@ class Nearby_search extends CI_Controller
                 'type' => $this->input->post('room_type'),
             );
             $source_name= array(
-                'source_name' => $source_name
+                'source_name' => $source_name,
+                'source_lat' => $source_lat,
+                'source_lng' => $source_lng,
             );
             $room_array['result'] = $this->nearby_search_model->search_nearby_places($data);
             $data = array_merge($room_array, $source_name);
@@ -75,13 +79,21 @@ class Nearby_search extends CI_Controller
 
     function get_directions()
     {
-        if(isset($_POST['source']))
+        if(isset($_POST['source_name']))
         {
-            $source_name = $_POST['source'];
-            $destination = $_POST['destination'];
+            $source_name = $_POST['source_name'];
+            $source_lat = $_POST['source_lat'];
+            $source_lng = $_POST['source_lng'];
+            $destination_name = $_POST['destination_name'];
+            $destination_lat = $_POST['destination_lat'];
+            $destination_lng = $_POST['destination_lng'];
             $data = array(
                 'source_name' => $source_name,
-                'destination_name' => $destination
+                'source_lat' => $source_lat,
+                'source_lng' => $source_lng,
+                'destination_name' => $destination_name,
+                'destination_lat' => $destination_lat,
+                'destination_lng' => $destination_lng,
             );
             $this->load->view('get_directions', $data);
         }

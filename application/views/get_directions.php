@@ -39,26 +39,26 @@
         });
 
         //getting directions
-            alert('jfjf');
-            window.source;
-            window.destination;
-            var originName = '<?php echo $source_name?>';
-            var destinationName = '<?php echo $destination_name?>';
-            //alert(window.placeLatsD);
-            var index = 1;
-            //alert(JSON.stringify(window.resultsO.Results[index]['lat']));
-            for (var i = 0; i < window.placeLats.length; i++) {
-                if (window.placeLats[i][0] == originName) {
-                    index = window.placeLats[i][1];
-                    window.source = new google.maps.LatLng(window.resultsO.Results[index]['lat'], window.resultsO.Results[index]['lng']);
-                    window.destination = new google.maps.LatLng(window.resultsD.Results[index]['lat'], window.resultsD.Results[index]['lng']);
-                }
-            }
-            // alert(source);
-            // alert(destination);
-            getWholePath();
+        //    alert('jfjf');
+        //    window.source;
+        //    window.destination;
+        //    var originName = '<?php //echo $source_name?>//';
+        //    var destinationName = '<?php //echo $destination_name?>//';
+        //    //alert(window.placeLatsD);
+        //    var index = 1;
+        //    //alert(JSON.stringify(window.resultsO.Results[index]['lat']));
+        //    for (var i = 0; i < window.placeLats.length; i++) {
+        //        if (window.placeLats[i][0] == originName) {
+        //            index = window.placeLats[i][1];
+        //            window.source = new google.maps.LatLng(window.resultsO.Results[index]['lat'], window.resultsO.Results[index]['lng']);
+        //            window.destination = new google.maps.LatLng(window.resultsD.Results[index]['lat'], window.resultsD.Results[index]['lng']);
+        //        }
+        //    }
+        //    // alert(source);
+        //    // alert(destination);
+        //    getWholePath();
 
-        function getWholePath() {
+
             // var map = new google.maps.Map(document.getElementById('map'), {
             //   center: {lat: 6.901120, lng: 79.860532},
             //   zoom: 15,
@@ -124,10 +124,10 @@
                             'inside': 0
                         }
                 };
-                srcdst.source['latitudes'] = source.lat();
-                srcdst.source['longitudes'] = source.lng();
-                srcdst.destination['latitudes'] = destination.lat();
-                srcdst.destination['longitudes'] = destination.lng();
+                srcdst.source['latitudes'] = <?php echo $source_lat?>;
+                srcdst.source['longitudes'] = <?php echo $source_lng?>;
+                srcdst.destination['latitudes'] = <?php echo $destination_lat?>;
+                srcdst.destination['longitudes'] = <?php echo $destination_lng?>
                 //alert(JSON.stringify(srcdst));
                 //check if the search points are inside any of the polygons
                 //otherwise zero
@@ -252,7 +252,6 @@
             }
             requestPoly.open(method, urlPoly, shouldBeAsync);
             requestPoly.send(polyData);
-        }
     }
 
 

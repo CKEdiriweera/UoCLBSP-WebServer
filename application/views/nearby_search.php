@@ -231,8 +231,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         $.post("<?php echo base_url(); ?>Nearby_search/get_directions",
             {
-                status: 0,
                 source_name: originName,
+                source_lat: sourceLat,
+                source_lng: sourceLng,
             },
         );
     }
