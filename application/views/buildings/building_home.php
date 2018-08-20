@@ -26,6 +26,19 @@
             width: 239px;
             border: 0.1px solid gray;
         }
+
+        #Search{
+            background-image: url('<?php echo base_url(); ?>assets/drawable/searchicon.png');
+            background-position: 2px 8px;
+            background-size: 35px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 30px 12px 40px;
+            border: 2px solid #ddd;
+            margin-bottom: 12px;
+        }
+
     </style>
 </head>
 
@@ -76,15 +89,15 @@ $building_json = json_encode($building_array);
     </div>
     </br>
     <form method="post">
-        <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search building" style="width:320px;">
-    <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
+        <input id="Search" placeholder="Search building">
+<!--    <form method="post" action="--><?php //echo base_url() ?><!--index.php/manage_building/add_building">-->
 <!--        <input id="name">-->
 <!--        <input type="text" id="id">-->
 <!--        <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search building" style="width:320px;">-->
 <!--        <input type="hidden" name="id" id="id">-->
-        <button type="button" onclick="search_building()" id="search_button" class="btn btn-default">Search</button>
+        <button type="button" onclick="search_building()" id="search_button" class="sbutton" style="width: 100%">Search</button>
     </form>
-    <button type="button" class="btn btn-default"  id="add_button" style="position: absolute; bottom: 50px;">Add new building</button>
+    <button type="button" class="sbutton"  id="add_button" style="position: absolute; bottom: 50px;width:21%">Add new building</button>
     <script>
         $("#add_button").click(function () {
             //$("body").html("url: <?php //echo base_url()?>//index.php/manage_building/building");

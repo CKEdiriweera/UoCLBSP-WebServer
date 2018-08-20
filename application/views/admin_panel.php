@@ -12,6 +12,7 @@
 <head>
 
     <script src="<?php echo base_url() ?>assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
 
     <style>
         #adminSearch{
@@ -21,9 +22,10 @@
             background-repeat: no-repeat;
             width: 30%;
             font-size: 16px;
-            padding: 12px 30px 12px 40px;
+            padding: 12px 30px 5px 40px;
             border: 2px solid #ddd;
-            margin-bottom: 12px;
+            margin-top: 50px;
+            margin-bottom: 5px;
         }
 
     </style>
@@ -219,13 +221,13 @@
                 <input id="adminSearch" placeholder="Search" onkeyup="searchTable()">
             </div>
             <div class="container" style="padding-top: 400px">
-                <button class="btn btn-primary btn-lg" style="font-size: 44px">Add Admin</button>
+                <button class="sbutton" style="font-size: 20px; width: 30%">Add Admin</button>
             </div>
         </div>
 
         <hr>
         <div id="right_div" class="col-sm-6" style=" height: 100%">
-            <h2 style="padding-bottom: 20px">Admin Table</h2>
+            <h2 style="padding-bottom: 20px; padding-top:0%; color: #AF7AC5">Admin Table</h2>
             <table id="adminTable" class="table table-bordered" style="width: 100%; table-layout: auto">
                 <thead>
                 <tr>

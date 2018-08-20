@@ -26,6 +26,19 @@
             width: 239px;
             border: 0.1px solid gray;
         }
+
+        #type{
+            background-image: url('<?php echo base_url(); ?>assets/drawable/searchicon.png');
+            background-position: 2px 8px;
+            background-size: 35px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 30px 12px 40px;
+            border: 2px solid #ddd;
+            margin-bottom: 12px;
+        }
+
     </style>
 </head>
 
@@ -67,11 +80,11 @@
         </div>
         </br>
         <form method="post" action="<?php echo base_url() ?>index.php/manage_room_types/add_room_type">
-            <input type="text" class="form-control" class="ui-widget" id="type" placeholder="Search room type" style="width:320px;">
-            <input type="text" id="id">
-            <button type="button" onclick="search_room_types()" id="search_button" class="btn btn-default">Search</button>
+            <input type="text" id="type" placeholder="Search room type" style="width:320px;">
+<!--            <input type="text" id="id">-->
+            <button type="button" onclick="search_room_types()" id="search_button" class="sbutton" style="width: 104%">Search</button>
         </form>
-        <button type="button" class="btn btn-default" id="add_button" style="position: absolute; bottom: 50px;">Add new room type</button>
+        <button type="button" class="sbutton" id="add_button" style="position: absolute; bottom: 50px; width: 21%">Add new room type</button>
         <script>
             $("#add_button").click(function () {
                 //$("body").html("url: <?php //echo base_url()?>//index.php/manage_building/building");
