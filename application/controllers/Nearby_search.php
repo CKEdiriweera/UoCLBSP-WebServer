@@ -71,26 +71,19 @@ class Nearby_search extends CI_Controller
             echo($room_array);
         }
 
-//        $data = '{"source_name": "a", "source_lat": "b", "source_lng": "c", "room_type": "d"}';
-//        var_dump($data);
-//        $data = $_POST['data'];
-
-//        $data = '{"source_name":"nearbySearch","source_lat":6.7876508,"source_lng":79.9740259,"room_type":"Canteen"}';
-
-//        var_dump($room_array);
-//        return "hello";
-
-//        $data = '{"source_name": "","source_lat": 0,"source_lng": 0,"room_type":""}';
-//        $character = json_decode($data, true);
-//        $data = array(
-//            'name' => $character[source_name],
-//            'lat1' => $character[source_lat],
-//            'lng1' => $character[source_lng],
-//            'type' => $character[room_type],
-//        );
-//        $room_array['result'] = $this->nearby_search_model->search_nearby_places($data);
-//        $room_array = json_encode($room_array);
-//        echo($room_array);
     }
 
+    function get_directions()
+    {
+        if(isset($_POST['source']))
+        {
+            $source_name = $_POST['source'];
+            $destination = $_POST['destination'];
+            $data = array(
+                'source_name' => $source_name,
+                'destination_name' => $destination
+            );
+            $this->load->view('get_directions', $data);
+        }
+    }
 }
