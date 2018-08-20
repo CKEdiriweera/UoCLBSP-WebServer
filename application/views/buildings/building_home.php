@@ -78,8 +78,8 @@ $building_json = json_encode($building_array);
     <form method="post">
         <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search building" style="width:320px;">
     <form method="post" action="<?php echo base_url() ?>index.php/manage_building/add_building">
-        <input id="name">
-        <input type="text" id="id">
+<!--        <input id="name">-->
+<!--        <input type="text" id="id">-->
 <!--        <input type="text" class="form-control" class="ui-widget" id="name" placeholder="Search building" style="width:320px;">-->
 <!--        <input type="hidden" name="id" id="id">-->
         <button type="button" onclick="search_building()" id="search_button" class="btn btn-default">Search</button>

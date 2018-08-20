@@ -94,14 +94,14 @@ class Manage_building extends CI_Controller
                 'longitudes' => $this->input->post('longitudes'),
             );
 //            var_dump($data0);
-            $data = $this->manage_building_model->get_name($data0);
+            $data = $this->manage_building_model->get_id($data0);
 //            var_dump($data);
             $data = json_decode(json_encode($data), True);
             $data = array(
-                'name' => $data[0]['name']
+                'id' => $data[0]['id']
             );
 //            var_dump($data);
-            $building = $this->manage_building_model->selected($data);
+            $building = $this->manage_building_model->selected2($data);
             $building['result'] = $this->manage_building_model->display_buildings_except($data);
 //            var_dump($building);
             $view_data = $this->load->view('buildings/edit_building', $building, TRUE);
@@ -113,27 +113,31 @@ class Manage_building extends CI_Controller
     {
         $this->load->model('manage_building_model');
         $data = array(
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-            'latitudes' => $this->input->post('latitudes'),
-            'longitudes' => $this->input->post('longitudes'),
-            'graph_id' => $this->input->post('graphId'),
-            'id' => $this->input->post('id'),
+            'name' => $_REQUEST['name'],
+            'description' => $_REQUEST['description'],
+            'latitudes' => $_REQUEST['latitudes'],
+            'longitudes' => $_REQUEST['longitudes'],
+            'graph_id' => $_REQUEST['graphId'],
+            'id' => $_REQUEST['id'],
         );
 //        var_dump($data);
         $this->manage_building_model->change($data);
+
+        echo json_encode(array("status" => true));
 //        $this->load->view('buildings/edit');
         //$this->load->library(base_url("controllers/Admin_home"));
         //$this->Admin_home->index();
 
 //        redirect('Admin_home');
     }
-    public function delete_building()
-    {
-        $this->load->model('manage_building_model');
+
+    public function delete_building(){
+        $this->load->model('Manage_building_model');
         $datasearch4 = array(
-            'id' => $this->input->post('id'),
+            'id' => $_REQUEST['id']
         );
-        $this->manage_building_model->delete($datasearch4);
+        $this->Manage_building_model->delete($datasearch4);
+
+        echo json_encode(array("status" => true));
     }
 }
