@@ -33,8 +33,8 @@ class Nearby_search extends CI_Controller
     {
         if (isset($_POST['source_name'])) {
             $source_name = $_POST['source_name'];
-            $source_lat = $_POST['sourceLat'];
-            $source_lng = $_POST['sourceLng'];
+            $source_lat = $_POST['source_lat'];
+            $source_lng = $_POST['source_lng'];
             $this->load->model('Nearby_search_model');
             $data = array(
                 'name' => $this->input->post('source_name'),
