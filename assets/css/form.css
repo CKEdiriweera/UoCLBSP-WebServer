@@ -9,6 +9,28 @@ input[type=text], input[type=password], select {
     box-sizing: border-box;
 }
 
+button[class='sbutton']{
+    width: 47%;
+    background-color: #AF7AC5;
+    color: #FFFFFF;
+    padding: 14px 10px;
+    margin-top: 40px;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button[class='rbutton']{
+    width: 47%;
+    background-color: #AF7AC5;
+    color: #FFFFFF;
+    padding: 14px 10px;
+    margin-top: 40px;
+    float: right;
+    border: none;
+    cursor: pointer;
+}
+
 input[type=submit]{
     width: 47%;
     background-color: #AF7AC5;
@@ -20,7 +42,29 @@ input[type=submit]{
     cursor: pointer;
 }
 
+input[type=xxx]{
+    width: 47%;
+    background-color: #AF7AC5;
+    color: #FFFFFF;
+    padding: 14px 10px;
+    margin-top: 40px;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+}
+
 input[type=reset]{
+    width: 47%;
+    background-color: #AF7AC5;
+    color: #FFFFFF;
+    padding: 14px 10px;
+    margin-top: 40px;
+    float: right;
+    border: none;
+    cursor: pointer;
+}
+
+input[type=yyy] {
     width: 47%;
     background-color: #AF7AC5;
     color: #FFFFFF;
