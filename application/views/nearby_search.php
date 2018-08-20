@@ -211,6 +211,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     window.source = new google.maps.LatLng (window.resultsO.Results[index]['lat'], window.resultsO.Results[index]['lng']);
                     sourceLat = window.resultsO.Results[index]['lat'];
                     sourceLng = window.resultsO.Results[index]['lng'];
+                    alert(sourceLng);
                 }
             }
             // alert(sourceLng);
