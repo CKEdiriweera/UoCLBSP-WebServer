@@ -2,6 +2,92 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
+    <script src="<?php echo base_url() ?>assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!--    <script src="https://apis.google.com/js/platform.js" async defer></script>-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+
+    <script>
+        function updateBuilding() {
+            // var form = document.getElementById('form');
+            // form.action = action;
+            // form.submit();
+
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
+            var id = document.getElementById('id').value;
+
+            var longitudes = document.getElementById('infoLat').value;
+            var latitudes = document.getElementById('infoLng').value;
+
+            var graph_id = 1;
+
+
+
+            // var graph_id = document.getElementById('graphId').value;
+
+            /*Uncomment this to check polygon change of a marker. If the key is not working the whole function will not work
+
+            let loc = new google.maps.LatLng(longitudes,latitudes);
+
+            for(var z=0;z<polyArray.length ; z++){
+                if(google.maps.geometry.poly.containsLocation(loc, polyArray[z])){
+                    graph_id = polyArray[z].id;
+                    break;
+                }
+            }
+
+            */
+
+            $.ajax({
+                url: "<?php echo base_url('Manage_building/change_building');?>",
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    "latitudes": latitudes,
+                    "longitudes": longitudes,
+                    "graphId": graph_id,
+                    "name": name,
+                    "id": id,
+                    "description": description
+                },
+                success: function () {
+                    swal(
+                        'Good job!',
+                        'Data has been save!',
+                        'success'
+                    );
+                }
+            });
+        }
+
+        function deleteBuilding() {
+
+            var id =document.getElementById('id').value;
+
+            $.ajax({
+                url: "<?php echo base_url('Manage_building/delete_building');?>",
+                method: 'POST',
+                dataType: 'JSON',
+                data: {"id": id},
+                success: function () {
+                    swal(
+                        'Good job!',
+                        'Data has been save!',
+                        'success'
+                    );
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(id);
+                    console.log(errorThrown);
+                    alert('Error adding / update data');
+                }
+            });
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -21,13 +107,7 @@ $building_json = json_encode($building_array);
         <p>Edit Building</p>
     </div>
     </br>
-    <script type="text/javascript">
-        function submitForm(action) {
-            var form = document.getElementById('form');
-            form.action = action;
-            form.submit();
-        }
-    </script>
+
     <form method="post" id="form">
         <table>
             <tr>
@@ -43,7 +123,7 @@ $building_json = json_encode($building_array);
                     Description :
                 </td>
                 <td>
-                    <input type="text" name="description" id="name" value="<?php echo $description ?>">
+                    <input type="text" name="description" id="description" value="<?php echo $description ?>">
                 </td>
             </tr>
             <tr>
@@ -69,15 +149,15 @@ $building_json = json_encode($building_array);
             </tr>
             <tr>
                 <td>
-                    <input type="hidden" name="graphId" id="graphId" value="<?php echo $graph_id ?>">
+                    <input type="text" name="graphId" id="graphId" value="<?php echo $graph_id ?>">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="submit" id="update" onclick="submitForm('<?php echo base_url()?>manage_building/change_building')" name="update" value="Update building">
+                    <input type="submit" id="update" onclick="updateBuilding()" name="update" value="Update building">
                 </td>
                 <td>
-                    <input type="submit" id="delete" onclick="submitForm('<?php echo base_url()?>manage_building/delete_building')" name="delete" value="Delete building">
+                    <input type="submit" id="delete" onclick="deleteBuilding()" name="delete" value="Delete building">
                 </td>
             </tr>
         </table>
@@ -273,6 +353,10 @@ $building_json = json_encode($building_array);
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 </body>
 </html>
+
+<script>
+
+</script>
