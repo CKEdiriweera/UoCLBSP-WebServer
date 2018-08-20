@@ -12,8 +12,13 @@ class Admin_home extends CI_Controller
 
     public function home()
     {
-        $this->load->view('search_place');
-//        $this->load->view('admin_map');
+//        $this->load->view('search_place');
+        $this->load->view('admin_map');
+    }
+
+    public function map()
+    {
+        $this->load->view('admin_map');
     }
 
     public function add_polygon(){
