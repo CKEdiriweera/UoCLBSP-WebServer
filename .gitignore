@@ -34,3 +34,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /.env.development
 application/views/test1.php
 application/controllers/Test.php
+application/views/test.php
+application/views/buildings/building_home.php___jb_tmp___
