@@ -84,14 +84,14 @@ class Nearby_search extends CI_Controller
             $source_name = $_POST['source_name'];
             $source_lat = $_POST['source_lat'];
             $source_lng = $_POST['source_lng'];
-            $destination_name = $_POST['destination_name'];
+//            $destination_name = $_POST['destination_name'];
             $destination_lat = $_POST['destination_lat'];
             $destination_lng = $_POST['destination_lng'];
             $data = array(
                 'source_name' => $source_name,
                 'source_lat' => $source_lat,
                 'source_lng' => $source_lng,
-                'destination_name' => $destination_name,
+//                'destination_name' => $destination_name,
                 'destination_lat' => $destination_lat,
                 'destination_lng' => $destination_lng,
             );

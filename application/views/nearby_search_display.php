@@ -180,17 +180,17 @@ $room_json = json_encode($rooms);
         }
 
         function getDirections(event) {
-            var destination_name = room_marker.name;
-            var destination_lat = room_marker.latLng.lat();
-            var destination_lng = room_marker.latLng.lng();
+            // var destination_name = room_marker.name;
+            var destination_lat = event.latLng.lat();
+            var destination_lng = event.latLng.lng();
             // var name = $(this.name).val();
             // console.log(name.toString());
             $.post("<?php echo base_url(); ?>/Nearby_search/get_directions",
                 {
                     source_name: '<?php echo $source_name?>',
-                    source_lat: '<?php echo $source_lat?>'
-                    source_lng: '<?php echo $source_lng?>'
-                    destination: destination_name,
+                    source_lat: '<?php echo $source_lat?>',
+                    source_lng: '<?php echo $source_lng?>',
+                    // destination: destination_name,
                     destination_lat: destination_lat,
                     destination_lng: destination_lng
                 },

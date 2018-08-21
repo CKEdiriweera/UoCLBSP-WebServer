@@ -29,7 +29,7 @@ class Nearby_search_model extends CI_Model
     ( 3959 * acos( cos( radians($lat1) ) * cos( radians(building.latitudes) ) * cos( radians($lng1) 
     - radians(building.longitudes) ) + sin( radians($lat1) ) * sin( radians(building.latitudes) ) ) ) AS distance
     FROM building, room, room_type WHERE room_type.type = '".$type."' AND room_type.id = room.room_type_id AND room.building_id = building.id 
-    HAVING distance < 10 ORDER BY distance LIMIT 0 , 10;");
+    HAVING distance < 1000 ORDER BY distance LIMIT 0 , 10;");
         foreach ($query->result() as $row)
         {
             $data2[]  = array(

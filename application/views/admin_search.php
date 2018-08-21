@@ -396,8 +396,6 @@
         requestPoly.send(polyData);
     }
 
-
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$this->config->item('api_key');?>&libraries=places,geometry&callback=initMap"
         async defer></script>
