@@ -63,15 +63,15 @@ class Manage_rooms extends CI_Controller
 
     public function add_room()
     {
-        $this->load->model('manage_rooms_model');
+        $this->load->model('Manage_rooms_model');
         $data = array(
-            'name' => $_REQUEST['room_name'],
+            'room_name' => $_REQUEST['name'],
             'description' => $_REQUEST['description'],
             'floor' => $_REQUEST['floor'],
             'room_type' => $_REQUEST['room_type'],
             'building_name' => $_REQUEST['building_name']
         );
-        $this->manage_rooms_model->add($data);
+        $this->Manage_rooms_model->add($data);
 
         echo json_encode(array("status"=>true));
     }

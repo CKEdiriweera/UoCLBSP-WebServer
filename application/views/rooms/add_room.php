@@ -86,6 +86,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             var type = document.getElementById('room_type').value;
             var building = document.getElementById('building_name').value;
 
+            alert(type);
+
             $.ajax({
                 url: '<?php echo base_url('Manage_rooms/add_room'); ?>',
                 method: 'POST',

@@ -20,21 +20,35 @@ class Manage_rooms_model extends CI_Model
 
     public function add($data)
     {
-        if (isset($_POST['room_name'])) {
-            $room_type = $_POST['room_type'];
-            $query1 = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
-            $rows = $query1->row_array();
-            $room_type_id = $rows['id'];
+        if (isset($data['room_name'])) {
+            $room_type = $data['room_type'];
+//            $query1 = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
+            $this->db->select('id');
+            $this->db->where('type',$room_type);
+            $query = $this->db->get('room_type');
+            $rows = $query->result();
+            foreach ($rows as $row){
+                $room_type_id = $row->id;
+            }
 
-            $building_name = $_POST['building_name'];
-            $query2 = $this->db->select('id')->from('building')->where('name', $building_name)->get();
-            $rows2 = $query2->row_array();
-            $building_id = $rows2['id'];
+            $building_name = $data['building_name'];
+//            $query2 = $this->db->select('id')->from('building')->where('name', $building_name)->get();
+//            $rows2 = $query2->row_array();
+//            $building_id = $rows2['id'];
+
+            $this->db->select('id');
+            $this->db->where('name',$building_name);
+            $query2 = $this->db->get('building');
+            $rows2 = $query2->result();
+            foreach ($rows2 as $row){
+                $building_id = $row->id;
+            }
+
 
             $data = array(
-                'name' => $_POST['room_name'],
-                'description' => $_POST['description'],
-                'floor' => $_POST['floor'],
+                'name' => $data['room_name'],
+                'description' => $data['description'],
+                'floor' => $data['floor'],
                 'room_type_id' => $room_type_id,
                 'building_id' => $building_id
             );
