@@ -31,6 +31,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             border: 0.1px solid gray;
         }
     </style>
+
+    <script>
+        function addPeople() {
+
+            var people_name = document.getElementById('people_name').value;
+            var designation = document.getElementById('designation').value;
+            var description = document.getElementById('description').value;
+            var room_name = document.getElementById('room_name').value;
+            // var building = document.getElementById('building_name').value;
+
+            $.ajax({
+                url: '<?php echo base_url('Manage_people/add_people'); ?>',
+                method: 'POST',
+                data: {'people_name':people_name, 'designation':designation, 'description':description, 'room_name':room_name},
+                // dataType: 'json',
+                success: function () {
+                    swal(
+                        'Good job!',
+                        'Room has been added',
+                        'success'
+                    );
+                },
+                error: function (response) {
+                    alert('hehe');
+                    console.log(response);
+                    swal({
+                        type: 'error',
+                        text: 'something went wrong!'
+                    });
+                }
+            });
+
+            document.getElementById('people_name').value = '';
+            document.getElementById('designation').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('room_name').value = '';
+
+            event.preventDefault();
+        }
+    </script>
+
 </head>
 
 <body>
@@ -46,11 +87,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     });
 </script>
 
+<script>
+
+</script>
+
     <div id="form-div">
         <div id="title-div">
                 <p>Add People</p></div>
             </br>
-            <form method="post" action="<?php echo base_url()?>index.php/manage_people/add_people">
+            <form>
 
                 <table>
                     <tr>
@@ -58,7 +103,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             Name :
                         </td>
                         <td>
-                            <input type="text" name="people_name">
+                            <input type="text" name="people_name" id="people_name">
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             Designation :
                         </td>
                         <td>
-                            <textarea rows="1.5" cols="30" name="designation"></textarea>
+                            <textarea rows="1.5" cols="30" name="designation" id="designation"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -88,8 +133,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 </table>
 
-                <input class="button" type="submit" name="add_people" value="Add"style="margin-top: 20px">
-                <input class="button" type="reset" name="reset" value="Reset"style="margin-top: 20px">
+<!--                <input class="button" type="submit" name="add_people" value="Add"style="margin-top: 20px">-->
+<!--                <input class="button" type="reset" name="reset" value="Reset"style="margin-top: 20px">-->
+                <button onclick="addPeople()" class="sbutton" >Submit</button>
+                <button type="reset" class="rbutton">Reset</button>
 
             </form>
         </div>

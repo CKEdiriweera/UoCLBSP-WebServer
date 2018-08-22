@@ -51,13 +51,15 @@ class Manage_people extends CI_Controller
     {
         $this->load->model('manage_people_model');
         $data = array(
-            'name' => $this->input->post('building_name'),
-            'designation' => $this->input->post('designation'),
-            'description' => $this->input->post('description'),
-            'room_name' => $this->input->post('room_name')
+            'people_name' => $_REQUEST['people_name'],
+            'designation' => $_REQUEST['designation'],
+            'description' => $_REQUEST['description'],
+            'room_name' => $_REQUEST['room_name']
         );
 
         $this->manage_people_model->add($data);
+
+        echo json_encode(array("status"=>true));
 //        redirect('admin_home');
 //        redirect(base_url() . 'index.php/Admin_home/buildings');
 
@@ -79,15 +81,17 @@ class Manage_people extends CI_Controller
 
     public function change_people()
     {
-        $this->load->model('manage_people_model');
+        $this->load->model('Manage_people_model');
         $data = array(
-            'id' => $this->input->post('id'),
-            'name' => $this->input->post('name'),
-            'designation' => $this->input->post('designation'),
-            'description' => $this->input->post('description'),
-            'room_name' => $this->input->post('room_name'),
+            'id'=> $_REQUEST['id'],
+            'name' => $_REQUEST['name'],
+            'designation' => $_REQUEST['designation'],
+            'description' => $_REQUEST['description'],
+            'room_name' => $_REQUEST['room_name']
         );
-        $this->manage_people_model->change($data);
+        $this->Manage_people_model->change($data);
+
+        json_encode(array("status"=>true));
     }
 
     public function delete_people()
@@ -97,6 +101,7 @@ class Manage_people extends CI_Controller
             'id' => $this->input->post('id'),
         );
         $this->manage_people_model->delete($data);
+        json_encode(array("status"=>true));
     }
 
 }
