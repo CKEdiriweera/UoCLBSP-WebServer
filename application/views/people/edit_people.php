@@ -46,7 +46,7 @@
 <div id="main">
     <div id="form-div">
         <div id="title-div">
-            <p>Edit Room</p>
+            <p>Edit Person</p>
         </div>
         </br>
         <form method="post" action="<?php echo base_url() ?>index.php/Manage_people/change_people">
@@ -56,7 +56,7 @@
                         Name :
                     </td>
                     <td>
-                        <input type="text" name="name" id="name" value="<?php echo $name ?>">
+                        <input type="text" name="name" id="name1" value="<?php echo $name ?>">
                         <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                         Designation :
                     </td>
                     <td>
-                        <input type="text" class="form-control" class="ui-widget" name="designation" id="designation" value="<?php echo $designation ?>">
+                        <input type="text" name="designation" id="designation" value="<?php echo $designation ?>">
                     </td>
                 </tr>
                 <tr>
@@ -73,7 +73,8 @@
                         Description :
                     </td>
                     <td>
-                        <input type="text" name="description" id="description" value="<?php echo $description ?>">
+<!--                        <input type="text" name="description" id="description" value="--><?php //echo $description ?><!--">-->
+                        <textarea name="description" id="description"><?php echo htmlentities($description);  ?></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -81,13 +82,15 @@
                         Room:
                     </td>
                     <td>
-                        <input type="text" class="form-control" class="ui-widget" name="room_name" id="room_name" value="<?php echo $room_name ?>">
+                        <input type="text" name="room_name" id="room_name" value="<?php echo $room_name ?>">
                     </td>
                 </tr>
 
             </table>
-                <input type="submit" name="update" id="update_button" onclick="update_people()" value="Update">
-                <input type="submit" name="delete" id="delete_button" onclick="delete_people()" value="Delete">
+<!--                <input type="submit" name="update" id="update_button" onclick="update_people()" value="Update">-->
+<!--                <input type="submit" name="delete" id="delete_button" onclick="delete_people()" value="Delete">-->
+            <button class="sbutton" onclick="update_people()">Update</button>
+            <button class="rbutton" onclick="delete_people()">Delete</button>
         </form>
     </div>
     <div id="map"></div>
@@ -95,32 +98,86 @@
 
         function update_people() {
 
-            $.post("<?php echo base_url(); ?>Manage_people/change_people",
-                {
-                    name: document.getElementById('name').value,
-                    id: document.getElementById('id').value,
-                    designation: document.getElementById('designation').value,
-                    description: document.getElementById('description').value,
-                    room_name: document.getElementById('room_name').value
+            var name = document.getElementById('name1').value;
+            var id = document.getElementById('id').value;
+            var description = document.getElementById('description').value;
+            var designation = document.getElementById('designation').value;
+            var room_name = document.getElementById('room_name').value;
+            // var building_name = document.getElementById('building_name').value;
+
+            $.ajax({
+                url:'<?php echo base_url('Manage_people/change_people'); ?>',
+                method:'POST',
+                data: {'name':name, 'id':id, 'description':description, 'designation':designation, "room_name":room_name},
+                success: function () {
+                    swal(
+                        'Good job!',
+                        'Room has been edited',
+                        'success'
+                    );
                 },
-                function(data, status){
-                    // alert("Data: " + data + "\nStatus: " + status);
-                    $("#main").html(data);
+                error: function (response) {
+                    swal({
+                        type: 'error',
+                        text: 'something went wrong!'
+                    });
                 }
-            );
+            });
+            event.preventDefault();
+            document.getElementById('name1').value='';
+            document.getElementById('id').value='';
+            document.getElementById('description').value='';
+            document.getElementById('designation').value='';
+            document.getElementById('room_name').value='';
+            // document.getElementById('building_name').value='';
         }
 
         function delete_people() {
 
-            $.post("<?php echo base_url(); ?>Manage_people/delete_people",
-                {
-                    id: document.getElementById('id').value,
-                },
-                function(data, status){
-                    // alert("Data: " + data + "\nStatus: " + status);
-                    $("#main").html(data);
+            var id = document.getElementById('id').value;
+
+            swal({
+                title: `Are you sure you want to delete?`,
+                text: `You wont be able to undo this change!`,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: true,
+            }).then((result) => {
+                if (result.value){
+                    $.ajax({
+                        url:'<?php echo base_url('Manage_people/delete_people'); ?>',
+                        method:'POST',
+                        data: {'id':id},
+                        success: function () {
+                            swal(
+                                'Good job!',
+                                'Person has been edited',
+                                'success'
+                            );
+
+                            document.getElementById('name1').value='';
+                            document.getElementById('id').value='';
+                            document.getElementById('description').value='';
+                            document.getElementById('designation').value='';
+                            document.getElementById('room_name').value='';
+
+                        },
+                        error: function (response) {
+                            swal({
+                                type: 'error',
+                                text: 'something went wrong!'
+                            });
+                        }
+                    });
                 }
-            );
+            });
+            event.preventDefault();
         }
     </script>
 </div>

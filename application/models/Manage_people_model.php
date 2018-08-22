@@ -28,7 +28,7 @@ class Manage_people_model extends CI_Model
 //                'building_id' => $rows['id']
 //            );
 
-            $room_name = $_POST['room_name'];
+            $room_name = $data['room_name'];
             $query2 = $this->db->select('id')->from('room')->where('name', $room_name)->get();
             $rows2 = $query2->row_array();
             $room_id = array(
@@ -36,9 +36,9 @@ class Manage_people_model extends CI_Model
             );
 
             $data3 = array(
-                'name' => $_POST['people_name'],
-                'designation' => $_POST['designation'],
-                'description' => $_POST['description'],
+                'name' => $data['people_name'],
+                'designation' => $data['designation'],
+                'description' => $data['description'],
 //                'building_id' => $building_id['building_id'],
                 'room_id' => $room_id['room_id']
             );
@@ -49,8 +49,8 @@ class Manage_people_model extends CI_Model
 
     }
 
-    public function edit($data)
-    {
+    public function edit($data){
+
         if (isset($_POST['id'])) {
             $id = $_POST['id'];
             $query = $this->db->select('*')->from('people')->where('id', $id)->get();
@@ -76,34 +76,53 @@ class Manage_people_model extends CI_Model
         }
     }
 
-    public function change($data)
-    {
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
+    public function change($data){
+//        if (isset($_POST['id'])) {
+//            $id = $_POST['id'];
+//
+//            $room_name = $_POST['room_name'];
+//            $room_name_query = $this->db->select('id')->from('room')->where('name', $room_name)->get();
+//            $room_name_row = $room_name_query->row_array();
+//            $room_name_id = $room_name_row['id'];
+//
+//            $data = array(
+//                'name' => $_POST['name'],
+//                'designation' => $_POST['designation'],
+//                'description' => $_POST['description'],
+//                'room_id' => $room_name_id,
+//            );
+//
+//            $this->db->where('id', $id)->update('people', $data);
+//        }
+        $room_name = $data['room_name'];
+        $id = $data['id'];
+        $room_name_query = $this->db->select('id')->from('room')->where('name', $room_name)->get();
+        $room_name_row = $room_name_query->row_array();
+        $room_name_id = $room_name_row['id'];
 
-            $room_name = $_POST['room_name'];
-            $room_name_query = $this->db->select('id')->from('room')->where('name', $room_name)->get();
-            $room_name_row = $room_name_query->row_array();
-            $room_name_id = $room_name_row['id'];
-
-            $data = array(
-                'name' => $_POST['name'],
-                'designation' => $_POST['designation'],
-                'description' => $_POST['description'],
-                'room_id' => $room_name_id,
-            );
-
-            $this->db->where('id', $id)->update('people', $data);
-        }
+        $data = array(
+            'name' => $_POST['name'],
+            'designation' => $_POST['designation'],
+            'description' => $_POST['description'],
+            'room_id' => $room_name_id,
+        );
+        $this->db->where('id', $id)->update('people', $data);
     }
 
     public function delete($data)
     {
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
+        if (isset($data['id'])) {
+            $id = $data['id'];
             $this->db->where('id', $id)->delete('people');
-
         }
+    }
+
+    public function get_people_for_room($room_id){
+        $this->db->select('id');
+        $this->db->where('room_id',$room_id);
+        $query = $this->db->get('people');
+
+        return $query->result();
     }
 
 
