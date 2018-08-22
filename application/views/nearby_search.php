@@ -180,7 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             window.placeLats=[];
             var nameX;
             for(var i=0; i<results.Results.length; i++){
-                nameX = results.Results[i]['name']
+                nameX = results.Results[i]['name'];
                 places[i] = nameX;
                 window.placeLats.push([nameX,i]);
             }

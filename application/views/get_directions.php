@@ -56,6 +56,9 @@
             var status = requestPoly.status;
             var polyJson = JSON.parse(dataPoly);
 
+            console.log(polyJson);
+            alert(polyJson);
+
             var polygons = [],tempPoly = [],lat,lng,ids = [];
             for(var i=0;i<polyJson.polygons.length ; i++){
                 for(var j=0;j<polyJson.polygons[i].vertexes.length ; j++){
@@ -73,22 +76,34 @@
 
 
             }
+
             var srcdst =  { 'type':'getPath',
                 'source':
                     {'latitudes':'',
                         'longitudes':'',
-                        'inside':1
+                        'inside':41
                     },
                 'destination':
                     {'latitudes':'',
                         'longitudes':'',
-                        'inside':1
+                        'inside':41
                     }
             };
+
             srcdst.source['latitudes'] = parseFloat(source_lat);
             srcdst.source['longitudes'] = parseFloat(source_lng);
             srcdst.destination['latitudes'] = parseFloat(destination_lat);
             srcdst.destination['longitudes'] = parseFloat(destination_lng);
+
+            // console.log("d lat =" + destination_lat);
+            // console.log("d lng = " + destination_lng);
+
+            console.log(srcdst);
+
+            alert(srcdst.source['latitudes']);
+
+
+
             alert(JSON.stringify(srcdst));
            /* for(var z=0;z<polygons.length ; z++){
                 if(polygons[z]){
@@ -103,6 +118,7 @@
 
             }*/
             var jsonInside = JSON.stringify(srcdst);
+            alert(jsonInside);
             var url = "<?=$this->config->item('server_url');?>";
             var method = "POST";
             var postData = jsonInside;
@@ -113,10 +129,11 @@
             requestPath.timeout = 12000;
             requestPath.ontimeout = function(e){
                 alert('request timeout');
-            }
+            };
             requestPath.onload = function () {
                 var status = requestPath.status; // HTTP response status, e.g., 200 for "200 OK"
                 var newPathJson = requestPath.response;
+                alert(newPathJson);
                 if(requestPath.readyState === XMLHttpRequest.DONE && requestPath.status === 200){
                     alert(JSON.stringify(newPathJson));
                     var newPath = JSON.parse(newPathJson);
