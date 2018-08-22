@@ -69,7 +69,7 @@
         requestPlaces.timeout = 5000;
         requestPlaces.ontimeout = function(e){
             alert('request timeout');
-        }
+        };
         //on success
         requestPlaces.onload = function () {
             var status = requestPlaces.status;
@@ -96,7 +96,7 @@
                 list.appendChild(option);
             });
             // alert(list);
-        }
+        };
         requestPlaces.open(method, urlPlaces, shouldBeAsync);
         requestPlaces.send(placesData);
     });
@@ -115,7 +115,7 @@
         requestPlacesD.timeout = 5000;
         requestPlacesD.ontimeout = function(e){
             alert('request timeout');
-        }
+        };
         //on success
         requestPlacesD.onload = function () {
             var status = requestPlacesD.status;
@@ -143,7 +143,7 @@
             });
             //alert(JSON.stringify(placeLats));
 
-        }
+        };
         requestPlacesD.open(method, urlPlaces, shouldBeAsync);
         requestPlacesD.send(placesData);
     });
@@ -181,7 +181,7 @@
         requestPoly.timeout = 10000;
         requestPoly.ontimeout = function(e){
             alert('request timeout');
-        }
+        };
         requestPoly.onload = function () {
             var status = requestPoly.status;
             //if(requestPoly.readyState === XMLHttpRequest.DONE && requestPoly.status === 200){
@@ -277,7 +277,7 @@
             requestPath.timeout = 12000;
             requestPath.ontimeout = function(e){
                 alert('request timeout');
-            }
+            };
             requestPath.onload = function () {
                 var status = requestPath.status; // HTTP response status, e.g., 200 for "200 OK"
                 var newPathJson = requestPath.response;
@@ -382,7 +382,7 @@
                     }
 
                 }
-            }
+            };
             //}
             requestPath.open(method, url, shouldBeAsync);
             //request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -391,7 +391,7 @@
             // Or... whatever
             // Actually sends the request to the server.
             requestPath.send(postData);
-        }
+        };
         requestPoly.open(method, urlPoly, shouldBeAsync);
         requestPoly.send(polyData);
     }
