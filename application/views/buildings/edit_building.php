@@ -37,12 +37,6 @@
 
             }
 
-            // console.log(graph_id);
-
-            alert('xxxx');
-            // console.log(loc);
-
-
             $.ajax({
                 url: "<?php echo base_url('Manage_building/change_building');?>",
                 method: 'POST',
@@ -56,6 +50,7 @@
                     "description": description
                 },
                 success: function () {
+                    $('#form').trigger("reset");
                     swal(
                         'Good job!',
                         'Data has been save!',
@@ -68,23 +63,104 @@
                     alert('Error adding / update data');
                 }
             });
+            resetForm();
+            event.preventDefault();
         }
 
         function deleteBuilding() {
 
             var id =document.getElementById('id').value;
+            event.preventDefault();
 
             $.ajax({
-                url: "<?php echo base_url('Manage_building/delete_building');?>",
-                method: 'POST',
+                url: "<?php echo base_url('Manage_building/get_building_belongings');?>",
+                method: 'GET',
                 dataType: 'JSON',
                 data: {"id": id},
-                success: function () {
-                    swal(
-                        'Good job!',
-                        'Data has been save!',
-                        'success'
-                    );
+                success: function (response) {
+                    if (response.safe===true){
+                        swal({
+                            title: `Are you sure you want to delete?`,
+                            text: `You wont be able to reverse this action!`,
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, cancel!',
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: true,
+                        }).then((result) => {
+                            if (result.value){
+                                event.preventDefault();
+                                $.ajax({
+                                    url: "<?php echo base_url('Manage_building/delete_building');?>",
+                                    method: 'POST',
+                                    dataType: 'JSON',
+                                    data: {"id": id},
+                                    success: function () {
+                                        event.preventDefault();
+                                        swal(
+                                            'Good job!',
+                                            'Data has been deleted!',
+                                            'success'
+                                        );
+                                        resetForm();
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log(id);
+                                        console.log(errorThrown);
+                                        alert('Error adding / update data');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: `Are you sure you want to delete?`,
+                            text: `There are ${response.rooms_count} rooms and ${response.people_count} people inside this building!!`,
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, cancel!',
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: true,
+                        }).then((result) => {
+                            if (result.value){
+                                event.preventDefault();
+                                $.ajax({
+                                    url: "<?php echo base_url('Manage_building/delete_building');?>",
+                                    method: 'POST',
+                                    dataType: 'JSON',
+                                    data: {"id": id},
+                                    success: function () {
+                                        //$('#form').trigger("reset");
+                                        initialize();
+                                        event.preventDefault();
+                                        swal(
+                                            'Good job!',
+                                            'Data has been deleted!',
+                                            'success'
+                                        );
+                                        resetForm();
+
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log(id);
+                                        console.log(errorThrown);
+                                        alert('Error adding / update data');
+                                    }
+                                });
+                            }
+                        });
+                        event.preventDefault();
+
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(id);
@@ -92,8 +168,26 @@
                     alert('Error adding / update data');
                 }
             });
+            event.preventDefault();
+
         }
 
+    </script>
+
+    <script>
+        function resetForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('infoLat').value = '';
+            document.getElementById('infoLng').value = '';
+            document.getElementById('id').value = '';
+            document.getElementById('graphId').value = '';
+
+            initialize();
+            initMap();
+            loadmap();
+
+        }
     </script>
 
 </head>
@@ -132,7 +226,7 @@ $building_json = json_encode($building_array);
                 </td>
                 <td>
 <!--                    <input type="text" name="description" id="description" value="--><?php //echo $description ?><!--">-->
-                    <textarea name="description" id="description">"<?php echo $description ?>"</textarea>
+                    <textarea name="description" id="description"><?php echo htmlentities($description);  ?></textarea>
                 </td>
             </tr>
             <tr>
@@ -255,7 +349,7 @@ $building_json = json_encode($building_array);
             })(building_marker, info_window));
         }
 
-        map.addListener('dblclick', sendData);
+        //map.addListener('dblclick', sendData);
         // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
         var urlPoly = "<?=$this->config->item('server_url');?>";
         var method = "POST";
@@ -301,7 +395,7 @@ $building_json = json_encode($building_array);
                 // newpoint.addListener('click', pointone);
             }
 //                    alert(data);
-        }
+        };
         requestMap.open(method, urlPoly, shouldBeAsync);
         requestMap.send(mapData);
 

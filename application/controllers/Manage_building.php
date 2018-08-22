@@ -140,4 +140,32 @@ class Manage_building extends CI_Controller
 
         echo json_encode(array("status" => true));
     }
+
+    public function get_building_belongings(){
+        $id = $_REQUEST['id'];
+        $this->load->model('Manage_building_model','Building');
+
+        $people_count = 0;
+        $room_list = $this->Building->get_rooms_for_building($id);
+
+        if (count($room_list)==0){
+            echo json_encode(array("safe"=>true));
+        }
+        else{
+            $this->load->model('Manage_people_model','People');
+            foreach ($room_list as $room){
+                $room_id = $room->id;
+                $people = $this->People->People->get_people_for_room($room_id);
+                $people_count = $people_count + count($people);
+                echo json_encode(array("safe"=>false,"people_count"=>$people_count,"rooms_count"=>count($room_list)));
+            }
+
+        }
+//        else{
+//            $this->load->model('Manage_rooms','Room');
+//            foreach ($room_list as $room){
+//                $this->Room->
+//            }
+//        }
+    }
 }

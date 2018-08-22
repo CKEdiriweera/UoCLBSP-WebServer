@@ -189,7 +189,7 @@ $building_json = json_encode($building_array);
             })(building_marker, info_window));
         }
 
-        map.addListener('dblclick', sendData);
+        //map.addListener('dblclick', sendData);
         // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
         var urlPoly = "<?=$this->config->item('server_url');?>";
         var method = "POST";
@@ -262,34 +262,34 @@ $building_json = json_encode($building_array);
         }
     }
 
-    function sendData(ev) {
-        var resultJson = [];
-        for (var i = 0; i < polyindex.length; i++) {
-            if (outJSON[polyindex[i]].length > 0) {
-                var getElement = {};
-                getElement['id'] = polyindex[i];
-                getElement['paths'] = outJSON[polyindex[i]];
-                resultJson.push(getElement);
-            }
-        }
-        var finalJson = {};
-        finalJson['type'] = "addPaths";
-        finalJson['Changes'] = resultJson;
-        // alert(JSON.stringify(finalJson));
-        var urlPoly = "<?=$this->config->item('server_url');?>";
-        var method = "POST";
-        var mapData = JSON.stringify(finalJson);
-        var shouldBeAsync = true;
-        var requestMap = new XMLHttpRequest();
-        var data;
-        requestMap.onload = function () {
-            var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
-            var data = requestMap.response;
-            // alert(data);
-        }
-        requestMap.open(method, urlPoly, shouldBeAsync);
-        requestMap.send(mapData);
-    }
+    //function sendData(ev) {
+    //    var resultJson = [];
+    //    for (var i = 0; i < polyindex.length; i++) {
+    //        if (outJSON[polyindex[i]].length > 0) {
+    //            var getElement = {};
+    //            getElement['id'] = polyindex[i];
+    //            getElement['paths'] = outJSON[polyindex[i]];
+    //            resultJson.push(getElement);
+    //        }
+    //    }
+    //    var finalJson = {};
+    //    finalJson['type'] = "addPaths";
+    //    finalJson['Changes'] = resultJson;
+    //    // alert(JSON.stringify(finalJson));
+    //    var urlPoly = "<?//=$this->config->item('server_url');?>//";
+    //    var method = "POST";
+    //    var mapData = JSON.stringify(finalJson);
+    //    var shouldBeAsync = true;
+    //    var requestMap = new XMLHttpRequest();
+    //    var data;
+    //    requestMap.onload = function () {
+    //        var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+    //        var data = requestMap.response;
+    //        // alert(data);
+    //    }
+    //    requestMap.open(method, urlPoly, shouldBeAsync);
+    //    requestMap.send(mapData);
+    //}
 
     function search_building() {
         var name = document.getElementById('name').value;

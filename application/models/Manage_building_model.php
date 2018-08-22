@@ -133,4 +133,12 @@ class Manage_building_model extends CI_Model
         $id = $datasearch4['id'];
         $this->db->where('id', $id)->delete('building');
     }
+
+    public function get_rooms_for_building($id){
+        $this->db->select('id');
+        $this->db->where('building_id',$id);
+        $query = $this->db->get('room');
+
+        return $query->result();
+    }
 }
