@@ -85,7 +85,7 @@
 
         function deleteAdmin(id) {
             swal({
-                title: `are you sure you want to delete?`,
+                title: `Are you sure you want to delete?`,
                 text: "You won't be able to revert this!",
                 type: 'warning',
                 showCancelButton: true,

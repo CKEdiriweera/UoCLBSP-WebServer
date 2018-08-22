@@ -55,6 +55,7 @@ foreach($result as $key => $data){
 //}
 
 $building_json = json_encode($building_array);
+//echo $building_json;
 
 //        var_dump($building_json);
 ?>
@@ -153,8 +154,9 @@ $building_json = json_encode($building_array);
         });
 
         var buildings = <?php echo $building_json; ?>;
-        buildings = JSON.parse(JSON.stringify(buildings));
         // alert(buildings);
+        buildings = JSON.parse(JSON.stringify(buildings));
+
         for(var a = 0; a < buildings.length; a++)
         {
             var lat = buildings[a]['latitudes'];

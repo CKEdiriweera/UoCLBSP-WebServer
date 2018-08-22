@@ -4,6 +4,7 @@ class Manage_building_model extends CI_Model
     public function display_buildings()
     {
         $query = $this->db->select('id, latitudes, longitudes, name, description, graph_id')->from('building')->get();
+//        var_dump($query->result());
         return $query->result();
     }
 
@@ -20,11 +21,11 @@ class Manage_building_model extends CI_Model
     {
         $latitudes = $data0['latitudes'];
         $longitudes = $data0['longitudes'];
-        var_dump($latitudes);
-        var_dump($longitudes);
+//        var_dump($latitudes);
+//        var_dump($longitudes);
         $multiple_where = array('latitudes' => $latitudes, 'longitudes' => $longitudes);
         $query = $this->db->select('id')->from('building')->where($multiple_where)->get();
-        var_dump($query->result());
+//        var_dump($query->result());
         return $query->result();
     }
 
@@ -34,6 +35,7 @@ class Manage_building_model extends CI_Model
         $id = $data['id'];
         $query = $this->db->select('id, latitudes, longitudes, name, description, graph_id')->from('building')->where('id !=', $id)->get();
         return $query->result();
+        var_dump($query->result());
     }
 
     function search_buildings($name)

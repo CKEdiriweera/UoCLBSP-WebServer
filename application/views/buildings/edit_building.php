@@ -18,10 +18,10 @@
             var description = document.getElementById('description').value;
             var id = document.getElementById('id').value;
 
-            var longitudes = document.getElementById('infoLat').value;
-            var latitudes = document.getElementById('infoLng').value;
+            var longitudes = document.getElementById('infoLng').value;
+            var latitudes = document.getElementById('infoLat').value;
 
-            var loc = new google.maps.LatLng(parseFloat(longitudes),parseFloat(latitudes));
+            var loc = new google.maps.LatLng(parseFloat(latitudes),parseFloat(longitudes));
             // var graph_id = document.getElementById('graphId').value;
             var graph_id;
 
@@ -37,25 +37,7 @@
 
             }
 
-
-            // alert('xxxx');
-
-
-
-            // var graph_id = document.getElementById('graphId').value;
-
-            /*Uncomment this to check polygon change of a marker. If the key is not working the whole function will not work*/
-
-            // var loc = new google.maps.LatLng(parseFloat(longitudes),parseFloat(latitudes));
-            //
-            // for(var z=0;z<polyArray.length ; z++){
-            //     if(google.maps.geometry.poly.containsLocation(loc, polyArray[z])){
-            //         graph_id = polyArray[z].id;
-            //         break;
-            //     }
-            // }
-
-            console.log(graph_id);
+            // console.log(graph_id);
 
             alert('xxxx');
             // console.log(loc);
@@ -252,6 +234,8 @@ $building_json = json_encode($building_array);
                 position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
                 map: map
             });
+            // console.log(building_marker);
+            // alert(building_marker);
 
             var content = '<b>' + name + '</b>' + '</br>' + description;
 
