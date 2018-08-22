@@ -30,6 +30,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             width: 239px;
             border: 0.1px solid gray;
         }
+        @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+        .isa_error {
+            margin: 10px 0px;
+            padding:12px;
+
+        }
+        .isa_error {
+            color: #D8000C;
+            background-color: #FFD2D2;
+        }
+        .isa_error i {
+            margin:10px 22px;
+            font-size:2em;
+            vertical-align:middle;
+        }
     </style>
 
     <script>
@@ -41,33 +57,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             var room_name = document.getElementById('room_name').value;
             // var building = document.getElementById('building_name').value;
 
-            $.ajax({
-                url: '<?php echo base_url('Manage_people/add_people'); ?>',
-                method: 'POST',
-                data: {'people_name':people_name, 'designation':designation, 'description':description, 'room_name':room_name},
-                // dataType: 'json',
-                success: function () {
-                    swal(
-                        'Good job!',
-                        'Room has been added',
-                        'success'
-                    );
-                },
-                error: function (response) {
-                    alert('hehe');
-                    console.log(response);
-                    swal({
-                        type: 'error',
-                        text: 'something went wrong!'
-                    });
-                }
-            });
+            if(people_name == "" || designation == "" || description == "" || room_name == "")
+            {
+                document.getElementById("validation").style.display = "block";
+                $(".alert").alert();
+            }else
+            {
+                $.ajax({
+                    url: '<?php echo base_url('Manage_people/add_people'); ?>',
+                    method: 'POST',
+                    data: {'people_name':people_name, 'designation':designation, 'description':description, 'room_name':room_name},
+                    // dataType: 'json',
+                    success: function () {
+                        swal(
+                            'Good job!',
+                            'Room has been added',
+                            'success'
+                        );
+                        document.getElementById("validation").style.display = "none";
+                    },
+                    error: function (response) {
+                        alert('hehe');
+                        console.log(response);
+                        swal({
+                            type: 'error',
+                            text: 'something went wrong!'
+                        });
+                    }
+                });
+            }
+
 
             document.getElementById('people_name').value = '';
             document.getElementById('designation').value = '';
             document.getElementById('description').value = '';
             document.getElementById('room_name').value = '';
-
             event.preventDefault();
         }
     </script>
@@ -96,7 +120,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p>Add People</p></div>
             </br>
             <form>
-
+                <div id="validation" class="isa_error" style="display: none; width: 375px">
+                    <i class="fa fa-times-circle"></i>
+                    All fields required!
+                </div>
                 <table>
                     <tr>
                         <td>
