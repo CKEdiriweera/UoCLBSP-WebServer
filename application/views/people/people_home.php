@@ -82,7 +82,7 @@
         <form method="post" action="<?php echo base_url() ?>index.php/manage_people/add_people">
             <input type="text" id="name" placeholder="Search people" style="width:320px;">
 <!--            <input type="text" id="id">-->
-            <button type="button" onclick="search_people()" id="search_button" class="sbutton" style="width: 100%">Search</button>
+            <button type="button" onclick="search_people()" id="search_button" class="sbutton" style="width: 90%">Search</button>
         </form>
         <button type="button" class="sbutton" id="add_button" style="position: absolute; bottom: 50px; width: 21%">Add new person</button>
         <script>

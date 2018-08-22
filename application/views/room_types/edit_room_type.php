@@ -32,12 +32,12 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="id" id="room_type_id" value="<?php echo $id ?>">
+                        <input type="hidden" name="id" id="room_type_id" value="<?php echo $id ?>">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" name="update" value="Update">
+                        <button class="sbutton" id="update" onclick="update_room()" name="update" style="width: 375%;float: left; display: inline-block">Update</button>
                     </td>
                 </tr>
             </table>

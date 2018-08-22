@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             Room Type :
                         </td>
                         <td>
-                            <input type="text" class="form-control" class="ui-widget" name="room_type" id="room_type" value="">
+                            <input type="text" class="ui-widget" name="room_type" id="room_type" value="">
                         </td>
                     </tr>
                     <tr>
@@ -93,13 +93,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             Building :
                         </td>
                         <td>
-                            <input type="text" class="form-control" class="ui-widget" name="building_name" id="building_name" value="">
+                            <input type="text"  name="building_name" id="building_name" value="">
                         </td>
                     </tr>
                 </table>
 
                 <input class="button" type="submit" name="add_building" value="Add" style="margin-top: 20px">
-                <input class="button" type="reset" name="reset" value="Reset"style="margin-top: 20px">
+                <input class="button" type="reset" name="reset" value="Reset" style="margin-top: 20px">
             </form>
         </div>
         <div id="map"></div></div>

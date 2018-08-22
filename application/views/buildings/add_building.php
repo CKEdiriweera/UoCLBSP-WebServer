@@ -13,7 +13,11 @@ ini_set('display_errors', 1);
         $building_array[$key] = (array)$data;
     }
 
-    $building_json = json_encode($building_array);
+//    if (isset($building_array)){
+//        $building_json = json_encode($building_array);
+//    }
+$building_json = json_encode($building_array);
+
     //        var_dump($building_json);
 ?>
 
@@ -76,8 +80,8 @@ ini_set('display_errors', 1);
 
     </form>
 
-    <input id ="add_button" class="button" type="submit" name="add_building" value="Add Building">
-    <input class="button" type="reset" name="reset" value="Reset">
+<!--    <input id ="add_button" class="button" type="submit" name="add_building" value="Add Building">-->
+<!--    <input class="button" type="reset" name="reset" value="Reset">-->
 
     <script>
         $("#add_button").click(function () {
@@ -122,16 +126,22 @@ ini_set('display_errors', 1);
     function addBuilding() {
 
 
-        let name = document.getElementById('b_name').value;
-        let desc = document.getElementById('b_desc').value;
+        let name = document.getElementById('name').value;
+        let desc = document.getElementById('description').value;
         let lat = document.getElementById('infoLat').value;
         let lng = document.getElementById('infoLng').value;
         let g_id = document.getElementById('graphId').value;
 
         $.ajax({
-            url:"<?php echo base_url('Manage_building/add_building')?>",
-            data: {"name":name, "desc":desc, "lat":lat, "lng":lng, "g_id":g_id},
-            type:"POST",
+            url: "<?php echo base_url('Manage_building/add_building');?>",
+            type: "POST",
+            data: {
+                "name": name,
+                "desc": desc,
+                "lat": lat,
+                "lng": lng,
+                "g_id": g_id
+            },
             dataType:"JSON",
             success:function () {
                 $.ajax({
