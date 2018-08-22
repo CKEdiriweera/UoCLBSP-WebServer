@@ -18,8 +18,9 @@ class Manage_rooms_model extends CI_Model
         return $this->db->select('name')->like('name', $building_name, 'both')->order_by('name', 'ASC')->limit(5)->get('building')->result();
     }
 
-    public function add($data){
-        if(isset($_POST['room_name'])){
+    public function add($data)
+    {
+        if (isset($_POST['room_name'])) {
             $room_type = $_POST['room_type'];
             $query1 = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
             $rows = $query1->row_array();
@@ -134,40 +135,41 @@ class Manage_rooms_model extends CI_Model
 
     public function change($data)
     {
-            $id = $data['id'];
+        $id = $data['id'];
 //            $room_query = $this->db->select('id')->from('building')->where('name', $name)->get();
 //            $room_row = $room_query->row_array();
 //            $id = $room_row['id'];
 
-            $room_type = $data['room_type'];
-            $room_type_query = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
-            $room_type_row = $room_type_query->row_array();
-            $room_type_id = $room_type_row['id'];
+        $room_type = $data['room_type'];
+        $room_type_query = $this->db->select('id')->from('room_type')->where('type', $room_type)->get();
+        $room_type_row = $room_type_query->row_array();
+        $room_type_id = $room_type_row['id'];
 
-            $building_name = $data['building_name'];
-            $building_query = $this->db->select('id')->from('building')->where('name', $building_name)->get();
-            $building_row = $building_query->row_array();
-            $building_id = $building_row['id'];
+        $building_name = $data['building_name'];
+        $building_query = $this->db->select('id')->from('building')->where('name', $building_name)->get();
+        $building_row = $building_query->row_array();
+        $building_id = $building_row['id'];
 
-            $data = array(
-                'name' => $data['name'],
-                'description' => $data['description'],
-                'floor' => $data['floor'],
-                'room_type_id' => $room_type_id,
-                'building_id' => $building_id
-            );
+        $data = array(
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'floor' => $data['floor'],
+            'room_type_id' => $room_type_id,
+            'building_id' => $building_id
+        );
 
-            $this->db->where('id', $id)->update('room', $data);
+        $this->db->where('id', $id)->update('room', $data);
     }
 
-    public function delete($data)
-    {
-        if (isset($_POST['id'])) {
-//            echo 'poo';
-            $id = $data['id'];
-            $this->db->where('id', $id)->delete('room');
-
-        }
+    public function delete($data){
+        $id = $data['id'];
+        $this->db->where('id', $id)->delete('room');
     }
 
+    public function get_types(){
+        $this->db->select('type');
+        $query = $this->db->get('room_type');
+
+        return $query->result();
+    }
 }

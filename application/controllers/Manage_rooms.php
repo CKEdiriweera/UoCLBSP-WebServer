@@ -65,13 +65,15 @@ class Manage_rooms extends CI_Controller
     {
         $this->load->model('manage_rooms_model');
         $data = array(
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-            'floor' => $this->input->post('floor'),
-            'room_type' => $this->input->post('room_type'),
-            'building_name' => $this->input->post('building_name')
+            'name' => $_REQUEST['room_name'],
+            'description' => $_REQUEST['description'],
+            'floor' => $_REQUEST['floor'],
+            'room_type' => $_REQUEST['room_type'],
+            'building_name' => $_REQUEST['building_name']
         );
         $this->manage_rooms_model->add($data);
+
+        echo json_encode(array("status"=>true));
     }
 
     public function search_room()
@@ -101,26 +103,50 @@ class Manage_rooms extends CI_Controller
 //        $this->manage_rooms_model->edit($datasearch2);
 //    }
 
-    public function change_room()
-    {
+    public function change_room(){
         $this->load->model('manage_rooms_model');
         $data = array(
-            'id' =>$this->input->post('id'),
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-            'floor' => $this->input->post('floor'),
-            'room_type' => $this->input->post('room_type'),
-            'building_name' => $this->input->post('building_name'),
+            'id' =>$_REQUEST['id'],
+            'name' => $_REQUEST['name'],
+            'description' => $_REQUEST['description'],
+            'floor' => $_REQUEST['floor'],
+            'room_type' => $_REQUEST['room_type'],
+            'building_name' => $_REQUEST['building_name']
         );
         $this->manage_rooms_model->change($data);
+
+        echo json_encode(array("status"=>true));
     }
 
-    public function delete_room()
-    {
-        $this->load->model('manage_rooms_model');
+    public function delete_room(){
+        $this->load->model('Manage_rooms_model');
         $data = array(
-            'id' => $this->input->post('id'),
+            'id' => $_REQUEST['id']
         );
-        $this->manage_rooms_model->delete($data);
+        $this->Manage_rooms_model->delete($data);
     }
+
+    public function get_room_types(){
+        $this->load->model('Manage_rooms_model','Room');
+        $types = $this->Room->get_types();
+
+        echo json_encode($types);
+    }
+
+    public function get_people_for_rooms(){
+
+        $room_id = $_REQUEST['id'];
+
+        $this->load->model('Manage_people_model','People');
+        $people = $this->People->get_people_for_room($room_id);
+
+        if (count($people)==0){
+            echo json_encode(array("status"=>true));
+        }
+        else{
+            echo json_encode(array("status"=>false, "people_count"=>count($people)));
+        }
+    }
+
+
 }

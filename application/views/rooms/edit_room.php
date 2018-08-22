@@ -47,6 +47,38 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '<?php echo base_url('Manage_rooms/get_room_types'); ?>',
+            method: 'GET',
+            //data: id,
+            // dataType: 'json',
+            success: function (response) {
+
+                var res = JSON.parse(response);
+
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].type=='<?php echo $room_type; ?>') {
+                        $('#room_type').append( `<option value= '${res[i].type}' selected> ${res[i].type}</option>`);
+                    }
+                    else {
+                        $('#room_type').append( `<option value= '${res[i].type}'> ${res[i].type}</option>`);
+                    }
+                }
+            },
+            error: function (response) {
+                console.log(response);
+                swal({
+                    type: 'error',
+                    text: 'something went wrong!'
+                });
+            }
+        });
+    });
+</script>
+
 <script type="text/javascript">
     function submitForm(action) {
         // document.getElementById('room_type').value.setAttribute('room_type');
@@ -78,7 +110,7 @@
                         Description :
                     </td>
                     <td>
-                        <input type="text" name="description" id="name" value="<?php echo $description ?>">
+                        <input type="text" name="description" id="description" value="<?php echo $description ?>">
                     </td>
                 </tr>
                 <tr>
@@ -94,7 +126,10 @@
                         Room Type :
                     </td>
                     <td>
-                        <input type="text" name="room_type" id="room_type" value="<?php echo $room_type ?>">
+<!--                        <input type="text" name="room_type" id="room_type" value="--><?php //echo $room_type ?><!--">-->
+                        <select name="room_type" id="room_type">
+                            <option disabled selected>Select a Room Type</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -123,32 +158,122 @@
         </form>
         <script>
             function update_room() {
-                $.post("<?php echo base_url(); ?>Manage_rooms/change_room",
-                    {
-                        name: document.getElementById('name').value,
-                        id: document.getElementById('id').value,
-                        description: document.getElementById('description').value,
-                        floor: document.getElementById('floor').value,
-                        room_type: document.getElementById('room_type').value,
-                        building_name: document.getElementById('building_name').value,
+
+                var name =document.getElementById('name').value;
+                var id= document.getElementById('id').value;
+                var description = document.getElementById('description').value;
+                var floor = document.getElementById('floor').value;
+                var room_type = document.getElementById('room_type').value;
+                var building_name = document.getElementById('building_name').value;
+
+                $.ajax({
+                    url:'<?php echo base_url('Manage_rooms/change_room'); ?>',
+                    data: {'name':name, 'id':id, 'description':description, 'floor':floor, 'room_type':room_type, "building_name":building_name},
+                    success: function () {
+                        swal(
+                            'Good job!',
+                            'Room has been edited',
+                            'success'
+                        );
                     },
-                    function(data, status){
-                        // alert("Data: " + data + "\nStatus: " + status);
-                        $("#main").html(data);
+                    error: function (response) {
+                        swal({
+                            type: 'error',
+                            text: 'something went wrong!'
+                        });
                     }
-                );
+                });
+
+                event.preventDefault();
+                document.getElementById('name').value='';
+                document.getElementById('id').value='';
+                document.getElementById('description').value='';
+                document.getElementById('floor').value='';
+                document.getElementById('room_type').value='';
+                document.getElementById('building_name').value='';
+
             }
 
             function delete_room() {
-                $.post("<?php echo base_url(); ?>Manage_rooms/delete_room",
-                    {
-                        id: document.getElementById('id').value,
+
+                var room_id = document.getElementById('id').value;
+
+                $.ajax({
+                    url:'<?php echo base_url('Manage_rooms/get_people_for_rooms'); ?>',
+                    data: {'id':room_id},
+                    success: function (response) {
+
+                        res = JSON.parse(response);
+                         alert(res);
+                        // console.log(response);
+                        // console.log(response[0]);
+
+                        if (res.status===false){
+                            swal({
+                                title: `Are you sure you want to delete?`,
+                                text: `There are ${res.people_count} people inside this building!!`,
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel!',
+                                confirmButtonClass: 'btn btn-success',
+                                cancelButtonClass: 'btn btn-danger',
+                                buttonsStyling: true,
+                            }).then((result) => {
+                                if (result.value){
+                                    $.ajax({
+                                        url:'<?php echo base_url('Manage_rooms/delete_room'); ?>',
+                                        data: {'id':room_id},
+                                        success: function () {
+                                            swal(
+                                                'Good job!',
+                                                'Room has been edited',
+                                                'success'
+                                            );
+                                        },
+                                        error: function (response) {
+                                            swal({
+                                                type: 'error',
+                                                text: 'something went wrong!'
+                                            });
+                                        }
+                                    });
+                                    // event.preventDefault();
+                                }
+                            });
+                            //event.preventDefault();
+                        }
+                        else {
+                            $.ajax({
+                                url:'<?php echo base_url('Manage_rooms/delete_room'); ?>',
+                                data: {'id':room_id},
+                                success: function () {
+                                    swal(
+                                        'Good job!',
+                                        'Room has been edited',
+                                        'success'
+                                    );
+                                },
+                                error: function (response) {
+                                    swal({
+                                        type: 'error',
+                                        text: 'something went wrong!'
+                                    });
+                                }
+                            });
+                        }
+
                     },
-                    function(data, status){
-                        // alert("Data: " + data + "\nStatus: " + status);
-                        $("#main").html(data);
+                    error: function (response) {
+                        swal({
+                            type: 'error',
+                            text: 'something went wrong!'
+                        });
                     }
-                );
+                });
+                event.preventDefault();
             }
         </script>
     </div>
