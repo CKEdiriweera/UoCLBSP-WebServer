@@ -70,7 +70,7 @@
                     </td>
                     <td>
                         <input type="text" name="name" id="name" value="<?php echo $name ?>">
-                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                     </td>
                 </tr>
                 <tr>
@@ -94,7 +94,7 @@
                         Room Type :
                     </td>
                     <td>
-                        <input type="text" class="form-control" class="ui-widget" name="room_type" id="room_type" value="<?php echo $room_type ?>">
+                        <input type="text" name="room_type" id="room_type" value="<?php echo $room_type ?>">
                     </td>
                 </tr>
                 <tr>
@@ -102,18 +102,24 @@
                         Building Name :
                     </td>
                     <td>
-                        <input type="text" class="form-control" class="ui-widget" name="building_name" id="building_name" value="<?php echo $building_name ?>">
+                        <input type="text" name="building_name" id="building_name" value="<?php echo $building_name ?>">
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <input type="submit" id="update" onclick="update_room()" name="update" value="Update building">
-                    </td>
-                    <td>
-                        <input type="submit" id="delete" onclick="delete_room()" name="delete" value="Delete building">
-                    </td>
+<!--                    <td>-->
+<!--                        <input type="submit" id="update" onclick="update_room()" name="update" value="Update building">-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <input type="submit" id="delete" onclick="delete_room()" name="delete" value="Delete building">-->
+<!--                    </td>-->
                 </tr>
             </table>
+
+            <div>
+                <button class="sbutton" id="update" onclick="update_room()" name="update" style="width: 45%;float: left; display: inline-block">Update</button>
+                <button class="rbutton" id="delete" onclick="delete_room()" name="delete" style=" width: 45%; float: right; display: inline-block">Delete</button>
+            </div>
+
         </form>
         <script>
             function update_room() {

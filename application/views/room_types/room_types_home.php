@@ -82,7 +82,7 @@
         <form method="post" action="<?php echo base_url() ?>index.php/manage_room_types/add_room_type">
             <input type="text" id="type" placeholder="Search room type" style="width:320px;">
 <!--            <input type="text" id="id">-->
-            <button type="button" onclick="search_room_types()" id="search_button" class="sbutton" style="width: 104%">Search</button>
+            <button type="button" onclick="search_room_types()" id="search_button" class="sbutton" style="width: 90%">Search</button>
         </form>
         <button type="button" class="sbutton" id="add_button" style="position: absolute; bottom: 50px; width: 21%">Add new room type</button>
         <script>

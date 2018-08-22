@@ -39,7 +39,7 @@ class Manage_building extends CI_Controller
 
     public function add_building()
     {
-        $this->load->model('manage_building_model');
+        $this->load->model('Manage_building_model');
 //        $data = array(
 //            'name' => $this->input->post('name'),
 //            'description' => $this->input->post('description'),
@@ -54,14 +54,14 @@ class Manage_building extends CI_Controller
             'latitudes' => $_REQUEST['lat'],
             'longitudes' => $_REQUEST['lng'],
             'graph_id' => $_REQUEST['g_id'],
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-            'latitudes' => $this->input->post('latitudes'),
-            'longitudes' => $this->input->post('longitudes'),
-            'graph_id' => $this->input->post('graph_id')
+//            'name' => $this->input->post('name'),
+//            'description' => $this->input->post('description'),
+//            'latitudes' => $this->input->post('latitudes'),
+//            'longitudes' => $this->input->post('longitudes'),
+//            'graph_id' => $this->input->post('graph_id')
 
         );
-        $this->manage_building_model->add($data);
+        $this->Manage_building_model->add($data);
 
         $res = array("type"=>true);
 
@@ -88,21 +88,21 @@ class Manage_building extends CI_Controller
     public function search_buildingby_latlng()
     {
         if (isset($_POST['latitudes'], $_POST['longitudes'])) {
-            $this->load->model('manage_building_model');
+            $this->load->model('Manage_building_model');
             $data0 = array(
                 'latitudes' => $this->input->post('latitudes'),
                 'longitudes' => $this->input->post('longitudes'),
             );
 //            var_dump($data0);
-            $data = $this->manage_building_model->get_id($data0);
+            $data = $this->Manage_building_model->get_id($data0);
 //            var_dump($data);
             $data = json_decode(json_encode($data), True);
-            $data = array(
+            $data1 = array(
                 'id' => $data[0]['id']
             );
 //            var_dump($data);
-            $building = $this->manage_building_model->selected2($data);
-            $building['result'] = $this->manage_building_model->display_buildings_except($data);
+            $building = $this->Manage_building_model->selected2($data1);
+            $building['result'] = $this->Manage_building_model->display_buildings_except($data1);
 //            var_dump($building);
             $view_data = $this->load->view('buildings/edit_building', $building, TRUE);
             $this->output->set_output($view_data);

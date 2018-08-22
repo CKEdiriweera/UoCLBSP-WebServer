@@ -21,24 +21,45 @@
             var longitudes = document.getElementById('infoLat').value;
             var latitudes = document.getElementById('infoLng').value;
 
-            var graph_id = 1;
+            var loc = new google.maps.LatLng(parseFloat(longitudes),parseFloat(latitudes));
+            // var graph_id = document.getElementById('graphId').value;
+            var graph_id;
+
+            for (var z=0;z<polyArray.length;z++){
+                var edgcoords = polyArray[z]["vertexes"];
+
+                var pl = new google.maps.Polygon({paths: edgcoords});
+
+                if(google.maps.geometry.poly.containsLocation(loc, pl)){
+                    graph_id = polyArray[z]["id"];
+                    break;
+                }
+
+            }
+
+
+            // alert('xxxx');
 
 
 
             // var graph_id = document.getElementById('graphId').value;
 
-            /*Uncomment this to check polygon change of a marker. If the key is not working the whole function will not work
+            /*Uncomment this to check polygon change of a marker. If the key is not working the whole function will not work*/
 
-            let loc = new google.maps.LatLng(longitudes,latitudes);
+            // var loc = new google.maps.LatLng(parseFloat(longitudes),parseFloat(latitudes));
+            //
+            // for(var z=0;z<polyArray.length ; z++){
+            //     if(google.maps.geometry.poly.containsLocation(loc, polyArray[z])){
+            //         graph_id = polyArray[z].id;
+            //         break;
+            //     }
+            // }
 
-            for(var z=0;z<polyArray.length ; z++){
-                if(google.maps.geometry.poly.containsLocation(loc, polyArray[z])){
-                    graph_id = polyArray[z].id;
-                    break;
-                }
-            }
+            console.log(graph_id);
 
-            */
+            alert('xxxx');
+            // console.log(loc);
+
 
             $.ajax({
                 url: "<?php echo base_url('Manage_building/change_building');?>",
@@ -58,6 +79,11 @@
                         'Data has been save!',
                         'success'
                     );
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(id);
+                    console.log(errorThrown);
+                    alert('Error adding / update data');
                 }
             });
         }
@@ -123,7 +149,8 @@ $building_json = json_encode($building_array);
                     Description :
                 </td>
                 <td>
-                    <input type="text" name="description" id="description" value="<?php echo $description ?>">
+<!--                    <input type="text" name="description" id="description" value="--><?php //echo $description ?><!--">-->
+                    <textarea name="description" id="description">"<?php echo $description ?>"</textarea>
                 </td>
             </tr>
             <tr>
@@ -144,23 +171,29 @@ $building_json = json_encode($building_array);
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="id" id="id" value="<?php echo $id ?>">
+                    <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="graphId" id="graphId" value="<?php echo $graph_id ?>">
+                    <input type="hidden" name="graphId" id="graphId" value="<?php echo $graph_id ?>">
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="submit" id="update" onclick="updateBuilding()" name="update" value="Update building">
-                </td>
-                <td>
-                    <input type="submit" id="delete" onclick="deleteBuilding()" name="delete" value="Delete building">
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--<!--                    <input type="submit" id="update" onclick="updateBuilding()" name="update" value="Update building" class="">-->
+<!--                    <button class="sbutton" id="update" onclick="updateBuilding()" name="update" style="position: absolute; width: 10%">Update Building</button>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--<!--                    <input type="submit" id="delete" onclick="deleteBuilding()" name="delete" value="Delete building">-->
+<!--                    <button class="rbutton" id="delete" onclick="deleteBuilding()" name="delete" style="position: absolute; width: 10%">Delete Building</button>-->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
+        <div>
+            <button class="sbutton" id="update" onclick="updateBuilding()" name="update" style="width: 45%;float: left; display: inline-block">Update</button>
+            <button class="rbutton" id="delete" onclick="deleteBuilding()" name="delete" style=" width: 45%; float: right; display: inline-block">Delete</button>
+        </div>
     </form>
 </div>
 <div id="map"></div>
@@ -195,14 +228,14 @@ $building_json = json_encode($building_array);
     }
 
     function initialize() {
-        var latLng = new google.maps.LatLng(<?php echo $latitudes ?>, <?php echo $longitudes ?>);
+        var latLng = new google.maps.LatLng('<?php echo $latitudes; ?>', '<?php echo $longitudes; ?>');
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16,
             center: latLng,
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        var buildings = <?php echo $building_json; ?>;
+        var buildings = '<?php echo $building_json; ?>';
         buildings = JSON.parse(JSON.stringify(buildings));
         // alert(buildings);
         for(var a = 0; a < buildings.length; a++)
@@ -310,6 +343,7 @@ $building_json = json_encode($building_array);
             // updateMarkerStatus('Position Found!');
             geocodePosition(marker.getPosition());
             // document.getElementById('graphId').setAttribute('value', polydraw.id.value);
+            console.log(polyArray);
         });
     }
 
@@ -340,9 +374,9 @@ $building_json = json_encode($building_array);
         }
     }
 
-    $(input).onclick(function () {
-        $("#main").load("Admin_home/buildings");
-    });
+    // $(input).onclick(function () {
+    //     $("#main").load("Admin_home/buildings");
+    // });
 
     // Onload handler to fire off the app.
     google.maps.event.addDomListener(window, 'load', initialize);

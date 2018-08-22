@@ -37,8 +37,6 @@
 
                     var obj = JSON.parse(response);
 
-                    console.log(obj);
-
                     if (obj.admin=="true"){
                         console.log(response.admin);
 
@@ -46,7 +44,8 @@
                     }
                     else{
                         console.log(obj.admin);
-                        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home/user";
+                        //document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php //echo $this->config->item('base_url'); ?>///User_home/user";
+                        window.location.href = "<?php echo site_url('User_home'); ?>";
                     }
                     document.getElementById('signinbutton').style.display = 'none';
                     //link.style.visibility = 'hidden';
@@ -66,24 +65,24 @@
     </script>
 
     <script>
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                //console.log('User signed out.');
-                var s = <?php echo json_encode($_SESSION); ?>;
-                console.log(s);
-
-                window.location.href="<?php echo base_url('Login/logout'); ?>";
-
-                var s = <?php echo json_encode($_SESSION); ?>;
-                console.log(s);
-
-                //document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php //echo $this->config->item('base_url'); ?>///User_home";
-                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php echo $this->config->item('base_url'); ?>/User_home";
-
-            });
-
-        }
+        //function signOut() {
+        //    var auth2 = gapi.auth2.getAuthInstance();
+        //    auth2.signOut().then(function () {
+        //        //console.log('User signed out.');
+        //        var s = '<?php //echo json_encode($_SESSION); ?>//';
+        //        console.log(s);
+        //
+        //        window.location.href="<?php //echo base_url('Login/logout'); ?>//";
+        //
+        //        var s = '<?php //echo json_encode($_SESSION); ?>//';
+        //        console.log(s);
+        //
+        //        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=<?php //echo $this->config->item('base_url'); ?>///User_home";
+        //        console.log('<?php //$_SESSION?>//');
+        //
+        //    });
+        //
+        //}
 
     </script>
 
@@ -113,10 +112,10 @@
                <div>
                    <a data-target="Admin_home/search"><img src="<?php echo base_url();?>/assets/drawable/web_icon.png" height="45px"></a>
                    <!--               <input type="text" name="name" id="name" class="form-control" placeholder="Search map.." style="width:300px; margin-left: 10%; margin-top: 0px; margin-bottom: 0px;">-->
-                   <div id ="signinbutton" class="g-signin2" data-onsuccess="onSignIn" style="float: right; padding-right: 70px; padding-top: 5px"></div>
+                   <div id ="signinbutton" class="g-signin2" data-onsuccess="onSignIn" style="float: right; padding-left: 500px; padding-top: 5px; " </div>
                    <!-- <div id ="signoutbutton" style="float: right; padding-right: 70px; padding-top: 5px; display: none"> <button type="button" onclick="signOut()">Sign Out</button>  </div> -->
-                   <img id="gimage" src="<?php echo $this->session->userdata('img');?>" height="45px" style="display:none; float: right; padding-right: 35px;">
-                   <a id="signoutbutton" href="#" onclick="signOut();" style="display: none; float: right; padding-right: 50px; padding-top: 5px">Sign Out</a>
+<!--                   <img id="gimage" src="--><?php //echo $this->session->userdata('img');?><!--" height="45px" style="display:none; float: right; padding-right: 35px;">-->
+<!--                   <a id="signoutbutton" href="#" onclick="signOut();" style="display: none; float: right; padding-right: 50px; padding-top: 5px">Sign Out</a>-->
                </div>
 
            </div>

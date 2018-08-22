@@ -57,7 +57,7 @@
                     </td>
                     <td>
                         <input type="text" name="name" id="name" value="<?php echo $name ?>">
-                        <input type="text" name="id" id="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                     </td>
                 </tr>
                 <tr>

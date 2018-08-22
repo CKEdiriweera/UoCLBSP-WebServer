@@ -50,7 +50,12 @@ ini_set('display_errors', 1);
 foreach($result as $key => $data){
     $building_array[$key] = (array)$data;
 }
+//if(isset($building_array)){
+//    $building_json = json_encode($building_array);
+//}
+
 $building_json = json_encode($building_array);
+
 //        var_dump($building_json);
 ?>
 <script src="<?php echo base_url().'assets/js/jquery-3.3.1.js'?>" type="text/javascript"></script>
@@ -59,17 +64,16 @@ $building_json = json_encode($building_array);
 
 <script>
     $(document).ready(function(){
-        $( "#name" ).autocomplete({
+        $( "#Search" ).autocomplete({
             minLength: 0,
             source: "<?php echo site_url('Manage_building/get_autocomplete/?');?>",
             focus: function( event, ui ) {
-                $( "#name" ).val( ui.item.name );
+                $( "#Search" ).val( ui.item.name );
                 console.log(source);
-                var_dump(source);
                 return false;
             },
             select: function( event, ui ) {
-                $( "#name" ).val( ui.item.name );
+                $( "#Search" ).val( ui.item.name );
                 $( "#id" ).val( ui.item.id );
                 console.log(source);
                 return false;
@@ -97,7 +101,7 @@ $building_json = json_encode($building_array);
 <!--        <input type="hidden" name="id" id="id">-->
         <button type="button" onclick="search_building()" id="search_button" class="sbutton" style="width: 100%">Search</button>
     </form>
-    <button type="button" class="sbutton"  id="add_button" style="position: absolute; bottom: 50px;width:21%">Add new building</button>
+    <button type="button" class="sbutton"  id="add_button" style="position: absolute; bottom: 50px;width:24%">Add new building</button>
     <script>
         $("#add_button").click(function () {
             //$("body").html("url: <?php //echo base_url()?>//index.php/manage_building/building");
@@ -306,6 +310,8 @@ $building_json = json_encode($building_array);
         var latitudes = event.latLng.lat();
         var longitudes = event.latLng.lng();
         // alert(latitudes);
+        console.log(latitudes);
+        console.log(longitudes);
 
         $.post("<?php echo base_url(); ?>Manage_building/search_buildingby_latlng",
             {

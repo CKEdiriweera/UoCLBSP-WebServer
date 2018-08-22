@@ -20,8 +20,11 @@ class Manage_building_model extends CI_Model
     {
         $latitudes = $data0['latitudes'];
         $longitudes = $data0['longitudes'];
+        var_dump($latitudes);
+        var_dump($longitudes);
         $multiple_where = array('latitudes' => $latitudes, 'longitudes' => $longitudes);
         $query = $this->db->select('id')->from('building')->where($multiple_where)->get();
+        var_dump($query->result());
         return $query->result();
     }
 
