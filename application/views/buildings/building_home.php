@@ -156,40 +156,42 @@ $building_json = json_encode($building_array);
         var buildings = <?php echo $building_json; ?>;
         // alert(buildings);
         buildings = JSON.parse(JSON.stringify(buildings));
-
-        for(var a = 0; a < buildings.length; a++)
+        if(buildings.length != 0)
         {
-            var lat = buildings[a]['latitudes'];
-            var lng = buildings[a]['longitudes'];
-            var name = buildings[a]['name'];
-            var description = buildings[a]['description'];
+            for(var a = 0; a < buildings.length; a++)
+            {
+                var lat = buildings[a]['latitudes'];
+                var lng = buildings[a]['longitudes'];
+                var name = buildings[a]['name'];
+                var description = buildings[a]['description'];
 
-            var building_marker = new google.maps.Marker({
-                position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
-                map: map
-            });
+                var building_marker = new google.maps.Marker({
+                    position: {'lat': parseFloat(lat), 'lng': parseFloat(lng)},
+                    map: map
+                });
 
-            building_marker.addListener('dblclick', edit_building);
+                building_marker.addListener('dblclick', edit_building);
 
-            var content = '<b>' + name + '</b>' + '</br>' + description;
+                var content = '<b>' + name + '</b>' + '</br>' + description;
 
-            var info_window = new google.maps.InfoWindow();
+                var info_window = new google.maps.InfoWindow();
 
-            google.maps.event.addListener(building_marker, 'mouseover', (function (building_marker, content, info_window) {
-                return function () {
-                    info_window.setContent(content);
-                    info_window.open(map, building_marker);
-                };
-            })(building_marker, content, info_window));
+                google.maps.event.addListener(building_marker, 'mouseover', (function (building_marker, content, info_window) {
+                    return function () {
+                        info_window.setContent(content);
+                        info_window.open(map, building_marker);
+                    };
+                })(building_marker, content, info_window));
 
-            google.maps.event.addListener(building_marker, 'mouseout', (function (building_marker, info_window) {
-                return function () {
-                    info_window.close();
-                };
-            })(building_marker, info_window));
+                google.maps.event.addListener(building_marker, 'mouseout', (function (building_marker, info_window) {
+                    return function () {
+                        info_window.close();
+                    };
+                })(building_marker, info_window));
+            }
         }
 
-        //map.addListener('dblclick', sendData);
+        // map.addListener('dblclick', sendData);
         // mapdata = '{"graphs":[{"vertexes":[{"lng":79.859614,"id":10,"lat":6.903579},{"lng":79.859726,"id":11,"lat":6.90225},{"lng":79.85948,"id":12,"lat":6.902409}],"edges":[{"destination":10,"id":9,"source":12},{"destination":12,"id":11,"source":11}],"id":16}],"polygons":[{"vertexes":[{"lng":79.858825,"lat":6.90357},{"lng":79.86155,"lat":6.903602},{"lng":79.860821,"lat":6.901334},{"lng":79.859147,"lat":6.902622}],"id":16}]}';
         var urlPoly = "<?=$this->config->item('server_url');?>";
         var method = "POST";
@@ -312,8 +314,8 @@ $building_json = json_encode($building_array);
         var latitudes = event.latLng.lat();
         var longitudes = event.latLng.lng();
         // alert(latitudes);
-        console.log(latitudes);
-        console.log(longitudes);
+        // console.log(latitudes);
+        // console.log(longitudes);
 
         $.post("<?php echo base_url(); ?>Manage_building/search_buildingby_latlng",
             {

@@ -109,6 +109,18 @@ class Manage_building extends CI_Controller
         }
     }
 
+    public function get_building_by_name()
+    {
+        $this->load->model('Manage_building_model');
+        $data0 = array(
+            'latitudes' => $this->input->post('latitudes'),
+            'longitudes' => $this->input->post('longitudes'),
+        );
+        $data['res'] = $this->Manage_building_model->get_name($data0);
+//        return json_encode($data);
+//        var_dump($data);
+    }
+
     public function change_building()
     {
         $this->load->model('manage_building_model');

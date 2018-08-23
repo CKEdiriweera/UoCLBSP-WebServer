@@ -2,6 +2,24 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/form.css">
     <script src="<?php echo base_url() ?>assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <style>
+        @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+        .isa_error {
+            margin: 10px 0px;
+            padding:12px;
+
+        }
+        .isa_error {
+            color: #D8000C;
+            background-color: #FFD2D2;
+        }
+        .isa_error i {
+            margin:10px 22px;
+            font-size:2em;
+            vertical-align:middle;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,6 +45,10 @@ $building_json = json_encode($building_array);
     </div>
     </br>
     <form id="form">
+        <div id="validation" class="isa_error" style="display: none; width: 375px">
+            <i class="fa fa-times-circle"></i>
+            All fields required!
+        </div>
 
         <table>
             <tr>
@@ -124,46 +146,50 @@ $building_json = json_encode($building_array);
 
 <script>
     function addBuilding() {
+        var name = document.getElementById('name').value;
+        var desc = document.getElementById('description').value;
+        var lat = document.getElementById('infoLat').value;
+        var lng = document.getElementById('infoLng').value;
+        var g_id = document.getElementById('graphId').value;
 
+        if(name == "" || desc == "" || lat == "" || lng == "")
+        {
+            document.getElementById("validation").style.display = "block";
+            $(".alert").alert();
+        }else {
+            $.ajax({
+                url: "<?php echo base_url('Manage_building/add_building');?>",
+                type: "POST",
+                data: {
+                    "name": name,
+                    "desc": desc,
+                    "lat": lat,
+                    "lng": lng,
+                    "g_id": g_id
+                },
+                dataType:"JSON",
+                success:function () {
+                    $.ajax({
+                        dataType:'text',
+                        type: "POST",
+                        url: "<?php echo base_url() ?>index.php/manage_building/building",
+                        success: function (response){
+                            // $("#cont").html(' ');
+                            $("#cont").html(response);
+                            document.getElementById("validation").style.display = "none";
+                            // location.replace(response);
+                        },
+                        error:function () {
+                            swal({
+                                type:'error'
+                            })
+                        }
+                    });
 
-        let name = document.getElementById('name').value;
-        let desc = document.getElementById('description').value;
-        let lat = document.getElementById('infoLat').value;
-        let lng = document.getElementById('infoLng').value;
-        let g_id = document.getElementById('graphId').value;
-
-        $.ajax({
-            url: "<?php echo base_url('Manage_building/add_building');?>",
-            type: "POST",
-            data: {
-                "name": name,
-                "desc": desc,
-                "lat": lat,
-                "lng": lng,
-                "g_id": g_id
-            },
-            dataType:"JSON",
-            success:function () {
-                $.ajax({
-                    dataType:'text',
-                    type: "POST",
-                    url: "<?php echo base_url() ?>index.php/manage_building/building",
-                    success: function (response){
-                        // $("#cont").html(' ');
-                        $("#cont").html(response);
-                        // location.replace(response);
-                    },
-                    error:function () {
-                        swal({
-                            type:'error'
-                        })
-                    }
-                });
-
-                $('#form').trigger("reset");
-            }
-        });
-
+                    $('#form').trigger("reset");
+                }
+            });
+        }
     }
 </script>
 

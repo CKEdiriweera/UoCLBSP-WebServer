@@ -15,7 +15,10 @@ class Manage_rooms extends CI_Controller
 
     public function rooms()
     {
-        $this->load->view('rooms/add_room');
+        $this->load->model('Manage_building_model');
+        $buildings['result'] = $this->Manage_building_model->display_buildings();
+//        var_dump($buildings);
+        $this->load->view('rooms/add_room', $buildings);
     }
 
     function get_autocomplete(){
