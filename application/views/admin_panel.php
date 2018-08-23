@@ -137,7 +137,7 @@
 
                     swal(
                         'Deleted!',
-                        'Your file has been deleted.',
+                        'Your file has been edited.',
                         'success'
                     );
                     updateData();
@@ -243,7 +243,7 @@
                     success: function (response) {
                         // console.log(response);
                         swal(
-                            'Deleted!',
+                            'Saved!',
                             'Admin has been added.',
                             'success'
                         );

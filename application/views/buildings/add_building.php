@@ -177,6 +177,12 @@ $building_json = json_encode($building_array);
                             // $("#cont").html(' ');
                             $("#cont").html(response);
                             document.getElementById("validation").style.display = "none";
+
+                            swal(
+                                'Saved!',
+                                'Building has been added.',
+                                'success'
+                            );
                             // location.replace(response);
                         },
                         error:function () {
