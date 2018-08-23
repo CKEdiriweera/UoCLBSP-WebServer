@@ -226,38 +226,95 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
 
             function sendData(ev) {
-                var resultJson = [];
-                for (var i = 0; i < polyindex.length; i++) {
-                    if (outJSON[polyindex[i]].length > 0) {
-                        var getElement = {};
-                        getElement['id'] = polyindex[i];
-                        getElement['paths'] = outJSON[polyindex[i]];
-                        resultJson.push(getElement);
-                    }
-                }
-                var finalJson = {};
-                finalJson['type'] = "addPaths";
-                finalJson['Changes'] = resultJson;
-                // alert(JSON.stringify(finalJson));
+
+                swal({
+                    title: `Are you sure you want to Create Road?`,
+                    text: `You wont be able to reverse this action!`,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, create it!',
+                    cancelButtonText: 'No, cancel!',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: true,
+                }).then((result) => {
+                    if (result.value){
+
+                        swal(
+                            'Good job!',
+                            'Road has been added!',
+                            'success'
+                        );
+
+                        var resultJson = [];
+                        for (var i = 0; i < polyindex.length; i++) {
+                            if (outJSON[polyindex[i]].length > 0) {
+                                var getElement = {};
+                                getElement['id'] = polyindex[i];
+                                getElement['paths'] = outJSON[polyindex[i]];
+                                resultJson.push(getElement);
+                            }
+                        }
+                        var finalJson = {};
+                        finalJson['type'] = "addPaths";
+                        finalJson['Changes'] = resultJson;
+                        // alert(JSON.stringify(finalJson));
 
 //                var urlPoly = "http://ec2-52-72-156-17.compute-1.amazonaws.com:1978";
-                var urlPoly = "<?=$this->config->item('server_url');?>";
-                var method = "POST";
-                var mapData = JSON.stringify(finalJson);
-                var shouldBeAsync = true;
-                var requestMap = new XMLHttpRequest();
-                var data;
-                requestMap.onload = function () {
-                    var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
-                    var data = requestMap.response;
-                    $(function () {
-                        $("#cont").load("Admin_home/add_road");
-                    });
-                    // alert(data);
-                }
-                requestMap.open(method, urlPoly, shouldBeAsync);
-                requestMap.send(mapData);
+                        var urlPoly = "<?=$this->config->item('server_url');?>";
+                        var method = "POST";
+                        var mapData = JSON.stringify(finalJson);
+                        var shouldBeAsync = true;
+                        var requestMap = new XMLHttpRequest();
+                        var data;
+                        requestMap.onload = function () {
+                            var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+                            var data = requestMap.response;
+                            $(function () {
+                                $("#cont").load("Admin_home/add_road");
+                            });
+                            // alert(data);
+                        };
+                        requestMap.open(method, urlPoly, shouldBeAsync);
+                        requestMap.send(mapData);
 
+                    }
+                });
+
+//                var resultJson = [];
+//                for (var i = 0; i < polyindex.length; i++) {
+//                    if (outJSON[polyindex[i]].length > 0) {
+//                        var getElement = {};
+//                        getElement['id'] = polyindex[i];
+//                        getElement['paths'] = outJSON[polyindex[i]];
+//                        resultJson.push(getElement);
+//                    }
+//                }
+//                var finalJson = {};
+//                finalJson['type'] = "addPaths";
+//                finalJson['Changes'] = resultJson;
+//                // alert(JSON.stringify(finalJson));
+//
+////                var urlPoly = "http://ec2-52-72-156-17.compute-1.amazonaws.com:1978";
+//                var urlPoly = "<?//=$this->config->item('server_url');?>//";
+//                var method = "POST";
+//                var mapData = JSON.stringify(finalJson);
+//                var shouldBeAsync = true;
+//                var requestMap = new XMLHttpRequest();
+//                var data;
+//                requestMap.onload = function () {
+//                    var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+//                    var data = requestMap.response;
+//                    $(function () {
+//                        $("#cont").load("Admin_home/add_road");
+//                    });
+//                    // alert(data);
+//                }
+//                requestMap.open(method, urlPoly, shouldBeAsync);
+//                requestMap.send(mapData);
+//
 
             }
         </script>

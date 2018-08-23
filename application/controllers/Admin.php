@@ -91,4 +91,28 @@ class Admin extends CI_Controller
 
         json_encode(array("status"=>true));
     }
+
+    public function get_moderators_data(){
+        $admin_list = $this->Admin->get_mods();
+        echo json_encode($admin_list);
+    }
+
+    public function addMod(){
+
+        $data = array(
+            "name" => $_REQUEST['name'],
+            "email" => $_REQUEST['email'],
+            "telephone"=> $_REQUEST['telephone'],
+            "type"=>'Moderator'
+        );
+
+//        $name = $_REQUEST['name'];
+//        $email = $_REQUEST['email'];
+//        $telephone = $_REQUEST['telephone'];
+
+
+        $this->Admin->addMod($data);
+
+        json_encode(array("status"=>true));
+    }
 }

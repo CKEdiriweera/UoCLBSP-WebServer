@@ -61,8 +61,16 @@ class Admin_model extends CI_Model{
     }
 
 
-    public function addAdmin($data){
+    public function addMod($data){
         $this->db->insert('user',$data);
+    }
+    public function get_mods(){
+        $this->db->select('id, name, email, telephone');
+        $this->db->where('type','Moderator');
+        $query = $this->db->get('user');
+
+        $data = $query->result();
+        return $data;
     }
 }
 

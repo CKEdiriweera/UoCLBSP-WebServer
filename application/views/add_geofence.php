@@ -71,7 +71,7 @@
                         // newpoint.addListener('click', pointone);
                     }
                     //                    alert(data);
-                }
+                };
                 requestMap.open(method, urlPoly, shouldBeAsync);
                 requestMap.send(mapData);
 
@@ -147,28 +147,75 @@
             }
 
             function sendData(event) {
-                if (state == 2) {
-                    jsonObj['outvertexes'] = outArray;
-                    jsonObj['type'] = "geofence";
-                    // alert(JSON.stringify(jsonObj));
 
-                    var urlPoly = "<?=$this->config->item('server_url');?>";
-                    var method = "POST";
-                    var mapData = JSON.stringify(jsonObj);
-                    var shouldBeAsync = true;
-                    var requestMap = new XMLHttpRequest();
-                    var data;
-                    requestMap.onload = function () {
-                        var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
-                        var data = requestMap.response;
-                        $(function () {
-                            $("#cont").load("Admin_home/add_polygon");
-                        });
-                        // alert(data);
+                swal({
+                    title: `Are you sure you want to Create Polygon?`,
+                    text: `You wont be able to reverse this action!`,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, create it!',
+                    cancelButtonText: 'No, cancel!',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: true,
+                }).then((result) => {
+                    if (result.value){
+
+                        swal(
+                            'Good job!',
+                            'Polygon has been added!',
+                            'success'
+                        );
+
+                        if (state == 2) {
+                            jsonObj['outvertexes'] = outArray;
+                            jsonObj['type'] = "geofence";
+                            // alert(JSON.stringify(jsonObj));
+
+                            var urlPoly = "<?=$this->config->item('server_url');?>";
+                            var method = "POST";
+                            var mapData = JSON.stringify(jsonObj);
+                            var shouldBeAsync = true;
+                            var requestMap = new XMLHttpRequest();
+                            var data;
+                            requestMap.onload = function () {
+                                var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+                                var data = requestMap.response;
+                                $(function () {
+                                    $("#cont").load("Admin_home/add_polygon");
+                                });
+                                // alert(data);
+                            };
+                            requestMap.open(method, urlPoly, shouldBeAsync);
+                            requestMap.send(mapData);
+                        }
                     }
-                    requestMap.open(method, urlPoly, shouldBeAsync);
-                    requestMap.send(mapData);
-                }
+                });
+
+                //if (state == 2) {
+                //    jsonObj['outvertexes'] = outArray;
+                //    jsonObj['type'] = "geofence";
+                //    // alert(JSON.stringify(jsonObj));
+                //
+                //    var urlPoly = "<?//=$this->config->item('server_url');?>//";
+                //    var method = "POST";
+                //    var mapData = JSON.stringify(jsonObj);
+                //    var shouldBeAsync = true;
+                //    var requestMap = new XMLHttpRequest();
+                //    var data;
+                //    requestMap.onload = function () {
+                //        var status = requestMap.status; // HTTP response status, e.g., 200 for "200 OK"
+                //        var data = requestMap.response;
+                //        $(function () {
+                //            $("#cont").load("Admin_home/add_polygon");
+                //        });
+                //        // alert(data);
+                //    };
+                //    requestMap.open(method, urlPoly, shouldBeAsync);
+                //    requestMap.send(mapData);
+                //}
             }
 
         </script>

@@ -31,6 +31,9 @@
     </style>
     
     <script>
+
+        var mod_list=[];
+
         $(document).ready(function () {
             updateData();
         });
@@ -39,7 +42,7 @@
         function updateData() {
             $("#adminTable tbody tr").remove();
             $.ajax({
-                url: '<?php echo base_url('Admin/get_admins_data'); ?>',
+                url: '<?php echo base_url('Admin/get_moderators_data'); ?>',
                 method: 'GET',
                 // data: ,
                 dataType: 'json',
@@ -52,19 +55,23 @@
 
                     response.forEach(function (entry) {
 
+                        mod_list.push(entry.email);
+
                         var deleteButton = `<td><a class="btn btn-danger" onclick="deleteAdmin(${entry.id})">Delete</a></td>`;
 
                         let userEmail = '<?php echo $_SESSION['email'] ?>';
 
-                        // if (userEmail===entry.email){
-                        //     var editButton = `<a class="btn btn-primary" onclick="">Edit</a>`;
-                        //
-                        //     var action = `<td>${editButton}</td><td>${deleteButton}</td>`;
-                        // }
-                        // else {
-                        //     var action = `<td></td><td>${deleteButton}</td>`;
-                        // }
-                        tab += `<tr><td>${entry.name}</td><td>${entry.email}</td><td>${entry.telephone}</td>${deleteButton}</tr>`;
+                        if (userEmail===entry.email){
+                            // var editButton = `<a class="btn btn-primary" onclick="">Edit</a>`;
+                            //
+                            // var action = `<td>${editButton}</td><td>${deleteButton}</td>`;
+                            var action = ``;
+                            tab = `<tr><td>${entry.name}</td><td>${entry.email}</td><td>${entry.telephone}</td>${action}</tr>` + tab;
+                        }
+                        else {
+                            var action = `<td></td><td>${deleteButton}</td>`;
+                            tab += `<tr><td>${entry.name}</td><td>${entry.email}</td><td>${entry.telephone}</td>${action}</tr>`;
+                        }
 
                     });
                     tab += '</tbody></table>';
@@ -234,9 +241,18 @@
                 });
 
             }
+
+            else if (jQuery.inArray(email,mod_list) !== -1){
+                swal({
+                    type: 'error',
+                    text: 'Email alredy in the moderator list!',
+                    title: 'You cannot have duplicate fields!'
+                });
+            }
+
             else {
                 $.ajax({
-                    url: '<?php echo base_url('Admin/addAdmin'); ?>',
+                    url: '<?php echo base_url('Admin/addMod'); ?>',
                     method: 'POST',
                     data: {'name':name, 'email':email, 'telephone':telephone},
                     // dataType: 'json',
@@ -280,7 +296,7 @@
 
         <hr>
         <div id="right_div" class="col-sm-6" style=" height: 100%">
-            <h2 style="padding-bottom: 20px; padding-top:0%; color: #AF7AC5">Admin Table</h2>
+            <h2 style="padding-bottom: 20px; padding-top:0%; color: #AF7AC5">Moderators</h2>
             <table id="adminTable" class="table table-bordered" style="width: 100%; table-layout: auto">
                 <thead>
                 <tr>
@@ -302,7 +318,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Admin Info Form</h3>
+                <h3 class="modal-title">Moderator Info Form</h3>
             </div>
             <div class="modal-body form">
                 <form action="#" id="form_admin" class="form-horizontal">
