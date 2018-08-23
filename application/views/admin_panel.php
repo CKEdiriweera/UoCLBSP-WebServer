@@ -210,6 +210,59 @@
         }
     </style>
 
+    <script>
+        function addAdmin() {
+            $('#form_admin')[0].reset();
+            $('#modal_form_admin').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Admin Info'); // Se
+        }
+
+        function save() {
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const telephone = document.getElementById('telephone').value;
+
+
+            // console.log(document.getElementById('telephone').value);
+
+            if (!name || !email || !telephone) {
+                swal({
+                    type: 'error',
+                    text: 'Some fields are empty in the form!',
+                    title: 'You cannot have empty fields!'
+                });
+
+            }
+            else {
+                $.ajax({
+                    url: '<?php echo base_url('Admin/addAdmin'); ?>',
+                    method: 'POST',
+                    data: {'name':name, 'email':email, 'telephone':telephone},
+                    // dataType: 'json',
+                    success: function (response) {
+                        // console.log(response);
+                        swal(
+                            'Deleted!',
+                            'Admin has been added.',
+                            'success'
+                        );
+                        updateData();
+                        $('#modal_form_admin').modal('hide');
+                    },
+                    error: function (response) {
+                        // console.log(response);
+                        swal({
+                            type: 'error',
+                            text: 'something went wrong!'
+                        });
+                    }
+                });
+            }
+
+        }
+    </script>
+
 </head>
 
 <body>
@@ -221,7 +274,7 @@
                 <input id="adminSearch" placeholder="Search" onkeyup="searchTable()">
             </div>
             <div class="container" style="padding-top: 400px">
-                <button class="sbutton" style="font-size: 20px; width: 30%">Add Admin</button>
+                <button class="sbutton" onclick="addAdmin()" style="font-size: 20px; width: 30%">Add Admin</button>
             </div>
         </div>
 
@@ -242,6 +295,48 @@
 
     </div>
 </div>
+
+
+<div class="modal fade" id="modal_form_admin" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Admin Info Form</h3>
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form_admin" class="form-horizontal">
+                    <input type="hidden" value="" id="id" name="id""/>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Name</label>
+                            <div class="col-md-9">
+                                <input name="name" id="name" placeholder="full Name" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Email</label>
+                            <div class="col-md-9">
+                                <input name="email" id="email" placeholder="Email" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Contact No</label>
+                            <div class="col-md-9">
+                                <input name="telephone" id="telephone" placeholder="Contact No" class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!--
+
 
 </body>
 

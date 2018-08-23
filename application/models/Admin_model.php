@@ -59,6 +59,11 @@ class Admin_model extends CI_Model{
         $this->db->where('id',$id);
         return $this->db->delete('user');
     }
+
+
+    public function addAdmin($data){
+        $this->db->insert('user',$data);
+    }
 }
 
 ?>

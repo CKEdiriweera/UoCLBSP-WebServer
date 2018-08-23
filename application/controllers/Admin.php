@@ -72,4 +72,23 @@ class Admin extends CI_Controller
 
 
     }
+
+    public function addAdmin(){
+
+        $data = array(
+            "name" => $_REQUEST['name'],
+            "email" => $_REQUEST['email'],
+            "telephone"=> $_REQUEST['telephone'],
+            "type"=>'Admin'
+            );
+
+//        $name = $_REQUEST['name'];
+//        $email = $_REQUEST['email'];
+//        $telephone = $_REQUEST['telephone'];
+
+
+        $this->Admin->addAdmin($data);
+
+        json_encode(array("status"=>true));
+    }
 }
